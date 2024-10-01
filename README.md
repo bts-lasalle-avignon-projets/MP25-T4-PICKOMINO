@@ -38,6 +38,7 @@ Version 1.0 :
 ## Équipe de développement
 
 <a href= "https://github.com/clementBernard130">BERNARD Clément</a>
+
 <a href =https://github.com/ValentinBOUSQUET>BOUSQUET-SOLFRINI Valentin</a>
 
 &copy; 2024-2025 LaSalle Avignon
