@@ -24,11 +24,21 @@ $ ./pickomino.out
 
 ## Changelog
 
+Le logiciel permet de jouer au Pickomino.
+
 ## TODO
+
+Version 1.0 : 
+- [ ] Saisir le nom du joueur 
+- [ ] Jouer partie 
+- [ ] Afficher le déroulement de la partie
 
 ## Défauts constatés non corrigés
 
 ## Équipe de développement
 
----
+<a href= "https://github.com/clementBernard130">BERNARD Clément</a>
+
+<a href =https://github.com/ValentinBOUSQUET>BOUSQUET-SOLFRINI Valentin</a>
+
 &copy; 2024-2025 LaSalle Avignon
