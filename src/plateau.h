@@ -1,7 +1,7 @@
 #ifndef JEU_H
 #define JEU_H
 
-#define DEBUG_JEU
+#define DEBUG_PLATEAU
 
 #include "données.h"
 
@@ -14,6 +14,6 @@ bool rechercherEtGarder(int desGarder[NB_DES],
 void garderDES(int desGarder[NB_DES], int desObtenue[NB_DES], int desEnJeu);
 bool verifierNombreDesGarder(int desGarder[NB_DES]);
 bool verifierLancer(int desGarder[NB_DES], int& desEnJeu);
-// int score();
+int calculerScore(int desGarder[NB_DES]);
 
 #endif

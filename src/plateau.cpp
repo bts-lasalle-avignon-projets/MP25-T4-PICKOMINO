@@ -5,13 +5,13 @@
 #include <cstdlib> // pour srand et rand
 #include <algorithm> // pour any_of
 
-#ifdef DEBUG_JEU
+#ifdef DEBUG_PLATEAU
 #include <iostream>
 #endif
 
 int lancerDes(int desObtenue[NB_DES], int desEnJeu) {
     srand(time(NULL));
-#ifdef DEBUG_JEU
+#ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "desEnJeu = " << desEnJeu << std::endl;
 #endif
@@ -96,6 +96,25 @@ void garderDES(int desGarder[NB_DES], int desObtenue[NB_DES], int desEnJeu) {
     afficherDesGardes(desGarder, NB_DES);
 }
 
+int calculerScore(int desGarder[NB_DES])
+{
+    int score = 0;
+
+    for (int i = 0; i < NB_DES; i++)
+    {
+        // Utiliser une variable temporaire pour ne pas modifier le tableau original
+        int valeur = (desGarder[i] == 6) ? 5 : desGarder[i];
+        score += valeur;
+    }
+
+    #ifdef DEBUG_PLATEAU
+        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+        std::cout << "score = " << score << std::endl;
+    #endif
+
+    return score;
+}
+
 bool verifierNombreDesGarder(int desGarder[NB_DES], int& desEnJeu) {
     int compteurDesGardes = 0;
     for (int i = 0; i < NB_DES; i++) {
@@ -117,12 +136,13 @@ int jouerTour(int desGarder[NB_DES], int& desEnJeu) {
     lancerDes(desObtenue, desEnJeu);
     afficherDes(desObtenue, desEnJeu); 
 
+
     if (!peutRelancer(desObtenue, desGarder, desEnJeu)) {
         afficherJeuNul();
         return 0;
     }
-
     garderDES(desGarder, desObtenue, desEnJeu);
+    calculerScore(desGarder);
     return 1;
 }
 
@@ -134,7 +154,6 @@ int obtenirSuiteDeDes() {
         if (jouerTour(desGarder, desEnJeu) == 0) {
             return 0;
         }
-
         if (!demanderContinuer()) {
             break;
         }
@@ -144,8 +163,7 @@ int obtenirSuiteDeDes() {
         afficherJeuNul();
         return 0;
     }
-
-#ifdef DEBUG_JEU
+#ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "Le joueur peut piocher un pickomino " << std::endl;
 #endif
