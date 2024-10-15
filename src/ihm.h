@@ -1,8 +1,18 @@
 #ifndef IHM_H
 #define IHM_H
 
-#include "données.h"
+#include <string>
 
-int afficherDes(int desObtenue[NB_DES], int& desEnJeu);
-
+void afficherDemandeValeur();
+void afficherErreurEntree();
+void afficherDemandeNombreAGarder(const std::string& valeur);
+void afficherDesGardes(int desGarder[], int taille);
+void afficherTousDesGardes();
+int demanderValeur();
+int obtenirNombreAGarder();
+void afficherValeurDejaGardee();
+void afficherDes(int desObtenue[], int desEnJeu);
+void afficherLancerArrete();
+void afficherJeuNul();
+bool demanderContinuer();
 #endif
