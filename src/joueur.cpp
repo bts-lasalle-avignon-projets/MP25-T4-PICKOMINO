@@ -1,21 +1,25 @@
 #include "joueur.h"
-
+#include "donnees.h"
+#include "ihm.h"
 #ifdef DEBUG_JOUEUR
 #include <iostream>
 #endif
 
-
 int selectionnerNombreDeJoueur()
 {
-    int nombreDeJoueur;
-    std::cout << "Veuillez indiquer le nombre de joueurs ( entre 2 et 7 ): " << std::endl;
-    std::cin >> nombreDeJoueur;
-    if (nombreDeJoueur >= MIN_JOUEUR && nombreDeJoueur <= MAX_JOUEUR)
+    int nombreDeJoueur = afficherNombreDeJoueur(nombreDeJoueur);
+}
+
+/*
+bool verifierNombreDeJoueur(int& nombreDeJoueur)
+{
+    if(nombreDeJoueur <= NB_JOUEUR_MIN && nombreDeJoueur >= NB_JOUEUR_MAX) 
     {
-        std::cout << "Vous avez selectionné: " << nombreDeJoueur << std::endl;
+        return true;
     }
-    else
+    else 
     {
-        std::cout << "Veuillez saisir une valeur correcte." << std::endl;
+        return false;
     }
 }
+*/
