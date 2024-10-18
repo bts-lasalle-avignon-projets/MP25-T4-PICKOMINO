@@ -25,10 +25,10 @@ int lancerDes(int desObtenue[NB_DES], int desEnJeu)
     return 0;
 }
 
-int convertirValeur(char valeur)
+int convertirIdVers(char valeur)
 {
     if(valeur == 'V' || valeur == 'v')
-        return 6;
+        return ID_VERS;
     else if(valeur >= '1' && valeur <= '5')
         return valeur - '0';
     return -1;
@@ -38,7 +38,7 @@ bool contientV(int desGarder[NB_DES])
 {
     for(int i = 0; i < NB_DES; i++)
     {
-        if(desGarder[i] == 6)
+        if(desGarder[i] == ID_VERS)
             return true;
     }
     return false;
@@ -100,7 +100,7 @@ void garderDES(int desGarder[NB_DES], int desObtenue[NB_DES], int desEnJeu)
     bool dejaGardee;
     do
     {
-        valeurGardee = convertirValeur(demanderValeur());
+        valeurGardee = convertirIdVers(demanderValeur());
         if(valeurGardee == -1)
         {
             afficherErreurEntree();
@@ -125,8 +125,7 @@ int calculerScore(int desGarder[NB_DES])
 
     for(int i = 0; i < NB_DES; i++)
     {
-        // Utiliser une variable temporaire pour ne pas modifier le tableau original
-        int valeur = (desGarder[i] == 6) ? 5 : desGarder[i];
+        int valeur = (desGarder[i] == ID_VERS) ? VALEUR_VERS : desGarder[i];
         score += valeur;
     }
 
