@@ -171,7 +171,7 @@ int jouerTour(int desGarder[NB_DES], int& desEnJeu)
         return 0;
     }
     garderDES(desGarder, desObtenue, desEnJeu);
-    calculerScore(desGarder);
+    afficherScore(calculerScore(desGarder));
     return 1;
 }
 

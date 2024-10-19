@@ -1,4 +1,4 @@
-#include "ihm.h"
+﻿#include "ihm.h"
 #include <iostream>
 #include <string>
 
@@ -35,6 +35,11 @@ void afficherTousDesGardes() {
     std::cout << "Tous les dés sont gardés. Aucune relance." << std::endl;
 }
 
+void afficherScore(int score)
+{
+    std::cout << "Votre score : " << score << std::endl;
+}
+
 void afficherDes(int desObtenue[], int taille) {
     std::cout << "Dés obtenus au lancer : ";
     for (int i = 0; i < taille; i++) {
@@ -53,17 +58,12 @@ void afficherJeuNul() {
 
 bool demanderContinuer() {
     char reponse;
+    const std::string choixValid = "oOnN";
     do {
         std::cout << "Voulez-vous continuer à jouer ? (o/n) : ";
         std::cin >> reponse;
+        reponse = tolower(reponse);
+    } while (choixValid.find(reponse) == std::string::npos);
 
-        // Vérifier si la réponse est valide
-        if (reponse == 'o' || reponse == 'O') {
-            return true; // Le joueur veut continuer
-        } else if (reponse == 'n' || reponse == 'N') {
-            return false; // Le joueur veut arrêter
-        } else {
-            std::cout << "Réponse invalide. Veuillez entrer 'o' pour oui ou 'n' pour non." << std::endl;
-        }
-    } while (true); // Continuer à demander jusqu'à obtenir une réponse valide
+    return reponse == 'o';
 }
