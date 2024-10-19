@@ -1,4 +1,5 @@
 ﻿#include "ihm.h"
+#include "donnees.h"
 #include <iostream>
 #include <string>
 
@@ -25,7 +26,7 @@ void afficherDesGardes(int desGarder[], int taille) {
     std::cout << "Vous avez gardé : ";
     for (int i = 0; i < taille; i++) {
         if (desGarder[i] != 0) {
-            std::cout << (desGarder[i] == 6 ? "V" : std::to_string(desGarder[i])) << " ";
+            std::cout << (desGarder[i] == ID_VERS ? "V" : std::to_string(desGarder[i])) << " ";
         }
     }
     std::cout << std::endl << std::endl;
@@ -43,7 +44,7 @@ void afficherScore(int score)
 void afficherDes(int desObtenue[], int taille) {
     std::cout << "Dés obtenus au lancer : ";
     for (int i = 0; i < taille; i++) {
-        std::cout << (desObtenue[i] == 6 ? "V" : std::to_string(desObtenue[i])) << " ";
+        std::cout << (desObtenue[i] == ID_VERS ? "V" : std::to_string(desObtenue[i])) << " ";
     }
     std::cout << std::endl;
 }
