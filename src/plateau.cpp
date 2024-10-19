@@ -44,7 +44,7 @@ bool contientV(int desGarder[NB_DES])
     return false;
 }
 
-bool sontEgal(int des1[NB_DES], int des2[NB_DES])
+bool verifierLancerNul(int des1[NB_DES], int des2[NB_DES])
 {
     for(size_t i = 0; i < NB_DES; i++)
     {
@@ -54,9 +54,9 @@ bool sontEgal(int des1[NB_DES], int des2[NB_DES])
     return true;
 }
 
-bool peutRelancer(int desObtenue[NB_DES], int desGarder[NB_DES], int desEnJeu)
+bool pouvoirRelancer(int desObtenue[NB_DES], int desGarder[NB_DES], int desEnJeu)
 {
-    if(sontEgal(desObtenue, desGarder))
+    if(verifierLancerNul(desObtenue, desGarder))
         return false;
 
     for(int i = 0; i < desEnJeu; i++)
@@ -165,7 +165,7 @@ int jouerTour(int desGarder[NB_DES], int& desEnJeu)
     lancerDes(desObtenue, desEnJeu);
     afficherDes(desObtenue, desEnJeu);
 
-    if(!peutRelancer(desObtenue, desGarder, desEnJeu))
+    if(!pouvoirRelancer(desObtenue, desGarder, desEnJeu))
     {
         afficherJeuNul();
         return 0;
