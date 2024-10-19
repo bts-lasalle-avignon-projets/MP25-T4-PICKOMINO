@@ -5,15 +5,20 @@
 
 #include "donnees.h"
 
-int  obtenirSuiteDeDes();
-int  demanderValeur();
-bool rechercherEtGarder(int desGarder[NB_DES],
-                        int desObtenue[NB_DES],
-                        int valeurGardee,
-                        int desEnJeu);
-void garderDES(int desGarder[NB_DES], int desObtenue[NB_DES], int desEnJeu);
-bool verifierNombreDesGarder(int desGarder[NB_DES]);
-bool verifierLancer(int desGarder[NB_DES], int& desEnJeu);
-int  calculerScore(int desGarder[NB_DES]);
+struct Plateau
+{
+    int desGardes[NB_DES];
+    int desObtenus[NB_DES];
+    int desEnJeu;
+};
 
-#endif
+void initialiserPlateau(Plateau& plateau);
+void lancerDes(Plateau& plateau);
+bool garderDes(Plateau& plateau);
+int  calculerScore(int desGardes[NB_DES]);
+bool estDejaGarde(int valeur, int desGardes[NB_DES], int nbDes);
+bool contientV(int desGardes[NB_DES]);
+bool verifierLancerNul(int desObtenus[NB_DES], int desGardes[NB_DES]);
+int  convertirValeurDe(char valeurDe);
+
+#endif // PLATEAU_H

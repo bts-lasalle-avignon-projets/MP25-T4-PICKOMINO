@@ -3,16 +3,20 @@
 
 #include <string>
 
-void afficherErreurEntree();
-void afficherDemandeNombreAGarder(const std::string& valeur);
-void afficherDesGardes(int desGarder[], int taille);
-void afficherTousDesGardes();
+#include "plateau.h"
+
+void afficherPlateau(Plateau& plateau);
+void afficherDes(int desObtenus[], int nbDes);
+void afficherDesGardes(int desGardes[], int nbDes);
 void afficherScore(int score);
-int demanderValeur();
-int obtenirNombreAGarder();
+
+void afficherErreurEntree();
 void afficherValeurDejaGardee();
-void afficherDes(int desObtenue[], int desEnJeu);
+void afficherTousDesGardes();
 void afficherLancerArrete();
-void afficherJeuNul();
-bool demanderContinuer();
-#endif
+void afficherLancerNul();
+
+char demanderValeurDe();
+bool demander(const std::string& message);
+
+#endif // IHM_H

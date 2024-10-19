@@ -3,37 +3,41 @@
 #include <iostream>
 #include <string>
 
-void afficherDemandeValeur() {
-    std::cout << "Choisir une valeur à garder : ";
+void afficherPlateau(Plateau& plateau)
+{
+    afficherDes(plateau.desObtenus, plateau.desEnJeu);
+    afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
 }
 
-void afficherErreurEntree() {
-    std::cout << "Entrée invalide. Veuillez réessayer." << std::endl;
+void afficherDes(int desObtenus[], int nbDes)
+{
+    std::cout << "Lancer des dés : ";
+    for(int i = 0; i < nbDes; i++)
+    {
+        std::cout << (desObtenus[i] == ID_VERS ? "V" : std::to_string(desObtenus[i])) << " ";
+    }
+    std::cout << std::endl;
 }
 
-void afficherValeurDejaGardee() {
-    std::cout << "Vous avez déjà gardé cette valeur." << std::endl;
-}
-
-int demanderValeur() {
-    char valeur;
-    std::cout << "Choisir une valeur à garder : ";
-    std::cin >> valeur;
-    return valeur;
-}
-
-void afficherDesGardes(int desGarder[], int taille) {
-    std::cout << "Vous avez gardé : ";
-    for (int i = 0; i < taille; i++) {
-        if (desGarder[i] != 0) {
-            std::cout << (desGarder[i] == ID_VERS ? "V" : std::to_string(desGarder[i])) << " ";
+void afficherDesGardes(int desGardes[], int nbDes)
+{
+    std::cout << "Dés gardés : ";
+    if(nbDes == 0)
+    {
+        std::cout << "aucun";
+    }
+    else
+    {
+        for(int i = 0; i < nbDes; i++)
+        {
+            if(desGardes[i] != 0)
+            {
+                std::cout << (desGardes[i] == ID_VERS ? "V" : std::to_string(desGardes[i])) << " ";
+            }
         }
     }
-    std::cout << std::endl << std::endl;
-}
 
-void afficherTousDesGardes() {
-    std::cout << "Tous les dés sont gardés. Aucune relance." << std::endl;
+    std::cout << std::endl;
 }
 
 void afficherScore(int score)
@@ -41,30 +45,55 @@ void afficherScore(int score)
     std::cout << "Votre score : " << score << std::endl;
 }
 
-void afficherDes(int desObtenue[], int taille) {
-    std::cout << "Dés obtenus au lancer : ";
-    for (int i = 0; i < taille; i++) {
-        std::cout << (desObtenue[i] == ID_VERS ? "V" : std::to_string(desObtenue[i])) << " ";
-    }
-    std::cout << std::endl;
+void afficherErreurEntree()
+{
+    std::cout << "Entrée invalide !" << std::endl;
 }
 
-void afficherLancerArrete() {
-    std::cout << "Vous ne pouvez plus relancer. Le jeu est arrêté." << std::endl;
+void afficherValeurDejaGardee()
+{
+    std::cout << "Vous avez déjà gardé cette valeur !" << std::endl;
 }
 
-void afficherJeuNul() {
-    std::cout << "Le lancer est nul, vous ne pouvez pas gagner." << std::endl;
+void afficherTousDesGardes()
+{
+    std::cout << "Tous les dés sont gardés ! Aucune relance." << std::endl;
 }
 
-bool demanderContinuer() {
-    char reponse;
-    const std::string choixValid = "oOnN";
-    do {
-        std::cout << "Voulez-vous continuer à jouer ? (o/n) : ";
+void afficherLancerArrete()
+{
+    std::cout << "Vous ne pouvez plus relancer !" << std::endl;
+}
+
+void afficherLancerNul()
+{
+    std::cout << "Le lancer est nul !" << std::endl;
+}
+
+char demanderValeurDe()
+{
+    char valeur;
+
+    do
+    {
+        std::cout << "Choisir une valeur à garder : ";
+        std::cin >> valeur;
+    } while((valeur < '1' || valeur > '5') && valeur != 'V' && valeur != 'v');
+
+    return valeur;
+}
+
+bool demander(const std::string& message)
+{
+    char              reponse;
+    const std::string choixValides = "on";
+
+    do
+    {
+        std::cout << "Voulez-vous " << message << " ? (oO/nN) ";
         std::cin >> reponse;
         reponse = tolower(reponse);
-    } while (choixValid.find(reponse) == std::string::npos);
+    } while(choixValides.find(reponse) == std::string::npos);
 
-    return reponse == 'o';
+    return (reponse == 'o' || reponse == 'O');
 }
