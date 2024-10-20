@@ -29,9 +29,9 @@ void jouerJeu()
 
 void jouerTour(Plateau& plateau)
 {
-    bool continuer = true;
+    bool jeuActif = true;
 
-    while(continuer)
+    while(jeuActif)
     {
         lancerDes(plateau);
         afficherPlateau(plateau);
@@ -51,7 +51,7 @@ void jouerTour(Plateau& plateau)
 
         afficherScore(calculerScore(plateau.desGardes));
 
-        continuer = demander("continuer à lancer des dés");
+        jeuActif = demander("continuer à lancer des dés");
     }
     /*
     if(!contientV(plateau.desGardes))
