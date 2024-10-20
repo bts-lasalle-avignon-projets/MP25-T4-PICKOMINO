@@ -27,7 +27,7 @@ void jouerJeu()
 #endif
 }
 
-void jouerTour(Plateau& plateau)
+int jouerTour(Plateau& plateau)
 {
     bool jeuActif = true;
 
@@ -39,7 +39,7 @@ void jouerTour(Plateau& plateau)
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
             afficherLancerNul();
-            break;
+            return 1;
         }
 
         bool gardeReussi = garderDes(plateau);
@@ -61,4 +61,5 @@ void jouerTour(Plateau& plateau)
     */
 
     afficherLancerArrete();
+    return 0;
 }

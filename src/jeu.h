@@ -8,6 +8,6 @@
 
 void initialiserJeu();
 void jouerJeu();
-void jouerTour(Plateau& plateau);
+int jouerTour(Plateau& plateau);
 
 #endif // JEU_H
