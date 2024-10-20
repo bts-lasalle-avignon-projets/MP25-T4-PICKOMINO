@@ -78,7 +78,7 @@ bool garderDes(Plateau& plateau)
     plateau.desEnJeu -= nbDesGardes;
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "desEnJeu = " << desEnJeu << std::endl;
+    std::cout << "desEnJeu = " << plateau.desEnJeu << std::endl;
 #endif
 
     return gardeEffectuee;
@@ -122,19 +122,18 @@ bool contientV(int desGardes[NB_DES])
     return false;
 }
 
-bool verifierLancerNul(int desObtenus[NB_DES], int desGarder[NB_DES], int desEnJeu)
+bool verifierLancerNul(int desObtenus[NB_DES], int desGardes[NB_DES], int desEnJeu)
 {
     bool lancerNul = true;
     for(int i = 0; i < desEnJeu; i++)
     {
-        bool dejaGarde = false;
-        for(int j = 0; j < NB_DES; j++)
-        {
-            if(desGarder[j] == desObtenus[i])
-            {
-                dejaGarde = true;
-            }
-        }
+        bool dejaGarde = estDejaGarde(desObtenus[i], desGardes, NB_DES - desEnJeu);
+#ifdef DEBUG_PLATEAU
+        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+        std::cout << "valeur = " << desObtenus[i] << std::endl;
+        std::cout << "dejaGarde = " << dejaGarde << std::endl;
+#endif
+
         if(!dejaGarde)
         {
             lancerNul = false;

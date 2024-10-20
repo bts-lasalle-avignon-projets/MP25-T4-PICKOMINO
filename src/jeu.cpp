@@ -30,30 +30,36 @@ void jouerJeu()
 int jouerTour(Plateau& plateau)
 {
     bool jeuActif = true;
+    int  etatTour = LANCER_TERMINE;
 
     while(jeuActif)
     {
         lancerDes(plateau);
+
         afficherPlateau(plateau);
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
             afficherLancerNul();
-            return 1;
+            etatTour = LANCER_NUL;
+            jeuActif = false;
         }
-
-        bool gardeReussi = garderDes(plateau);
-
-        if(!gardeReussi)
+        else
         {
-            afficherValeurDejaGardee();
+            if(!garderDes(plateau))
+            {
+                afficherValeurDejaGardee();
+            }
+
+            afficherScore(calculerScore(plateau.desGardes));
+
+            // @todo vérifier les règles du jeu
+            // if(plateau.desEnJeu > 0)
+            {
+                jeuActif = demander("continuer à lancer des dés");
+            }
         }
-
-        afficherScore(calculerScore(plateau.desGardes));
-
-        jeuActif = demander("continuer à lancer des dés");
     }
 
-    afficherLancerArrete();
-    return 0;
+    return etatTour;
 }
