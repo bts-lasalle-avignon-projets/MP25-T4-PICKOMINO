@@ -126,22 +126,21 @@ bool contientV(int desGardes[NB_DES])
 bool verifierLancerNul(int desObtenus[NB_DES], int desGarder[NB_DES], int desEnJeu)
 {
     bool lancerNul = true;
-
     for(int i = 0; i < desEnJeu; i++)
     {
-        bool dejaGardee = std::any_of(desGarder,
-                                      desGarder + NB_DES,
-                                      [desObtenus, i](int v)
-                                      {
-                                          return v == desObtenus[i];
-                                      });
-
-        if(!dejaGardee)
+        bool dejaGarde = false;
+        for(int j = 0; j < NB_DES; j++)
+        {
+            if(desGarder[j] == desObtenus[i])
+            {
+                dejaGarde = true;
+            }
+        }
+        if(!dejaGarde)
         {
             lancerNul = false;
         }
     }
-
     return lancerNul;
 }
 
