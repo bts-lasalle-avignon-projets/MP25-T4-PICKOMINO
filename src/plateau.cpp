@@ -3,6 +3,7 @@
 #include "donnees.h"
 #include <ctime>   // pour time
 #include <cstdlib> // pour rand
+#include <algorithm> //pour any_of
 
 #ifdef DEBUG_PLATEAU
 #include <iostream>
@@ -122,14 +123,23 @@ bool contientV(int desGardes[NB_DES])
     return false;
 }
 
-bool verifierLancerNul(int desObtenus[NB_DES], int desGardes[NB_DES])
+
+bool verifierLancerNul(int desObtenus[NB_DES], int desGarder[NB_DES], int desEnJeu) 
 {
-    for(size_t i = 0; i < NB_DES; i++)
+    bool lancerNul = true;
+
+    for(int i = 0; i < desEnJeu; i++) 
     {
-        if(desObtenus[i] != desGardes[i])
-            return false;
+        bool dejaGardee = std::any_of(desGarder, desGarder + NB_DES, [desObtenus, i](int v) {
+            return v == desObtenus[i];
+        });
+
+        if(!dejaGardee) {
+            lancerNul = false;
+        }
     }
-    return true;
+
+    return lancerNul;
 }
 
 int convertirValeurDe(char valeurDe)
