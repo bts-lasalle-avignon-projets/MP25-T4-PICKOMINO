@@ -1,9 +1,8 @@
 #include "plateau.h"
 #include "ihm.h"
 #include "donnees.h"
-#include <ctime>     // pour time
-#include <cstdlib>   // pour rand
-#include <algorithm> //pour any_of
+#include <ctime>   // pour time
+#include <cstdlib> // pour rand
 
 #ifdef DEBUG_PLATEAU
 #include <iostream>
