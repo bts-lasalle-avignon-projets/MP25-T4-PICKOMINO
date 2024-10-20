@@ -1,8 +1,8 @@
 #include "plateau.h"
 #include "ihm.h"
 #include "donnees.h"
-#include <ctime>   // pour time
-#include <cstdlib> // pour rand
+#include <ctime>     // pour time
+#include <cstdlib>   // pour rand
 #include <algorithm> //pour any_of
 
 #ifdef DEBUG_PLATEAU
@@ -123,18 +123,21 @@ bool contientV(int desGardes[NB_DES])
     return false;
 }
 
-
-bool verifierLancerNul(int desObtenus[NB_DES], int desGarder[NB_DES], int desEnJeu) 
+bool verifierLancerNul(int desObtenus[NB_DES], int desGarder[NB_DES], int desEnJeu)
 {
     bool lancerNul = true;
 
-    for(int i = 0; i < desEnJeu; i++) 
+    for(int i = 0; i < desEnJeu; i++)
     {
-        bool dejaGardee = std::any_of(desGarder, desGarder + NB_DES, [desObtenus, i](int v) {
-            return v == desObtenus[i];
-        });
+        bool dejaGardee = std::any_of(desGarder,
+                                      desGarder + NB_DES,
+                                      [desObtenus, i](int v)
+                                      {
+                                          return v == desObtenus[i];
+                                      });
 
-        if(!dejaGardee) {
+        if(!dejaGardee)
+        {
             lancerNul = false;
         }
     }

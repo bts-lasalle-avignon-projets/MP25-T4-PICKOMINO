@@ -27,22 +27,25 @@ void jouerJeu()
 #endif
 }
 
-void jouerTour(Plateau& plateau) {
+void jouerTour(Plateau& plateau)
+{
     bool continuer = true;
 
-    while (continuer) {
+    while(continuer)
+    {
         lancerDes(plateau);
         afficherPlateau(plateau);
 
-        if (verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu)) 
+        if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
             afficherLancerNul();
-            break; 
+            break;
         }
 
         bool gardeReussi = garderDes(plateau);
 
-        if (!gardeReussi) {
+        if(!gardeReussi)
+        {
             afficherValeurDejaGardee();
         }
 
@@ -50,13 +53,12 @@ void jouerTour(Plateau& plateau) {
 
         continuer = demander("continuer à lancer des dés");
     }
-    if (!contientV(plateau.desGardes))
+    /*
+    if(!contientV(plateau.desGardes))
     {
-        #ifdef DEBUG_JEU
-            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-            std::cout << "Ne peut pas piocher de pickominos" << std::endl; 
-        #endif
+
     }
-    
+    */
+
     afficherLancerArrete();
 }
