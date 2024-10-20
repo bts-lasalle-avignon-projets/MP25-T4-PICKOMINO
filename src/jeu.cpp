@@ -53,12 +53,6 @@ int jouerTour(Plateau& plateau)
 
         jeuActif = demander("continuer à lancer des dés");
     }
-    /*
-    if(!contientV(plateau.desGardes))
-    {
-
-    }
-    */
 
     afficherLancerArrete();
     return 0;
