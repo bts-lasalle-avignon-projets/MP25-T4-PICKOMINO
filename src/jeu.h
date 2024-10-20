@@ -3,6 +3,7 @@
 
 #include "plateau.h"
 
+#define DEBUG_JEU
 #define SIMULATION
 
 void initialiserJeu();

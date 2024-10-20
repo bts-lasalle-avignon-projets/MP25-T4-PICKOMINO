@@ -4,6 +4,10 @@
 #include <ctime>   // pour time
 #include <cstdlib> // pour srand
 
+#ifdef DEBUG_JEU
+#include <iostream>
+#endif
+
 void initialiserJeu()
 {
     srand(time(NULL));
@@ -23,9 +27,36 @@ void jouerJeu()
 #endif
 }
 
-void jouerTour(Plateau& plateau)
-{
-    lancerDes(plateau);
+void jouerTour(Plateau& plateau) {
+    bool continuer = true;
 
-    afficherPlateau(plateau);
+    while (continuer) {
+        lancerDes(plateau);
+        afficherPlateau(plateau);
+
+        if (verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu)) 
+        {
+            afficherLancerNul();
+            break; 
+        }
+
+        bool gardeReussi = garderDes(plateau);
+
+        if (!gardeReussi) {
+            afficherValeurDejaGardee();
+        }
+
+        afficherScore(calculerScore(plateau.desGardes));
+
+        continuer = demander("continuer à lancer des dés");
+    }
+    if (!contientV(plateau.desGardes))
+    {
+        #ifdef DEBUG_JEU
+            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+            std::cout << "Ne peut pas piocher de pickominos" << std::endl; 
+        #endif
+    }
+    
+    afficherLancerArrete();
 }
