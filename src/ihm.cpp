@@ -5,8 +5,17 @@
 
 void afficherPlateau(Plateau& plateau)
 {
+    afficherBrochette(plateau.pickominos);
     afficherDes(plateau.desObtenus, plateau.desEnJeu);
     afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
+}
+
+void afficherBrochette(int pickominos[])
+{
+    for(int i = 0; i < NB_PICKOMINOS; i++)
+    {
+        std::cout << "| " << pickominos[i] << " |" << std::endl;
+    }
 }
 
 void afficherDes(int desObtenus[], int nbDes)

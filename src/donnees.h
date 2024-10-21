@@ -11,5 +11,15 @@
 #define NB_JOUEUR_MIN 2
 
 #define NB_PICKOMINOS 16
+#define VALEUR_PICKOMINO_MIN 21
+#define VALEUR_PICKOMINO_MAX 36
+
+enum NB_VERS_PICKOMINO
+{
+    UN_VER = 1,
+    DEUX_VERS = 2,
+    TROIS_VERS = 3,
+    QUATRE_VERS = 4
+};
 
 #endif

@@ -6,6 +6,7 @@
 #include "plateau.h"
 
 void afficherPlateau(Plateau& plateau);
+void afficherBrochette(int pickominos[]);
 void afficherDes(int desObtenus[], int nbDes);
 void afficherDesGardes(int desGardes[], int nbDes);
 void afficherScore(int score);

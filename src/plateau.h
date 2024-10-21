@@ -10,6 +10,7 @@ struct Plateau
     int desGardes[NB_DES];
     int desObtenus[NB_DES];
     int desEnJeu;
+    int pickominos[NB_PICKOMINOS];
 };
 
 void initialiserPlateau(Plateau& plateau);
