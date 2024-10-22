@@ -16,11 +16,9 @@ void initialiserPlateau(Plateau& plateau)
         plateau.desGardes[i]  = 0;
         plateau.desObtenus[i] = 0;
     }
-    int index = VALEUR_PICKOMINO_MIN;
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
-        plateau.pickominos[i] = index;
-        index++;
+        plateau.pickominos[i] = EtatPickomino::DISPONIBLE;
 #ifdef DEBUG_PLATEAU
         std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
         std::cout << "pickominos = " << plateau.pickominos[i] << std::endl;
