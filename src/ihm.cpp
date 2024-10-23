@@ -10,7 +10,7 @@ int saisirNombreDeJoueurs()
     do
     {
         std::cout << "Veuillez indiquer le nombre de joueurs (entre " << NB_JOUEUR_MIN << " et "
-                  << NB_JOUEUR_MAX << ") : " << std::endl;
+                  << NB_JOUEUR_MAX << ") : ";
         std::cin >> nombreDeJoueurs;
     } while(nombreDeJoueurs < NB_JOUEUR_MIN || nombreDeJoueurs > NB_JOUEUR_MAX);
 
