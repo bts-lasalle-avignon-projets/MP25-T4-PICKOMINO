@@ -5,8 +5,26 @@
 
 void afficherPlateau(Plateau& plateau)
 {
+    afficherBrochette(plateau.pickominos);
     afficherDes(plateau.desObtenus, plateau.desEnJeu);
     afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
+}
+
+void afficherBrochette(EtatPickomino pickominos[])
+{
+    std::cout << "|";
+    for(int i = 0; i < NB_PICKOMINOS; i++)
+    {
+        if(pickominos[i] == EtatPickomino::DISPONIBLE)
+        {
+            std::cout << " " << (i + VALEUR_PICKOMINO_MIN);
+        }
+        else if(pickominos[i] == EtatPickomino::RETOURNE)
+        {
+            std::cout << " X" << pickominos[i];
+        }
+    }
+    std::cout << " |" << std::endl;
 }
 
 void afficherDes(int desObtenus[], int nbDes)

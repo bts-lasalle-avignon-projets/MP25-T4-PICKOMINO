@@ -5,11 +5,18 @@
 
 #include "donnees.h"
 
+enum EtatPickomino
+{
+    RETOURNE   = -1,
+    DISPONIBLE = 0,
+};
+
 struct Plateau
 {
-    int desGardes[NB_DES];
-    int desObtenus[NB_DES];
-    int desEnJeu;
+    int           desGardes[NB_DES];
+    int           desObtenus[NB_DES];
+    int           desEnJeu;
+    EtatPickomino pickominos[NB_PICKOMINOS];
 };
 
 void initialiserPlateau(Plateau& plateau);
