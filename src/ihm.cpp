@@ -63,6 +63,11 @@ void afficherScore(int score)
     std::cout << "Votre score : " << score << std::endl;
 }
 
+void afficherPioche(int pickomino)
+{
+    std::cout << "Vous piochez : " << pickomino << std::endl;
+}
+
 void afficherErreurEntree()
 {
     std::cout << "Entrée invalide !" << std::endl;

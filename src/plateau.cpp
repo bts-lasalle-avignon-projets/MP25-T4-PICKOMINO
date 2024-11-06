@@ -158,3 +158,31 @@ int convertirValeurDe(char valeurDe)
         return valeurDe - '0';
     return VALEUR_DE_INCONNUE;
 }
+
+int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
+{
+    if (!contientV(desGardes))
+        return 0;
+    if (score < VALEUR_PICKOMINO_MIN)
+        return 0;
+    int pickominoChoisi = -1;
+    for (int i = 0; i < NB_PICKOMINOS; i++)
+    {
+        int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
+        if (valeurPickomino == score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        {
+            plateau.pickominos[i] = EtatPickomino::RETOURNE;
+            return valeurPickomino;
+        }
+        else if (valeurPickomino < score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        {
+            pickominoChoisi = i;
+        }
+    }
+    if (pickominoChoisi != -1)
+    {
+        plateau.pickominos[pickominoChoisi] = EtatPickomino::RETOURNE;
+        return pickominoChoisi + VALEUR_PICKOMINO_MIN;
+    }
+    return 0;
+}
