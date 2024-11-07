@@ -3,7 +3,10 @@
 
 #include <string>
 
+#include "donnees.h"
 #include "plateau.h"
+
+int saisirNombreDeJoueurs();
 
 void afficherPlateau(Plateau& plateau);
 void afficherBrochette(EtatPickomino pickominos[]);

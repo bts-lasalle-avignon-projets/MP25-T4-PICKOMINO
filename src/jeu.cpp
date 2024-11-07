@@ -21,6 +21,13 @@ void jouerJeu()
     initialiserJeu();
 
 #ifdef SIMULATION
+
+    int nbJoueurs = saisirNombreDeJoueurs();
+#ifdef DEBUG_JEU
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "nbJoueurs = " << nbJoueurs << std::endl;
+#endif
+
     initialiserPlateau(plateau);
 
     jouerTour(plateau);

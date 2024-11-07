@@ -1,7 +1,21 @@
 ﻿#include "ihm.h"
 #include "donnees.h"
+
 #include <iostream>
-#include <string>
+
+int saisirNombreDeJoueurs()
+{
+    int nombreDeJoueurs;
+
+    do
+    {
+        std::cout << "Veuillez indiquer le nombre de joueurs (entre " << NB_JOUEUR_MIN << " et "
+                  << NB_JOUEUR_MAX << ") : ";
+        std::cin >> nombreDeJoueurs;
+    } while(nombreDeJoueurs < NB_JOUEUR_MIN || nombreDeJoueurs > NB_JOUEUR_MAX);
+
+    return nombreDeJoueurs;
+}
 
 void afficherPlateau(Plateau& plateau)
 {
