@@ -37,15 +37,15 @@ void jouerJeu()
 int jouerTour(Plateau& plateau)
 {
     bool jeuActif = true;
-    int  etatTour = LANCER_TERMINE;
+    int etatTour = LANCER_TERMINE;
+    int score = 0;
 
-    while(jeuActif)
+    while (jeuActif)
     {
         lancerDes(plateau);
-
         afficherPlateau(plateau);
 
-        if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
+        if (verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
             afficherLancerNul();
             etatTour = LANCER_NUL;
@@ -53,20 +53,21 @@ int jouerTour(Plateau& plateau)
         }
         else
         {
-            if(!garderDes(plateau))
+            if (!garderDes(plateau))
             {
                 afficherValeurDejaGardee();
             }
+            score = calculerScore(plateau.desGardes);
+            afficherScore(score);
 
-            afficherScore(calculerScore(plateau.desGardes));
-
-            // @todo vérifier les règles du jeu
-            // if(plateau.desEnJeu > 0)
+            if (!demander("continuer à lancer des dés"))
             {
-                jeuActif = demander("continuer à lancer des dés");
+                afficherPioche(piocherPickominos(plateau.desGardes, score, plateau));
+                jeuActif = false;
             }
         }
     }
 
     return etatTour;
 }
+
