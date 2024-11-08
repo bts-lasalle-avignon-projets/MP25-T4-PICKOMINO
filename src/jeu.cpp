@@ -31,6 +31,7 @@ int jouerTour(Plateau& plateau)
 {
     bool jeuActif = true;
     int etatTour = LANCER_TERMINE;
+    int score = 0;
 
     while (jeuActif)
     {
@@ -49,11 +50,12 @@ int jouerTour(Plateau& plateau)
             {
                 afficherValeurDejaGardee();
             }
-            afficherScore(calculerScore(plateau.desGardes));
+            score = calculerScore(plateau.desGardes);
+            afficherScore(score);
 
             if (!demander("continuer à lancer des dés"))
             {
-                afficherPioche(piocherPickominos(plateau.desGardes, plateau));
+                afficherPioche(piocherPickominos(plateau.desGardes, score, plateau));
                 jeuActif = false;
             }
         }
