@@ -6,9 +6,8 @@
 
 struct Joueur
 {
-    char nomDuJoueur;
-    int  pileJoueur[NB_PICKOMINOS];
-    int  compteur;
+    int pileJoueur[NB_PICKOMINOS];
+    int compteur;
 };
 
 void creerLesPilesDesJoueurs(Joueur joueurs[NB_JOUEUR_MAX], int nbJoueurs);
