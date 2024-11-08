@@ -9,6 +9,7 @@ enum EtatPickomino
 {
     RETOURNE   = -1,
     DISPONIBLE = 0,
+    PRIS = 1,
 };
 
 struct Plateau
@@ -20,6 +21,7 @@ struct Plateau
 };
 
 void initialiserPlateau(Plateau& plateau);
+void initialiserBrochette(Plateau& plateau);
 void lancerDes(Plateau& plateau);
 bool garderDes(Plateau& plateau);
 int  calculerScore(int desGardes[NB_DES]);

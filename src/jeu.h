@@ -12,5 +12,6 @@
 void initialiserJeu();
 void jouerJeu();
 int  jouerTour(Plateau& plateau);
+bool verifierEtatPickominos(Plateau& plateau);
 
 #endif // JEU_H

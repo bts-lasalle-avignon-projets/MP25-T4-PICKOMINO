@@ -19,6 +19,7 @@ void jouerJeu()
     Plateau plateau;
 
     initialiserJeu();
+    initialiserBrochette(plateau);
 
 #ifdef SIMULATION
 
@@ -27,10 +28,11 @@ void jouerJeu()
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "nbJoueurs = " << nbJoueurs << std::endl;
 #endif
-
-    initialiserPlateau(plateau);
-
-    jouerTour(plateau);
+    do
+    {
+        initialiserPlateau(plateau);
+        jouerTour(plateau);
+    } while (!verifierEtatPickominos(plateau));
 #endif
 }
 
@@ -69,5 +71,15 @@ int jouerTour(Plateau& plateau)
     }
 
     return etatTour;
+}
+
+bool verifierEtatPickominos(Plateau& plateau)
+{
+    for(int i = 0; i < NB_PICKOMINOS; i++)
+    {
+        if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+            return false;
+    }
+    return true;
 }
 
