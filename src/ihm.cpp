@@ -35,7 +35,7 @@ void afficherBrochette(EtatPickomino pickominos[])
         }
         else if(pickominos[i] == EtatPickomino::RETOURNE)
         {
-            std::cout << " X" << pickominos[i];
+            std::cout << " X" ;
         }
     }
     std::cout << " |" << std::endl;
@@ -79,7 +79,7 @@ void afficherScore(int score)
 
 void afficherPioche(int pickomino)
 {
-    std::cout << "Vous piochez : " << pickomino << std::endl;
+    std::cout << "Vous piochez : " << pickomino << std::endl << std::endl;
 }
 
 void afficherErreurEntree()
@@ -104,7 +104,7 @@ void afficherLancerArrete()
 
 void afficherLancerNul()
 {
-    std::cout << "Le lancer est nul !" << std::endl;
+    std::cout << "Le lancer est nul !" << std::endl << std::endl;
 }
 
 char demanderValeurDe()

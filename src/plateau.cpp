@@ -16,13 +16,17 @@ void initialiserPlateau(Plateau& plateau)
         plateau.desGardes[i]  = 0;
         plateau.desObtenus[i] = 0;
     }
+}
+
+void initialiserBrochette(Plateau& plateau)
+{
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         plateau.pickominos[i] = EtatPickomino::DISPONIBLE;
-#ifdef DEBUG_PLATEAU
-        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-        std::cout << "pickominos = " << plateau.pickominos[i] << std::endl;
-#endif
+        #ifdef DEBUG_PLATEAU
+            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+            std::cout << "pickominos = " << plateau.pickominos[i] << std::endl;
+        #endif
     }
 }
 
@@ -165,7 +169,7 @@ int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
         return 0;
     if (score < VALEUR_PICKOMINO_MIN)
         return 0;
-    int pickominoChoisi = -1;
+    int pickominoChoisi = EtatPickomino::RETOURNE;
     for (int i = 0; i < NB_PICKOMINOS; i++)
     {
         int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
@@ -186,3 +190,4 @@ int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
     }
     return 0;
 }
+
