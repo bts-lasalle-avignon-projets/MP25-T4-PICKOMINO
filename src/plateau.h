@@ -27,6 +27,6 @@ bool estDejaGarde(int valeur, int desGardes[NB_DES], int nbDes);
 bool contientV(int desGardes[NB_DES]);
 bool verifierLancerNul(int desObtenus[NB_DES], int desGardes[NB_DES], int desEnJeu);
 int  convertirValeurDe(char valeurDe);
-int  piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau);
+int  piocherPickominos(int desGardes[NB_DES], Plateau& plateau);
 
 #endif // PLATEAU_H

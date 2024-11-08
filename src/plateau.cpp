@@ -159,8 +159,9 @@ int convertirValeurDe(char valeurDe)
     return VALEUR_DE_INCONNUE;
 }
 
-int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
+int piocherPickominos(int desGardes[NB_DES], Plateau& plateau)
 {
+    int score = calculerScore(plateau.desGardes);
     if (!contientV(desGardes))
         return 0;
     if (score < VALEUR_PICKOMINO_MIN)
@@ -179,7 +180,7 @@ int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
             pickominoChoisi = i;
         }
     }
-    if (pickominoChoisi != -1)
+    if (pickominoChoisi != EtatPickomino::RETOURNE)
     {
         plateau.pickominos[pickominoChoisi] = EtatPickomino::RETOURNE;
         return pickominoChoisi + VALEUR_PICKOMINO_MIN;
