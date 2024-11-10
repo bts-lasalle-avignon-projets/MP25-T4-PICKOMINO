@@ -3,15 +3,21 @@
 
 #include "plateau.h"
 
-#define DEBUG_JEU
+//#define DEBUG_JEU
 #define SIMULATION
 
 #define LANCER_NUL     1
 #define LANCER_TERMINE 0
 
-void initialiserJeu();
+struct Jeu
+{
+    int     nbJoueurs;
+    Plateau plateau;
+};
+
+void initialiserJeu(Jeu& jeu);
 void jouerJeu();
 int  jouerTour(Plateau& plateau);
-bool verifierEtatPickominos(Plateau& plateau);
+bool estPartieFinie(Plateau& plateau);
 
 #endif // JEU_H

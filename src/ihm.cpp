@@ -19,14 +19,20 @@ int saisirNombreDeJoueurs()
 
 void afficherPlateau(Plateau& plateau)
 {
+    afficherJoueur(plateau.numeroJoueur);
     afficherBrochette(plateau.pickominos);
     afficherDes(plateau.desObtenus, plateau.desEnJeu);
     afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
 }
 
+void afficherJoueur(int numeroJoueur)
+{
+    std::cout << "Joueur " << (numeroJoueur + 1) << std::endl;
+}
+
 void afficherBrochette(EtatPickomino pickominos[])
 {
-    std::cout << "|";
+    std::cout << "Brochette :";
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         if(pickominos[i] == EtatPickomino::DISPONIBLE)
@@ -35,10 +41,10 @@ void afficherBrochette(EtatPickomino pickominos[])
         }
         else if(pickominos[i] == EtatPickomino::RETOURNE)
         {
-            std::cout << " X" ;
+            std::cout << " X";
         }
     }
-    std::cout << " |" << std::endl;
+    std::cout << std::endl;
 }
 
 void afficherDes(int desObtenus[], int nbDes)

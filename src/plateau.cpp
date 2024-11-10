@@ -8,9 +8,10 @@
 #include <iostream>
 #endif
 
-void initialiserPlateau(Plateau& plateau)
+void initialiserPlateau(Plateau& plateau, int nbJoueurs)
 {
-    plateau.desEnJeu = NB_DES;
+    plateau.numeroJoueur = (plateau.numeroJoueur + 1) % nbJoueurs;
+    plateau.desEnJeu     = NB_DES;
     for(int i = 0; i < NB_DES; i++)
     {
         plateau.desGardes[i]  = 0;
@@ -23,10 +24,10 @@ void initialiserBrochette(Plateau& plateau)
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         plateau.pickominos[i] = EtatPickomino::DISPONIBLE;
-        #ifdef DEBUG_PLATEAU
-            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-            std::cout << "pickominos = " << plateau.pickominos[i] << std::endl;
-        #endif
+#ifdef DEBUG_PLATEAU
+        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+        std::cout << "pickominos = " << plateau.pickominos[i] << std::endl;
+#endif
     }
 }
 
@@ -165,29 +166,28 @@ int convertirValeurDe(char valeurDe)
 
 int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
 {
-    if (!contientV(desGardes))
+    if(!contientV(desGardes))
         return 0;
-    if (score < VALEUR_PICKOMINO_MIN)
+    if(score < VALEUR_PICKOMINO_MIN)
         return 0;
     int pickominoChoisi = EtatPickomino::RETOURNE;
-    for (int i = 0; i < NB_PICKOMINOS; i++)
+    for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
-        if (valeurPickomino == score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        if(valeurPickomino == score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
         {
             plateau.pickominos[i] = EtatPickomino::RETOURNE;
             return valeurPickomino;
         }
-        else if (valeurPickomino < score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        else if(valeurPickomino < score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
         {
             pickominoChoisi = i;
         }
     }
-    if (pickominoChoisi != EtatPickomino::RETOURNE)
+    if(pickominoChoisi != EtatPickomino::RETOURNE)
     {
         plateau.pickominos[pickominoChoisi] = EtatPickomino::RETOURNE;
         return pickominoChoisi + VALEUR_PICKOMINO_MIN;
     }
     return 0;
 }
-

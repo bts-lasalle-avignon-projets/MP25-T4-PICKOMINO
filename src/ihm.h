@@ -9,6 +9,7 @@
 int saisirNombreDeJoueurs();
 
 void afficherPlateau(Plateau& plateau);
+void afficherJoueur(int numeroJoueur);
 void afficherBrochette(EtatPickomino pickominos[]);
 void afficherDes(int desObtenus[], int nbDes);
 void afficherDesGardes(int desGardes[], int nbDes);

@@ -8,46 +8,44 @@
 #include <iostream>
 #endif
 
-void initialiserJeu()
+void initialiserJeu(Jeu& jeu)
 {
     srand(time(NULL));
-    // @todo initialiser les données du jeu
+    jeu.nbJoueurs            = saisirNombreDeJoueurs();
+    jeu.plateau.numeroJoueur = -1;
+#ifdef DEBUG_JEU
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "nbJoueurs = " << jeu.nbJoueurs << std::endl;
+#endif
+    // @todo initialiser les autres données du jeu
 }
 
 void jouerJeu()
 {
-    Plateau plateau;
+    Jeu jeu;
 
-    initialiserJeu();
-    initialiserBrochette(plateau);
+    initialiserJeu(jeu);
+    initialiserBrochette(jeu.plateau);
 
-#ifdef SIMULATION
-
-    int nbJoueurs = saisirNombreDeJoueurs();
-#ifdef DEBUG_JEU
-    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "nbJoueurs = " << nbJoueurs << std::endl;
-#endif
     do
     {
-        initialiserPlateau(plateau);
-        jouerTour(plateau);
-    } while (!verifierEtatPickominos(plateau));
-#endif
+        initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
+        jouerTour(jeu.plateau);
+    } while(!estPartieFinie(jeu.plateau));
 }
 
 int jouerTour(Plateau& plateau)
 {
     bool jeuActif = true;
-    int etatTour = LANCER_TERMINE;
-    int score = 0;
+    int  etatTour = LANCER_TERMINE;
+    int  score    = 0;
 
-    while (jeuActif)
+    while(jeuActif)
     {
         lancerDes(plateau);
         afficherPlateau(plateau);
 
-        if (verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
+        if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
             afficherLancerNul();
             etatTour = LANCER_NUL;
@@ -55,14 +53,14 @@ int jouerTour(Plateau& plateau)
         }
         else
         {
-            if (!garderDes(plateau))
+            if(!garderDes(plateau))
             {
                 afficherValeurDejaGardee();
             }
             score = calculerScore(plateau.desGardes);
             afficherScore(score);
 
-            if (!demander("continuer à lancer des dés"))
+            if(!demander("continuer à lancer des dés"))
             {
                 afficherPioche(piocherPickominos(plateau.desGardes, score, plateau));
                 jeuActif = false;
@@ -73,7 +71,7 @@ int jouerTour(Plateau& plateau)
     return etatTour;
 }
 
-bool verifierEtatPickominos(Plateau& plateau)
+bool estPartieFinie(Plateau& plateau)
 {
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
@@ -82,4 +80,3 @@ bool verifierEtatPickominos(Plateau& plateau)
     }
     return true;
 }
-

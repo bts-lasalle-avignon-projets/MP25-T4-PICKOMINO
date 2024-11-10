@@ -9,18 +9,19 @@ enum EtatPickomino
 {
     RETOURNE   = -1,
     DISPONIBLE = 0,
-    PRIS = 1,
+    PRIS       = 1,
 };
 
 struct Plateau
 {
+    int           numeroJoueur;
     int           desGardes[NB_DES];
     int           desObtenus[NB_DES];
     int           desEnJeu;
     EtatPickomino pickominos[NB_PICKOMINOS];
 };
 
-void initialiserPlateau(Plateau& plateau);
+void initialiserPlateau(Plateau& plateau, int nbJoueurs);
 void initialiserBrochette(Plateau& plateau);
 void lancerDes(Plateau& plateau);
 bool garderDes(Plateau& plateau);
