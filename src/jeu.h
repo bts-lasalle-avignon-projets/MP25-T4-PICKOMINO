@@ -3,7 +3,7 @@
 
 #include "plateau.h"
 
-//#define DEBUG_JEU
+// #define DEBUG_JEU
 #define SIMULATION
 
 #define LANCER_NUL     1
@@ -13,11 +13,12 @@ struct Jeu
 {
     int     nbJoueurs;
     Plateau plateau;
+    Joueur  joueurs[];
 };
 
 void initialiserJeu(Jeu& jeu);
 void jouerJeu();
-int  jouerTour(Plateau& plateau);
+int  jouerTour(Plateau& plateau, Joueur joueurs[]);
 bool estPartieFinie(Plateau& plateau);
 
 #endif // JEU_H

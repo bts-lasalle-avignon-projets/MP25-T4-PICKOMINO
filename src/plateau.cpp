@@ -23,11 +23,8 @@ void initialiserBrochette(Plateau& plateau)
 {
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
-        plateau.pickominos[i] = EtatPickomino::DISPONIBLE;
-#ifdef DEBUG_PLATEAU
-        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-        std::cout << "pickominos = " << plateau.pickominos[i] << std::endl;
-#endif
+        plateau.pickominos[i]            = EtatPickomino::DISPONIBLE;
+        plateau.proprietairePickomino[i] = -1;
     }
 }
 
@@ -164,30 +161,61 @@ int convertirValeurDe(char valeurDe)
     return VALEUR_DE_INCONNUE;
 }
 
-int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
+int piocherPickominos(int      desGardes[NB_DES],
+                      int      score,
+                      Plateau& plateau,
+                      int      numeroJoueur,
+                      Joueur   joueurs[])
 {
     if(!contientV(desGardes))
-        return 0;
-    if(score < VALEUR_PICKOMINO_MIN)
-        return 0;
-    int pickominoChoisi = EtatPickomino::RETOURNE;
+    {
+        retourDernierPickomino(joueurs[numeroJoueur], plateau);
+        return -1;
+    }
+
+    int meilleurPickomino = trouverMeilleurPickomino(score, plateau);
+    if(meilleurPickomino == -1)
+    {
+        retourDernierPickomino(joueurs[numeroJoueur], plateau);
+        return -1;
+    }
+
+    ajouterPickominoAuJoueur(joueurs[numeroJoueur], meilleurPickomino, plateau, numeroJoueur);
+    return meilleurPickomino;
+}
+
+int trouverMeilleurPickomino(int score, Plateau& plateau)
+{
+    int meilleurScore     = VALEUR_PICKOMINO_MIN - 1;
+    int meilleurPickomino = -1;
+
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
-        int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
-        if(valeurPickomino == score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        int valeur = i + VALEUR_PICKOMINO_MIN;
+        if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE && valeur <= score &&
+           valeur > meilleurScore)
         {
-            plateau.pickominos[i] = EtatPickomino::RETOURNE;
-            return valeurPickomino;
-        }
-        else if(valeurPickomino < score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
-        {
-            pickominoChoisi = i;
+            meilleurScore     = valeur;
+            meilleurPickomino = i;
         }
     }
-    if(pickominoChoisi != EtatPickomino::RETOURNE)
+    return meilleurPickomino;
+}
+
+void ajouterPickominoAuJoueur(Joueur& joueur, int pickomino, Plateau& plateau, int numeroJoueur)
+{
+    joueur.pileJoueur[joueur.compteur++]     = pickomino + VALEUR_PICKOMINO_MIN;
+    plateau.pickominos[pickomino]            = EtatPickomino::RETOURNE;
+    plateau.proprietairePickomino[pickomino] = numeroJoueur;
+}
+
+void retourDernierPickomino(Joueur& joueur, Plateau& plateau)
+{
+    if(joueur.compteur > 0)
     {
-        plateau.pickominos[pickominoChoisi] = EtatPickomino::RETOURNE;
-        return pickominoChoisi + VALEUR_PICKOMINO_MIN;
+        int dernierPickomino = joueur.pileJoueur[--joueur.compteur] - VALEUR_PICKOMINO_MIN;
+        joueur.pileJoueur[joueur.compteur]              = 0;
+        plateau.pickominos[dernierPickomino]            = EtatPickomino::DISPONIBLE;
+        plateau.proprietairePickomino[dernierPickomino] = -1;
     }
-    return 0;
 }

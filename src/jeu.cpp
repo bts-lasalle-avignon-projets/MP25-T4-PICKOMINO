@@ -1,6 +1,8 @@
+// jeu.cpp
 #include "jeu.h"
 #include "plateau.h"
 #include "ihm.h"
+#include "joueur.h"
 #include <ctime>   // pour time
 #include <cstdlib> // pour srand
 
@@ -13,11 +15,11 @@ void initialiserJeu(Jeu& jeu)
     srand(time(NULL));
     jeu.nbJoueurs            = saisirNombreDeJoueurs();
     jeu.plateau.numeroJoueur = -1;
+
 #ifdef DEBUG_JEU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "nbJoueurs = " << jeu.nbJoueurs << std::endl;
 #endif
-    // @todo initialiser les autres données du jeu
 }
 
 void jouerJeu()
@@ -30,11 +32,11 @@ void jouerJeu()
     do
     {
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
-        jouerTour(jeu.plateau);
+        jouerTour(jeu.plateau, jeu.joueurs);
     } while(!estPartieFinie(jeu.plateau));
 }
 
-int jouerTour(Plateau& plateau)
+int jouerTour(Plateau& plateau, Joueur joueurs[])
 {
     bool jeuActif = true;
     int  etatTour = LANCER_TERMINE;
@@ -54,20 +56,25 @@ int jouerTour(Plateau& plateau)
         else
         {
             if(!garderDes(plateau))
-            {
                 afficherValeurDejaGardee();
-            }
             score = calculerScore(plateau.desGardes);
             afficherScore(score);
 
             if(!demander("continuer à lancer des dés"))
             {
-                afficherPioche(piocherPickominos(plateau.desGardes, score, plateau));
+                int pickomino = piocherPickominos(plateau.desGardes,
+                                                  score,
+                                                  plateau,
+                                                  plateau.numeroJoueur,
+                                                  joueurs);
+                if(pickomino != -1)
+                {
+                    afficherPioche(pickomino);
+                }
                 jeuActif = false;
             }
         }
     }
-
     return etatTour;
 }
 
