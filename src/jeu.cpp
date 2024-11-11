@@ -1,5 +1,6 @@
 // jeu.cpp
 #include "jeu.h"
+#include "joueur.h"
 #include "plateau.h"
 #include "ihm.h"
 #include "joueur.h"
@@ -15,7 +16,7 @@ void initialiserJeu(Jeu& jeu)
     srand(time(NULL));
     jeu.nbJoueurs            = saisirNombreDeJoueurs();
     jeu.plateau.numeroJoueur = -1;
-
+    creerLesPilesDesJoueurs(jeu.joueurs, jeu.nbJoueurs);
 #ifdef DEBUG_JEU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "nbJoueurs = " << jeu.nbJoueurs << std::endl;
