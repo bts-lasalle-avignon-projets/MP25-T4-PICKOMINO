@@ -3,7 +3,6 @@
 #include "joueur.h"
 #include "plateau.h"
 #include "ihm.h"
-#include "joueur.h"
 #include <ctime>   // pour time
 #include <cstdlib> // pour srand
 
@@ -14,13 +13,14 @@
 void initialiserJeu(Jeu& jeu)
 {
     srand(time(NULL));
-    jeu.nbJoueurs            = saisirNombreDeJoueurs();
-    jeu.plateau.numeroJoueur = -1;
-    creerLesPilesDesJoueurs(jeu.joueurs, jeu.nbJoueurs);
+    jeu.nbJoueurs = saisirNombreDeJoueurs();
 #ifdef DEBUG_JEU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "nbJoueurs = " << jeu.nbJoueurs << std::endl;
 #endif
+    creerLesPilesDesJoueurs(jeu.joueurs, jeu.nbJoueurs);
+    jeu.plateau.numeroJoueur = -1;
+    initialiserBrochette(jeu.plateau);
 }
 
 void jouerJeu()
@@ -28,7 +28,6 @@ void jouerJeu()
     Jeu jeu;
 
     initialiserJeu(jeu);
-    initialiserBrochette(jeu.plateau);
 
     do
     {
@@ -50,6 +49,9 @@ int jouerTour(Plateau& plateau, Joueur joueurs[])
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
+            // @todo si le lancer du joueur est nul : il doit remettre sur la brochette le dernier
+            // Pickomino qu’il avait gagné et placé au-dessus de sa pile. Le Pickomino le plus élevé
+            // sur la brochette est alors retourné face cachée et ne peut plus être récupéré.
             afficherLancerNul();
             etatTour = LANCER_NUL;
             jeuActif = false;
@@ -63,19 +65,21 @@ int jouerTour(Plateau& plateau, Joueur joueurs[])
 
             if(!demander("continuer à lancer des dés"))
             {
-                int pickomino = piocherPickominos(plateau.desGardes,
-                                                  score,
-                                                  plateau,
-                                                  plateau.numeroJoueur,
-                                                  joueurs);
-                if(pickomino != -1)
+                int pickomino = piocherPickomino(plateau, score, joueurs);
+#ifdef DEBUG_JEU
+                std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
+                          << "] ";
+                std::cout << "pickomino = " << pickomino << std::endl;
+#endif
+                if(pickomino != AUCUN_PICKOMINO)
                 {
-                    afficherPioche(pickomino);
+                    afficherPioche(pickomino + VALEUR_PICKOMINO_MIN);
                 }
                 jeuActif = false;
             }
         }
     }
+
     return etatTour;
 }
 

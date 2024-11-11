@@ -9,10 +9,10 @@ int saisirNombreDeJoueurs()
 
     do
     {
-        std::cout << "Veuillez indiquer le nombre de joueurs (entre " << NB_JOUEUR_MIN << " et "
-                  << NB_JOUEUR_MAX << ") : ";
+        std::cout << "Veuillez indiquer le nombre de joueurs (entre " << NB_JOUEURS_MIN << " et "
+                  << NB_JOUEURS_MAX << ") : ";
         std::cin >> nombreDeJoueurs;
-    } while(nombreDeJoueurs < NB_JOUEUR_MIN || nombreDeJoueurs > NB_JOUEUR_MAX);
+    } while(nombreDeJoueurs < NB_JOUEURS_MIN || nombreDeJoueurs > NB_JOUEURS_MAX);
 
     return nombreDeJoueurs;
 }
@@ -20,6 +20,7 @@ int saisirNombreDeJoueurs()
 void afficherPlateau(Plateau& plateau)
 {
     afficherJoueur(plateau.numeroJoueur);
+    // @todo afficher la pile du joueur et le nombre de vers obtenus
     afficherBrochette(plateau.pickominos);
     afficherDes(plateau.desObtenus, plateau.desEnJeu);
     afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
@@ -30,7 +31,7 @@ void afficherJoueur(int numeroJoueur)
     std::cout << "Joueur " << (numeroJoueur + 1) << std::endl;
 }
 
-void afficherBrochette(EtatPickomino pickominos[])
+void afficherBrochette(EtatPickomino pickominos[NB_PICKOMINOS])
 {
     std::cout << "Brochette :";
     for(int i = 0; i < NB_PICKOMINOS; i++)
@@ -47,7 +48,7 @@ void afficherBrochette(EtatPickomino pickominos[])
     std::cout << std::endl;
 }
 
-void afficherDes(int desObtenus[], int nbDes)
+void afficherDes(int desObtenus[NB_DES], int nbDes)
 {
     std::cout << "Lancer des dés : ";
     for(int i = 0; i < nbDes; i++)
@@ -57,7 +58,7 @@ void afficherDes(int desObtenus[], int nbDes)
     std::cout << std::endl;
 }
 
-void afficherDesGardes(int desGardes[], int nbDes)
+void afficherDesGardes(int desGardes[NB_DES], int nbDes)
 {
     std::cout << "Dés gardés : ";
     if(nbDes == 0)

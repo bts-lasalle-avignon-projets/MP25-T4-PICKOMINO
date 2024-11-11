@@ -1,6 +1,7 @@
 #ifndef JEU_H
 #define JEU_H
 
+#include "joueur.h"
 #include "plateau.h"
 
 // #define DEBUG_JEU
@@ -12,8 +13,8 @@
 struct Jeu
 {
     int     nbJoueurs;
+    Joueur  joueurs[NB_JOUEURS_MAX];
     Plateau plateau;
-    Joueur  joueurs[];
 };
 
 void initialiserJeu(Jeu& jeu);
