@@ -41,12 +41,3 @@ int gererLeSommetDesPiles(Joueur& joueur)
 
     return joueur.sommet;
 }
-
-void ajouterPickominoAPile(Joueur& joueur, int pickomino)
-{
-    if(joueur.compteur < NB_PICKOMINOS)
-    {
-        joueur.pileJoueur[joueur.compteur] = pickomino;
-        joueur.compteur++;
-    }
-}
