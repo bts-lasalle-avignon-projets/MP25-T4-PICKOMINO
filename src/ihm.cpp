@@ -42,7 +42,7 @@ void afficherBrochette(EtatPickomino pickominos[NB_PICKOMINOS])
         }
         else if(pickominos[i] == EtatPickomino::RETOURNE)
         {
-            std::cout << " X" << pickominos[i];
+            std::cout << " X";
         }
     }
     std::cout << std::endl;

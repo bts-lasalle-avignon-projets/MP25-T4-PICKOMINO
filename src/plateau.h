@@ -10,7 +10,6 @@ enum EtatPickomino
 {
     RETOURNE   = -1,
     DISPONIBLE = 0,
-    PRIS = 1,
 };
 
 struct Plateau
