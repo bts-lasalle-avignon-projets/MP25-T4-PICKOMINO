@@ -1,9 +1,10 @@
 #ifndef PLATEAU_H
 #define PLATEAU_H
 
-//#define DEBUG_PLATEAU
+// #define DEBUG_PLATEAU
 
 #include "donnees.h"
+#include "joueur.h"
 
 enum EtatPickomino
 {
@@ -14,13 +15,14 @@ enum EtatPickomino
 
 struct Plateau
 {
+    int           numeroJoueur;
     int           desGardes[NB_DES];
     int           desObtenus[NB_DES];
     int           desEnJeu;
     EtatPickomino pickominos[NB_PICKOMINOS];
 };
 
-void initialiserPlateau(Plateau& plateau);
+void initialiserPlateau(Plateau& plateau, int nbJoueurs);
 void initialiserBrochette(Plateau& plateau);
 void lancerDes(Plateau& plateau);
 bool garderDes(Plateau& plateau);
@@ -29,6 +31,9 @@ bool estDejaGarde(int valeur, int desGardes[NB_DES], int nbDes);
 bool contientV(int desGardes[NB_DES]);
 bool verifierLancerNul(int desObtenus[NB_DES], int desGardes[NB_DES], int desEnJeu);
 int  convertirValeurDe(char valeurDe);
-int  piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau);
+int  piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]);
+int  trouverMeilleurPickomino(Plateau& plateau, int score);
+void ajouterPickominoAuJoueur(Joueur& joueur, int pickomino, Plateau& plateau);
+void rendreDernierPickomino(Joueur& joueur, Plateau& plateau);
 
 #endif // PLATEAU_H
