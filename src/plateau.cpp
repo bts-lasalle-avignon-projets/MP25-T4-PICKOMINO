@@ -161,25 +161,25 @@ int convertirValeurDe(char valeurDe)
 
 int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
 {
-    if (!contientV(desGardes))
+    if(!contientV(desGardes))
         return 0;
-    if (score < VALEUR_PICKOMINO_MIN)
+    if(score < VALEUR_PICKOMINO_MIN)
         return 0;
     int pickominoChoisi = -1;
-    for (int i = 0; i < NB_PICKOMINOS; i++)
+    for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
-        if (valeurPickomino == score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        if(valeurPickomino == score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
         {
             plateau.pickominos[i] = EtatPickomino::RETOURNE;
             return valeurPickomino;
         }
-        else if (valeurPickomino < score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        else if(valeurPickomino < score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
         {
             pickominoChoisi = i;
         }
     }
-    if (pickominoChoisi != EtatPickomino::RETOURNE)
+    if(pickominoChoisi != EtatPickomino::RETOURNE)
     {
         plateau.pickominos[pickominoChoisi] = EtatPickomino::RETOURNE;
         return pickominoChoisi + VALEUR_PICKOMINO_MIN;

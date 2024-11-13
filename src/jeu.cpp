@@ -18,13 +18,17 @@ void initialiserJeu()
 void jouerJeu()
 {
     Plateau plateau;
-    Joueur  joueur[NB_JOUEUR_MAX];
+    Joueur  joueur[NB_JOUEURS_MAX];
     initialiserJeu();
 
 #ifdef SIMULATION
 
     int nbJoueurs = saisirNombreDeJoueurs();
     creerLesPilesDesJoueurs(joueur, nbJoueurs);
+    for(int i = 0; i < nbJoueurs; i++)
+    {
+        gererLeSommetDesPiles(joueur[i]);
+    }
 #ifdef DEBUG_JEU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "nbJoueurs = " << nbJoueurs << std::endl;
@@ -39,15 +43,15 @@ void jouerJeu()
 int jouerTour(Plateau& plateau)
 {
     bool jeuActif = true;
-    int etatTour = LANCER_TERMINE;
-    int score = 0;
+    int  etatTour = LANCER_TERMINE;
+    int  score    = 0;
 
-    while (jeuActif)
+    while(jeuActif)
     {
         lancerDes(plateau);
         afficherPlateau(plateau);
 
-        if (verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
+        if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
             afficherLancerNul();
             etatTour = LANCER_NUL;
@@ -55,14 +59,14 @@ int jouerTour(Plateau& plateau)
         }
         else
         {
-            if (!garderDes(plateau))
+            if(!garderDes(plateau))
             {
                 afficherValeurDejaGardee();
             }
             score = calculerScore(plateau.desGardes);
             afficherScore(score);
 
-            if (!demander("continuer à lancer des dés"))
+            if(!demander("continuer à lancer des dés"))
             {
                 afficherPioche(piocherPickominos(plateau.desGardes, score, plateau));
                 jeuActif = false;
@@ -72,4 +76,3 @@ int jouerTour(Plateau& plateau)
 
     return etatTour;
 }
-
