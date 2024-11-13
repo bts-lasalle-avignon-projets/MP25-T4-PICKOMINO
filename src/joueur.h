@@ -1,9 +1,8 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
-
 #include "donnees.h"
 
-//#define DEBUG_JOUEUR
+#define DEBUG_JOUEUR
 
 struct Joueur
 {
