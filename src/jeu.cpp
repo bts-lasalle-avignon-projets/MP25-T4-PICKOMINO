@@ -1,7 +1,5 @@
 // jeu.cpp
 #include "jeu.h"
-#include "joueur.h"
-#include "plateau.h"
 #include "ihm.h"
 #include <ctime>   // pour time
 #include <cstdlib> // pour srand
@@ -28,7 +26,6 @@ void jouerJeu()
     Jeu jeu;
 
     initialiserJeu(jeu);
-
     for(int i = 0; i < jeu.nbJoueurs; i++)
     {
         gererLeSommetDesPiles(jeu.joueurs[i]);
@@ -39,11 +36,20 @@ void jouerJeu()
     do
     {
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
-        jouerTour(jeu.plateau, jeu.joueurs);
+        jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs);
+#ifdef DEBUG_JEU
+        int sommet = 0;
+        for(int i = 0; i < jeu.nbJoueurs; i++)
+        {
+            sommet = gererLeSommetDesPiles(jeu.joueurs[i]);
+            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+            std::cout << "Sommet Pile = " << sommet << std::endl;
+        }
+#endif
     } while(!estPartieFinie(jeu.plateau));
 }
 
-int jouerTour(Plateau& plateau, Joueur joueurs[])
+int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs)
 {
     bool jeuActif = true;
     int  etatTour = LANCER_TERMINE;
@@ -53,6 +59,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[])
     {
         lancerDes(plateau);
         afficherPlateau(plateau);
+        afficherPile(joueurs, nbJoueurs);
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {

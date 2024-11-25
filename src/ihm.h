@@ -5,10 +5,13 @@
 
 #include "donnees.h"
 #include "plateau.h"
+#include "joueur.h"
+#include "jeu.h"
 
 int saisirNombreDeJoueurs();
 
 void afficherPlateau(Plateau& plateau);
+void afficherPile(Joueur* joueurs, int nbJoueurs);
 void afficherJoueur(int numeroJoueur);
 void afficherBrochette(EtatPickomino pickominos[NB_PICKOMINOS]);
 void afficherDes(int desObtenus[NB_DES], int nbDes);
