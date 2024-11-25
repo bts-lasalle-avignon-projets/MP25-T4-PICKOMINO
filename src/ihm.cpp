@@ -76,7 +76,7 @@ void afficherDes(int desObtenus[NB_DES], int nbDes)
     {
         std::cout << (desObtenus[i] == ID_VERS ? "V" : std::to_string(desObtenus[i])) << " ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
 }
 
 void afficherDesGardes(int desGardes[NB_DES], int nbDes)
@@ -157,6 +157,7 @@ bool demander(const std::string& message)
     {
         std::cout << "Voulez-vous " << message << " ? (oO/nN) ";
         std::cin >> reponse;
+        std::cout << std::endl;
         reponse = tolower(reponse);
     } while(choixValides.find(reponse) == std::string::npos);
 
