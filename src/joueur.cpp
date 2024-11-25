@@ -11,5 +11,33 @@ void creerLesPilesDesJoueurs(Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs)
     for(int i = 0; i < nbJoueurs; i++)
     {
         joueurs[i].compteur = 0;
+
+        joueurs[i].sommet   = 0;
+#ifdef DEBUG_JOUEUR
+        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+        std::cout << "Nombre de pile = " << i << std::endl;
+#endif
     }
+}
+
+int gererLeSommetDesPiles(Joueur& joueur)
+{
+    if(joueur.compteur > 0)
+    {
+        if(joueur.sommet < NB_PICKOMINOS)
+        {
+            joueur.sommet++;
+        }
+    }
+    else
+    {
+        joueur.sommet = 0;
+    }
+
+#ifdef DEBUG_JOUEUR
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "Le sommet du joueur est à: " << joueur.sommet << std::endl;
+#endif
+
+    return joueur.sommet;
 }

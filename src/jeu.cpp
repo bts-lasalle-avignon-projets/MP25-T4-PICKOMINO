@@ -29,6 +29,13 @@ void jouerJeu()
 
     initialiserJeu(jeu);
 
+    for(int i = 0; i < nbJoueurs; i++)
+    {
+        gererLeSommetDesPiles(joueur[i]);
+    }
+
+    initialiserPlateau(plateau);
+
     do
     {
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
@@ -59,10 +66,13 @@ int jouerTour(Plateau& plateau, Joueur joueurs[])
         else
         {
             if(!garderDes(plateau))
-                afficherValeurDejaGardee();
-            score = calculerScore(plateau.desGardes);
-            afficherScore(score);
 
+            {
+              afficherValeurDejaGardee();
+            }
+              score = calculerScore(plateau.desGardes);
+              afficherScore(score);
+              
             if(!demander("continuer à lancer des dés"))
             {
                 int pickomino = piocherPickomino(plateau, score, joueurs);

@@ -200,6 +200,7 @@ int trouverMeilleurPickomino(Plateau& plateau, int score)
             meilleurPickomino = i;
         }
     }
+
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "meilleurPickomino = " << meilleurPickomino << std::endl;
