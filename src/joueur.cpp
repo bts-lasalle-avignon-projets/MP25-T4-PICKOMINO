@@ -27,7 +27,10 @@ int gererLeSommetDesPiles(Joueur& joueur)
 {
     if(joueur.compteur > 0)
     {
-        joueur.sommet = joueur.pileJoueur[joueur.compteur - 1];
+        if(joueur.sommet < NB_PICKOMINOS)
+        {
+            joueur.sommet++;
+        }
     }
     else
     {
