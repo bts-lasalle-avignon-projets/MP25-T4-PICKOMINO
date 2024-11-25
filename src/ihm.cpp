@@ -19,14 +19,21 @@ int saisirNombreDeJoueurs()
 
 void afficherPlateau(Plateau& plateau)
 {
+    afficherJoueur(plateau.numeroJoueur);
+    // @todo afficher la pile du joueur et le nombre de vers obtenus
     afficherBrochette(plateau.pickominos);
     afficherDes(plateau.desObtenus, plateau.desEnJeu);
     afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
 }
 
-void afficherBrochette(EtatPickomino pickominos[])
+void afficherJoueur(int numeroJoueur)
 {
-    std::cout << "|";
+    std::cout << "Joueur " << (numeroJoueur + 1) << std::endl;
+}
+
+void afficherBrochette(EtatPickomino pickominos[NB_PICKOMINOS])
+{
+    std::cout << "Brochette :";
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         if(pickominos[i] == EtatPickomino::DISPONIBLE)
@@ -35,13 +42,13 @@ void afficherBrochette(EtatPickomino pickominos[])
         }
         else if(pickominos[i] == EtatPickomino::RETOURNE)
         {
-            std::cout << " X" << pickominos[i];
+            std::cout << " X";
         }
     }
-    std::cout << " |" << std::endl;
+    std::cout << std::endl;
 }
 
-void afficherDes(int desObtenus[], int nbDes)
+void afficherDes(int desObtenus[NB_DES], int nbDes)
 {
     std::cout << "Lancer des dés : ";
     for(int i = 0; i < nbDes; i++)
@@ -51,7 +58,7 @@ void afficherDes(int desObtenus[], int nbDes)
     std::cout << std::endl;
 }
 
-void afficherDesGardes(int desGardes[], int nbDes)
+void afficherDesGardes(int desGardes[NB_DES], int nbDes)
 {
     std::cout << "Dés gardés : ";
     if(nbDes == 0)
@@ -79,7 +86,7 @@ void afficherScore(int score)
 
 void afficherPioche(int pickomino)
 {
-    std::cout << "Vous piochez : " << pickomino << std::endl;
+    std::cout << "Vous piochez : " << pickomino << std::endl << std::endl;
 }
 
 void afficherErreurEntree()
@@ -104,7 +111,7 @@ void afficherLancerArrete()
 
 void afficherLancerNul()
 {
-    std::cout << "Le lancer est nul !" << std::endl;
+    std::cout << "Le lancer est nul !" << std::endl << std::endl;
 }
 
 char demanderValeurDe()

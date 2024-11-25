@@ -8,21 +8,22 @@
 #include <iostream>
 #endif
 
-void initialiserPlateau(Plateau& plateau)
+void initialiserPlateau(Plateau& plateau, int nbJoueurs)
 {
-    plateau.desEnJeu = NB_DES;
+    plateau.numeroJoueur = (plateau.numeroJoueur + 1) % nbJoueurs;
+    plateau.desEnJeu     = NB_DES;
     for(int i = 0; i < NB_DES; i++)
     {
         plateau.desGardes[i]  = 0;
         plateau.desObtenus[i] = 0;
     }
+}
+
+void initialiserBrochette(Plateau& plateau)
+{
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         plateau.pickominos[i] = EtatPickomino::DISPONIBLE;
-#ifdef DEBUG_PLATEAU
-        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-        std::cout << "pickominos = " << plateau.pickominos[i] << std::endl;
-#endif
     }
 }
 
@@ -159,30 +160,74 @@ int convertirValeurDe(char valeurDe)
     return VALEUR_DE_INCONNUE;
 }
 
-int piocherPickominos(int desGardes[NB_DES], int score, Plateau& plateau)
+int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX])
 {
-    if(!contientV(desGardes))
-        return 0;
-    if(score < VALEUR_PICKOMINO_MIN)
-        return 0;
-    int pickominoChoisi = -1;
+    // @todo si le score ne suffit pas ?
+    if(!contientV(plateau.desGardes))
+    {
+        rendreDernierPickomino(joueurs[plateau.numeroJoueur], plateau);
+        // @todo Le Pickomino le plus élevé sur la brochette est alors retourné face cachée et ne
+        // peut plus être récupéré.
+        return AUCUN_PICKOMINO;
+    }
+
+    int meilleurPickomino = trouverMeilleurPickomino(plateau, score);
+    if(meilleurPickomino == AUCUN_PICKOMINO)
+    {
+        rendreDernierPickomino(joueurs[plateau.numeroJoueur], plateau);
+        // @todo Le Pickomino le plus élevé sur la brochette est alors retourné face cachée et ne
+        // peut plus être récupéré.
+        return AUCUN_PICKOMINO;
+    }
+
+    ajouterPickominoAuJoueur(joueurs[plateau.numeroJoueur], meilleurPickomino, plateau);
+
+    return meilleurPickomino;
+}
+
+int trouverMeilleurPickomino(Plateau& plateau, int score)
+{
+    int meilleurScore     = VALEUR_PICKOMINO_MIN - 1;
+    int meilleurPickomino = -1;
+
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
-        int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
-        if(valeurPickomino == score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        int valeur = i + VALEUR_PICKOMINO_MIN;
+        if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE && valeur <= score &&
+           valeur > meilleurScore)
         {
-            plateau.pickominos[i] = EtatPickomino::RETOURNE;
-            return valeurPickomino;
-        }
-        else if(valeurPickomino < score && plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
-        {
-            pickominoChoisi = i;
+            meilleurScore     = valeur;
+            meilleurPickomino = i;
         }
     }
-    if(pickominoChoisi != EtatPickomino::RETOURNE)
+
+#ifdef DEBUG_PLATEAU
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "meilleurPickomino = " << meilleurPickomino << std::endl;
+#endif
+
+    return meilleurPickomino;
+}
+
+void ajouterPickominoAuJoueur(Joueur& joueur, int pickomino, Plateau& plateau)
+{
+    joueur.pileJoueur[joueur.compteur++] = pickomino + VALEUR_PICKOMINO_MIN;
+    plateau.pickominos[pickomino]        = EtatPickomino(plateau.numeroJoueur + 1);
+#ifdef DEBUG_PLATEAU
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "pickomino = " << pickomino << std::endl;
+#endif
+}
+
+void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
+{
+    if(joueur.compteur > 0)
     {
-        plateau.pickominos[pickominoChoisi] = EtatPickomino::RETOURNE;
-        return pickominoChoisi + VALEUR_PICKOMINO_MIN;
+        int dernierPickomino = joueur.pileJoueur[--joueur.compteur] - VALEUR_PICKOMINO_MIN;
+#ifdef DEBUG_PLATEAU
+        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+        std::cout << "dernierPickomino = " << dernierPickomino << std::endl;
+#endif
+        plateau.pickominos[dernierPickomino] = EtatPickomino::DISPONIBLE;
     }
-    return 0;
 }
