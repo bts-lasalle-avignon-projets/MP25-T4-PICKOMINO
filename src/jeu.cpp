@@ -1,4 +1,3 @@
-// jeu.cpp
 #include "jeu.h"
 #include "joueur.h"
 #include "plateau.h"
@@ -19,7 +18,6 @@ void initialiserJeu(Jeu& jeu)
     std::cout << "nbJoueurs = " << jeu.nbJoueurs << std::endl;
 #endif
     creerLesPilesDesJoueurs(jeu.joueurs, jeu.nbJoueurs);
-    jeu.plateau.numeroJoueur = -1;
     initialiserBrochette(jeu.plateau);
 }
 
@@ -29,17 +27,35 @@ void jouerJeu()
 
     initialiserJeu(jeu);
 
-    for(int i = 0; i < jeu.nbJoueurs; i++)
-    {
-        gererLeSommetDesPiles(jeu.joueurs[i]);
-    }
-
-    initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
+    int joueurActif = 0;
 
     do
     {
+        std::cout << "Etat des piles avant le tour du joueur " << joueurActif + 1 << " :\n";
+        for(int i = 0; i < jeu.nbJoueurs; i++)
+        {
+            std::cout << "Pile du joueur " << i + 1 << " : Sommet = " << jeu.joueurs[i].sommet
+                      << std::endl;
+        }
+
+        if(joueurActif < jeu.nbJoueurs)
+        {
+            gererLeSommetDesPiles(jeu.joueurs[joueurActif]);
+        }
+
+        std::cout << "Etat des piles après le tour du joueur " << joueurActif + 1 << " :\n";
+        for(int i = 0; i < jeu.nbJoueurs; i++)
+        {
+            std::cout << "Pile du joueur " << i + 1 << " : Sommet = " << jeu.joueurs[i].sommet
+                      << std::endl;
+        }
+
+        joueurActif = (joueurActif + 1) % jeu.nbJoueurs;
+
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
+
         jouerTour(jeu.plateau, jeu.joueurs);
+
     } while(!estPartieFinie(jeu.plateau));
 }
 
@@ -51,14 +67,13 @@ int jouerTour(Plateau& plateau, Joueur joueurs[])
 
     while(jeuActif)
     {
-        lancerDes(plateau);
-        afficherPlateau(plateau);
+        lancerDes(plateau);       // Lancer les dés
+        afficherPlateau(plateau); // Afficher l'état du plateau
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
-            // @todo si le lancer du joueur est nul : il doit remettre sur la brochette le dernier
-            // Pickomino qu’il avait gagné et placé au-dessus de sa pile. Le Pickomino le plus élevé
-            // sur la brochette est alors retourné face cachée et ne peut plus être récupéré.
+            // Si le lancer est nul, on remet le dernier Pickomino sur la brochette et on arrête le
+            // tour
             afficherLancerNul();
             etatTour = LANCER_NUL;
             jeuActif = false;
@@ -66,13 +81,14 @@ int jouerTour(Plateau& plateau, Joueur joueurs[])
         else
         {
             if(!garderDes(plateau))
-
             {
                 afficherValeurDejaGardee();
             }
-            score = calculerScore(plateau.desGardes);
-            afficherScore(score);
 
+            score = calculerScore(plateau.desGardes); // Calcul du score
+            afficherScore(score);                     // Afficher le score
+
+            // Demander si le joueur veut continuer à lancer
             if(!demander("continuer à lancer des dés"))
             {
                 int pickomino = piocherPickomino(plateau, score, joueurs);
@@ -83,14 +99,15 @@ int jouerTour(Plateau& plateau, Joueur joueurs[])
 #endif
                 if(pickomino != AUCUN_PICKOMINO)
                 {
-                    afficherPioche(pickomino + VALEUR_PICKOMINO_MIN);
+                    afficherPioche(pickomino +
+                                   VALEUR_PICKOMINO_MIN); // Afficher le Pickomino pioché
                 }
                 jeuActif = false;
             }
         }
     }
 
-    return etatTour;
+    return etatTour; // Retourner l'état du tour (LANCER_NUL ou LANCER_TERMINE)
 }
 
 bool estPartieFinie(Plateau& plateau)
@@ -98,7 +115,7 @@ bool estPartieFinie(Plateau& plateau)
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
-            return false;
+            return false; // Si des Pickominos sont encore disponibles, la partie n'est pas finie
     }
-    return true;
+    return true; // Si aucun Pickomino n'est disponible, la partie est finie
 }
