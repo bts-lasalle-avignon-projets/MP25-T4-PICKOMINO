@@ -12,6 +12,7 @@ int saisirNombreDeJoueurs()
         std::cout << "Veuillez indiquer le nombre de joueurs (entre " << NB_JOUEURS_MIN << " et "
                   << NB_JOUEURS_MAX << ") : ";
         std::cin >> nombreDeJoueurs;
+        std::cout << std::endl;
     } while(nombreDeJoueurs < NB_JOUEURS_MIN || nombreDeJoueurs > NB_JOUEURS_MAX);
 
     return nombreDeJoueurs;
@@ -20,10 +21,30 @@ int saisirNombreDeJoueurs()
 void afficherPlateau(Plateau& plateau)
 {
     afficherJoueur(plateau.numeroJoueur);
-    // @todo afficher la pile du joueur et le nombre de vers obtenus
     afficherBrochette(plateau.pickominos);
     afficherDes(plateau.desObtenus, plateau.desEnJeu);
     afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
+}
+
+void afficherPile(Joueur joueurs[], int nbJoueurs)
+{
+    for(int numeroJoueur = 0; numeroJoueur < nbJoueurs; numeroJoueur++) // Iterer sur chaque joueur
+    {
+        if(joueurs[numeroJoueur].compteur <= 0) // Si le joueur n'a pas de pile
+        {
+            std::cout << "La pile du joueur " << numeroJoueur << " est vide." << std::endl;
+        }
+        else // Si le joueur a des éléments dans sa pile
+        {
+            std::cout << "Affichage de la pile du joueur " << numeroJoueur << ": ";
+            for(int i = 0; i < joueurs[numeroJoueur].compteur;
+                i++) // Affiche chaque élément de la pile
+            {
+                std::cout << joueurs[numeroJoueur].pileJoueur[i] << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
 }
 
 void afficherJoueur(int numeroJoueur)
@@ -55,7 +76,7 @@ void afficherDes(int desObtenus[NB_DES], int nbDes)
     {
         std::cout << (desObtenus[i] == ID_VERS ? "V" : std::to_string(desObtenus[i])) << " ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
 }
 
 void afficherDesGardes(int desGardes[NB_DES], int nbDes)
@@ -136,6 +157,7 @@ bool demander(const std::string& message)
     {
         std::cout << "Voulez-vous " << message << " ? (oO/nN) ";
         std::cin >> reponse;
+        std::cout << std::endl;
         reponse = tolower(reponse);
     } while(choixValides.find(reponse) == std::string::npos);
 
