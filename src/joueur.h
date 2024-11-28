@@ -13,6 +13,7 @@ struct Joueur
 };
 
 void creerLesPilesDesJoueurs(Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs);
-int  gererLeSommetDesPiles(Joueur& joueur);
+int  ajouterSommet(Joueur& joueur);
+int  retirerSommet(Joueur& joueur);
 
 #endif

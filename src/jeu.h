@@ -19,7 +19,7 @@ struct Jeu
 
 void initialiserJeu(Jeu& jeu);
 void jouerJeu();
-int  jouerTour(Plateau& plateau, Joueur joueurs[]);
+int  jouerTour(Plateau& plateau, Joueur joueurs[], Joueur& joueur);
 bool estPartieFinie(Plateau& plateau);
 
 #endif // JEU_H

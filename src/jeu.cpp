@@ -31,35 +31,22 @@ void jouerJeu()
 
     do
     {
-        std::cout << "Etat des piles avant le tour du joueur " << joueurActif + 1 << " :\n";
-        for(int i = 0; i < jeu.nbJoueurs; i++)
-        {
-            std::cout << "Pile du joueur " << i + 1 << " : Sommet = " << jeu.joueurs[i].sommet
-                      << std::endl;
-        }
-
-        if(joueurActif < jeu.nbJoueurs)
-        {
-            gererLeSommetDesPiles(jeu.joueurs[joueurActif]);
-        }
-
-        std::cout << "Etat des piles après le tour du joueur " << joueurActif + 1 << " :\n";
-        for(int i = 0; i < jeu.nbJoueurs; i++)
-        {
-            std::cout << "Pile du joueur " << i + 1 << " : Sommet = " << jeu.joueurs[i].sommet
-                      << std::endl;
-        }
-
         joueurActif = (joueurActif + 1) % jeu.nbJoueurs;
 
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
-
-        jouerTour(jeu.plateau, jeu.joueurs);
-
+        jouerTour(jeu.plateau, jeu.joueurs, jeu.joueurs[jeu.plateau.numeroJoueur]);
+#ifdef DEBUG_JEU
+        for(int i = 0; i < jeu.nbJoueurs; i++)
+        {
+            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+            std::cout << "Pile du joueur " << i << " : Sommet = " << jeu.joueurs[i].sommet
+                      << std::endl;
+        }
+#endif
     } while(!estPartieFinie(jeu.plateau));
 }
 
-int jouerTour(Plateau& plateau, Joueur joueurs[])
+int jouerTour(Plateau& plateau, Joueur joueurs[], Joueur& joueur)
 {
     bool jeuActif = true;
     int  etatTour = LANCER_TERMINE;
@@ -72,8 +59,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[])
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
-            // Si le lancer est nul, on remet le dernier Pickomino sur la brochette et on arrête le
-            // tour
+            rendreDernierPickomino(joueur, plateau);
             afficherLancerNul();
             etatTour = LANCER_NUL;
             jeuActif = false;
