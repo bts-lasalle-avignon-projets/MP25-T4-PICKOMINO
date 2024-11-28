@@ -1,5 +1,4 @@
 ﻿---
-FallbackStyle: 'InheritParentConfig'
 BasedOnStyle: Mozilla
 AlignAfterOpenBracket: Align
 AlignConsecutiveMacros: 'true'
