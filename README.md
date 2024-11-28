@@ -1,4 +1,5 @@
-[![Makefile CI]](https://github.com/bts-lasalle-avignon-projets/MP25-T4-PICKOMINO/tree/develop)
+[![Makefile CI](https://github.com/bts-lasalle-avignon-projets/MP25-T4-PICKOMINO/actions/workflows/makefile.yml/badge.svg)](https://github.com/bts-lasalle-avignon-projets/MP25-T4-PICKOMINO/actions/workflows/makefile.yml)
+
 
 # Mini-projet : Pickomino
 
