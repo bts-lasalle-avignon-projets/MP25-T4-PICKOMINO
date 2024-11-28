@@ -233,6 +233,7 @@ void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
         plateau.pickominos[dernierPickomino] = EtatPickomino::DISPONIBLE;
     }
     retournerPickominos(plateau);
+    retirerSommet(joueur);
 }
 
 void retournerPickominos(Plateau& plateau)
