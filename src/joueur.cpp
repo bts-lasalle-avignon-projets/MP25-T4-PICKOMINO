@@ -12,7 +12,7 @@ void creerLesPilesDesJoueurs(Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs)
     {
         joueurs[i].compteur = 0;
 
-        joueurs[i].sommet   = 0;
+        joueurs[i].sommet = 0;
 
 #ifdef DEBUG_JOUEUR
         std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";

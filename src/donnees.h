@@ -16,6 +16,7 @@
 #define AUCUN_PICKOMINO      -1
 
 enum NB_VERS_PICKOMINO
+
 {
     UN_VER      = 1,
     DEUX_VERS   = 2,

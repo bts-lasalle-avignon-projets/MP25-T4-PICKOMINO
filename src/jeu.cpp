@@ -44,7 +44,6 @@ void jouerJeu()
     } while(!estPartieFinie(jeu.plateau));
 }
 
-
 int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 {
     bool jeuActif = true;
@@ -53,7 +52,6 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 
     while(jeuActif)
     {
-
         lancerDes(plateau);
         afficherPlateau(plateau);
         afficherPile(joueurs, nbJoueurs);
