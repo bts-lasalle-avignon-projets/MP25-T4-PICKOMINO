@@ -1,6 +1,4 @@
 #include "jeu.h"
-#include "joueur.h"
-#include "plateau.h"
 #include "ihm.h"
 #include <ctime>   // pour time
 #include <cstdlib> // pour srand
@@ -34,7 +32,7 @@ void jouerJeu()
         joueurActif = (joueurActif + 1) % jeu.nbJoueurs;
 
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
-        jouerTour(jeu.plateau, jeu.joueurs, jeu.joueurs[jeu.plateau.numeroJoueur]);
+        jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs, jeu.joueurs[jeu.plateau.numeroJoueur]);
 #ifdef DEBUG_JEU
         for(int i = 0; i < jeu.nbJoueurs; i++)
         {
@@ -46,7 +44,8 @@ void jouerJeu()
     } while(!estPartieFinie(jeu.plateau));
 }
 
-int jouerTour(Plateau& plateau, Joueur joueurs[], Joueur& joueur)
+
+int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 {
     bool jeuActif = true;
     int  etatTour = LANCER_TERMINE;
@@ -54,8 +53,10 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], Joueur& joueur)
 
     while(jeuActif)
     {
-        lancerDes(plateau);       // Lancer les dés
-        afficherPlateau(plateau); // Afficher l'état du plateau
+
+        lancerDes(plateau);
+        afficherPlateau(plateau);
+        afficherPile(joueurs, nbJoueurs);
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
