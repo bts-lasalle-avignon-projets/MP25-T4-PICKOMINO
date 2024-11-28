@@ -1,4 +1,3 @@
-// jeu.cpp
 #include "jeu.h"
 #include "ihm.h"
 #include <ctime>   // pour time
@@ -17,7 +16,6 @@ void initialiserJeu(Jeu& jeu)
     std::cout << "nbJoueurs = " << jeu.nbJoueurs << std::endl;
 #endif
     creerLesPilesDesJoueurs(jeu.joueurs, jeu.nbJoueurs);
-    jeu.plateau.numeroJoueur = -1;
     initialiserBrochette(jeu.plateau);
 }
 
@@ -26,30 +24,27 @@ void jouerJeu()
     Jeu jeu;
 
     initialiserJeu(jeu);
-    for(int i = 0; i < jeu.nbJoueurs; i++)
-    {
-        gererLeSommetDesPiles(jeu.joueurs[i]);
-    }
 
-    initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
+    int joueurActif = 0;
 
     do
     {
+        joueurActif = (joueurActif + 1) % jeu.nbJoueurs;
+
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
-        jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs);
+        jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs, jeu.joueurs[jeu.plateau.numeroJoueur]);
 #ifdef DEBUG_JEU
-        int sommet = 0;
         for(int i = 0; i < jeu.nbJoueurs; i++)
         {
-            sommet = gererLeSommetDesPiles(jeu.joueurs[i]);
             std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-            std::cout << "Sommet Pile = " << sommet << std::endl;
+            std::cout << "Pile du joueur " << i << " : Sommet = " << jeu.joueurs[i].sommet
+                      << std::endl;
         }
 #endif
     } while(!estPartieFinie(jeu.plateau));
 }
 
-int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs)
+int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 {
     bool jeuActif = true;
     int  etatTour = LANCER_TERMINE;
@@ -63,9 +58,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs)
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
-            // @todo si le lancer du joueur est nul : il doit remettre sur la brochette le dernier
-            // Pickomino qu’il avait gagné et placé au-dessus de sa pile. Le Pickomino le plus élevé
-            // sur la brochette est alors retourné face cachée et ne peut plus être récupéré.
+            rendreDernierPickomino(joueur, plateau);
             afficherLancerNul();
             etatTour = LANCER_NUL;
             jeuActif = false;
@@ -73,13 +66,14 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs)
         else
         {
             if(!garderDes(plateau))
-
             {
                 afficherValeurDejaGardee();
             }
-            score = calculerScore(plateau.desGardes);
-            afficherScore(score);
 
+            score = calculerScore(plateau.desGardes); // Calcul du score
+            afficherScore(score);                     // Afficher le score
+
+            // Demander si le joueur veut continuer à lancer
             if(!demander("continuer à lancer des dés"))
             {
                 int pickomino = piocherPickomino(plateau, score, joueurs);
@@ -90,14 +84,15 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs)
 #endif
                 if(pickomino != AUCUN_PICKOMINO)
                 {
-                    afficherPioche(pickomino + VALEUR_PICKOMINO_MIN);
+                    afficherPioche(pickomino +
+                                   VALEUR_PICKOMINO_MIN); // Afficher le Pickomino pioché
                 }
                 jeuActif = false;
             }
         }
     }
 
-    return etatTour;
+    return etatTour; // Retourner l'état du tour (LANCER_NUL ou LANCER_TERMINE)
 }
 
 bool estPartieFinie(Plateau& plateau)
@@ -105,7 +100,7 @@ bool estPartieFinie(Plateau& plateau)
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
-            return false;
+            return false; // Si des Pickominos sont encore disponibles, la partie n'est pas finie
     }
-    return true;
+    return true; // Si aucun Pickomino n'est disponible, la partie est finie
 }
