@@ -1,20 +1,19 @@
 name: clang-format Check
 
 on:
-  push:
-    branches: [develop]
-  pull_request:
-    branches: [develop]
+    push:
+        branches: [develop]
+    pull_request:
+        branches: [develop]
 
 jobs:
-  build:
+    build:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
-
-    steps:
-    -  uses: action/checkout@v4
-    -  name: Run Clang-Format
-       uses: jidicula/clang-format-action@v4.13.0
-       with:
-       clang-format-version: '13'
-       check-path: 'src'
+        steps:
+            - uses: action/checkout@v4
+            - name: Run Clang-Format
+              uses: jidicula/clang-format-action@v4.13.0
+              with:
+                  clang-format-version: "13"
+                  check-path: "src"
