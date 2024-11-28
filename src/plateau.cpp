@@ -220,7 +220,7 @@ void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
 {
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "joueur.competeur = " << joueur.compteur;
+    std::cout << "joueur.compteur = " << joueur.compteur;
 
 #endif
     if(joueur.sommet > 0)
