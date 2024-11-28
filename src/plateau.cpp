@@ -218,10 +218,9 @@ void ajouterPickominoAuJoueur(Joueur& joueur, int pickomino, Plateau& plateau)
 
 void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
 {
-    if(joueur.sommet > 0)
 #ifdef DEBUG_PLATEAU
-        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "joueur.compteur = " << joueur.compteur;
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "joueur.competeur = " << joueur.compteur;
 
 #endif
     if(joueur.sommet > 0)
@@ -234,31 +233,8 @@ void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
         plateau.pickominos[dernierPickomino] = EtatPickomino::DISPONIBLE;
     }
     retournerPickominos(plateau);
-    retirerSommet(joueur);
 }
 
-void retournerPickominos(Plateau& plateau)
-{
-    int valeur = VALEUR_DE_INCONNUE;
-    int index  = VALEUR_DE_INCONNUE;
-
-    for(int i = 0; i < NB_PICKOMINOS; i++)
-    {
-        if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
-        {
-            int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
-            if(valeur == VALEUR_DE_INCONNUE || valeurPickomino > valeur)
-            {
-                valeur = valeurPickomino;
-                index  = i;
-            }
-        }
-    }
-    if(index != VALEUR_DE_INCONNUE)
-    {
-        plateau.pickominos[index] = EtatPickomino::RETOURNE; // On retourne ce Pickomino
-    }
-}
 void retournerPickominos(Plateau& plateau)
 {
     int valeur = VALEUR_DE_INCONNUE;
