@@ -1,3 +1,5 @@
+[![Makefile CI]](https://github.com/bts-lasalle-avignon-projets/MP25-T4-PICKOMINO/tree/develop)
+
 # Mini-projet : Pickomino
 
 - [Mini-projet : Pickomino](#mini-projet--pickomino)
