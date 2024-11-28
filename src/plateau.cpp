@@ -231,3 +231,25 @@ void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
         plateau.pickominos[dernierPickomino] = EtatPickomino::DISPONIBLE;
     }
 }
+void retournerPickominos(Plateau& plateau)
+{
+    int valeur = VALEUR_DE_INCONNUE;
+    int index  = VALEUR_DE_INCONNUE;
+
+    for(int i = 0; i < NB_PICKOMINOS; i++)
+    {
+        if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
+        {
+            int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
+            if(valeur == VALEUR_DE_INCONNUE || valeurPickomino > valeur)
+            {
+                valeur = valeurPickomino;
+                index  = i;
+            }
+        }
+    }
+    if(index != VALEUR_DE_INCONNUE)
+    {
+        plateau.pickominos[index] = EtatPickomino::RETOURNE; // On retourne ce Pickomino
+    }
+}
