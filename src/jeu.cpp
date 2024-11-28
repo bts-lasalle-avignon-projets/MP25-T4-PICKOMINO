@@ -36,7 +36,7 @@ void jouerJeu()
     do
     {
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
-        jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs);
+        jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs, jeu.joueurs[jeu.plateau.numeroJoueur]);
 #ifdef DEBUG_JEU
         int sommet = 0;
         for(int i = 0; i < jeu.nbJoueurs; i++)
@@ -49,7 +49,7 @@ void jouerJeu()
     } while(!estPartieFinie(jeu.plateau));
 }
 
-int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs)
+int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 {
     bool jeuActif = true;
     int  etatTour = LANCER_TERMINE;
@@ -63,9 +63,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs)
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
-            // @todo si le lancer du joueur est nul : il doit remettre sur la brochette le dernier
-            // Pickomino qu’il avait gagné et placé au-dessus de sa pile. Le Pickomino le plus élevé
-            // sur la brochette est alors retourné face cachée et ne peut plus être récupéré.
+            rendreDernierPickomino(joueur, plateau);
             afficherLancerNul();
             etatTour = LANCER_NUL;
             jeuActif = false;
