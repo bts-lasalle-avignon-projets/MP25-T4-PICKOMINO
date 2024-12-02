@@ -17,4 +17,4 @@ jobs:
               with:
                   clang-format-version: "13"
                   check-path: "src"
-                  args: "--fallback-style=InheritParentConfig"
+                  fallback-style: "InheritParentConfig"
