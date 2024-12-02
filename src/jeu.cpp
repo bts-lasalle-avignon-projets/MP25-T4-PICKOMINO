@@ -70,10 +70,9 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
                 afficherValeurDejaGardee();
             }
 
-            score = calculerScore(plateau.desGardes); // Calcul du score
-            afficherScore(score);                     // Afficher le score
+            score = calculerScore(plateau.desGardes);
+            afficherScore(score);
 
-            // Demander si le joueur veut continuer à lancer
             if(!demander("continuer à lancer des dés"))
             {
                 int pickomino = piocherPickomino(plateau, score, joueurs);
@@ -84,15 +83,14 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 #endif
                 if(pickomino != AUCUN_PICKOMINO)
                 {
-                    afficherPioche(pickomino +
-                                   VALEUR_PICKOMINO_MIN); // Afficher le Pickomino pioché
+                    afficherPioche(pickomino + VALEUR_PICKOMINO_MIN);
                 }
                 jeuActif = false;
             }
         }
     }
 
-    return etatTour; // Retourner l'état du tour (LANCER_NUL ou LANCER_TERMINE)
+    return etatTour;
 }
 
 bool estPartieFinie(Plateau& plateau)
@@ -100,7 +98,7 @@ bool estPartieFinie(Plateau& plateau)
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
         if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE)
-            return false; // Si des Pickominos sont encore disponibles, la partie n'est pas finie
+            return false;
     }
-    return true; // Si aucun Pickomino n'est disponible, la partie est finie
+    return true;
 }
