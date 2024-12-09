@@ -76,6 +76,11 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 
             if(!demander("continuer à lancer des dés"))
             {
+#ifdef DEBUG_JEU
+                std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
+                          << "] ";
+                std::cout << "Pioche ?";
+#endif
                 int pickomino = piocherPickomino(plateau, score, joueurs);
 #ifdef DEBUG_JEU
                 std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__

@@ -1,4 +1,4 @@
-TARGET = pickomino.exe
+TARGET = pickomino.out
 MAIN = main
 
 DOSSIER_INCLUDE = ./src

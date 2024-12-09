@@ -137,11 +137,6 @@ bool verifierLancerNul(int desObtenus[NB_DES], int desGardes[NB_DES], int desEnJ
     for(int i = 0; i < desEnJeu; i++)
     {
         bool dejaGarde = estDejaGarde(desObtenus[i], desGardes, NB_DES - desEnJeu);
-#ifdef DEBUG_PLATEAU
-        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-        std::cout << "valeur = " << desObtenus[i] << std::endl;
-        std::cout << "dejaGarde = " << dejaGarde << std::endl;
-#endif
 
         if(!dejaGarde)
         {
@@ -162,23 +157,26 @@ int convertirValeurDe(char valeurDe)
 
 int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX])
 {
+#ifdef DEBUG_PLATEAU
+    std::cout << "Hello word";
+#endif
     if(!contientV(plateau.desGardes))
     {
         rendreDernierPickomino(joueurs[plateau.numeroJoueur], plateau);
-
         return AUCUN_PICKOMINO;
     }
+
+    picorerJoueur(joueurs[plateau.numeroJoueur], joueurs, NB_JOUEURS_MAX, score);
 
     int meilleurPickomino = trouverMeilleurPickomino(plateau, score);
-    if(meilleurPickomino == AUCUN_PICKOMINO)
+    if(meilleurPickomino != AUCUN_PICKOMINO)
     {
-        rendreDernierPickomino(joueurs[plateau.numeroJoueur], plateau);
-        return AUCUN_PICKOMINO;
+        ajouterPickominoAuJoueur(joueurs[plateau.numeroJoueur], meilleurPickomino, plateau);
+        return meilleurPickomino;
     }
 
-    ajouterPickominoAuJoueur(joueurs[plateau.numeroJoueur], meilleurPickomino, plateau);
-
-    return meilleurPickomino;
+    rendreDernierPickomino(joueurs[plateau.numeroJoueur], plateau);
+    return AUCUN_PICKOMINO;
 }
 
 int trouverMeilleurPickomino(Plateau& plateau, int score)
@@ -207,6 +205,10 @@ int trouverMeilleurPickomino(Plateau& plateau, int score)
 
 void ajouterPickominoAuJoueur(Joueur& joueur, int pickomino, Plateau& plateau)
 {
+#ifdef DEBUG_PLATEAU
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "sommet = " << joueur.sommet << std::endl;
+#endif
     joueur.pilePickominos[joueur.sommet++] = pickomino + VALEUR_PICKOMINO_MIN;
     plateau.pickominos[pickomino]          = EtatPickomino(plateau.numeroJoueur + 1);
 #ifdef DEBUG_PLATEAU
@@ -219,7 +221,7 @@ void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
 {
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "joueur.compteur = " << joueur.compteur;
+    std::cout << "joueur.compteur = " << joueur.sommet;
 
 #endif
     if(joueur.sommet > 0)
@@ -255,4 +257,39 @@ void retournerPickominos(Plateau& plateau)
     {
         plateau.pickominos[index] = EtatPickomino::RETOURNE; // On retourne ce Pickomino
     }
+}
+void picorerJoueur(Joueur& joueur, Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs, int scoreJoueur)
+{
+    for(int i = 0; i < nbJoueurs; ++i)
+    {
+        if(joueurs[i].sommet != 0)
+        {
+            if(&joueurs[i] != &joueur)
+            {
+                if(joueurs[i].pilePickominos[joueurs[i].sommet] == scoreJoueur)
+                {
+                    joueurs[i].sommet--;
+
+                    joueur.pilePickominos[joueur.sommet] = scoreJoueur;
+
+// Affichage pour débogage
+#ifdef DEBUG_PLATEAU
+                    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
+                              << "] ";
+                    std::cout << "Le joueur " << i + 1 << " a volé le sommet " << scoreJoueur
+                              << " de " << i << std::endl;
+#endif
+
+                    return; // Le joueur a picoré un sommet, on peut sortir de la fonction
+                }
+            }
+        }
+    }
+
+// Si aucun sommet n'a été volé, afficher un message pour débogage
+#ifdef DEBUG_PLATEAU
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "Aucun sommet correspondant au score " << scoreJoueur << " n'a été trouvé."
+              << std::endl;
+#endif
 }
