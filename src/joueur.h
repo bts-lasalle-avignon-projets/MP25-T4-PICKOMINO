@@ -7,13 +7,10 @@
 
 struct Joueur
 {
-    int pileJoueur[NB_PICKOMINOS];
-    int compteur;
+    int pilePickominos[NB_PICKOMINOS];
     int sommet;
 };
 
 void creerLesPilesDesJoueurs(Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs);
-int  ajouterSommet(Joueur& joueur);
-int  retirerSommet(Joueur& joueur);
 
 #endif

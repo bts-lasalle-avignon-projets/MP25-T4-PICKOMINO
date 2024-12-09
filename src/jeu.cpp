@@ -34,7 +34,7 @@ void jouerJeu()
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
         jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs, jeu.joueurs[jeu.plateau.numeroJoueur]);
 #ifdef DEBUG_JEU
-        for(int i = 0; i < jeu.nbJoueurs; i++)
+        for(int i = 0; i < jeu.nbJoueurs; ++i)
         {
             std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
             std::cout << "Pile du joueur " << i << " : Sommet = " << jeu.joueurs[i].sommet
@@ -42,6 +42,7 @@ void jouerJeu()
         }
 #endif
     } while(!estPartieFinie(jeu.plateau));
+    //
 }
 
 int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)

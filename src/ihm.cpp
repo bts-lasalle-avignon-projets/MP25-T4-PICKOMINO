@@ -30,17 +30,17 @@ void afficherPile(Joueur joueurs[], int nbJoueurs)
 {
     for(int numeroJoueur = 0; numeroJoueur < nbJoueurs; numeroJoueur++) // Iterer sur chaque joueur
     {
-        if(joueurs[numeroJoueur].compteur <= 0) // Si le joueur n'a pas de pile
+        if(joueurs[numeroJoueur].sommet <= 0) // Si le joueur n'a pas de pile
         {
-            std::cout << "La pile du joueur " << numeroJoueur << " est vide." << std::endl;
+            std::cout << "La pile du joueur " << numeroJoueur + 1 << " est vide." << std::endl;
         }
         else // Si le joueur a des éléments dans sa pile
         {
-            std::cout << "Affichage de la pile du joueur " << numeroJoueur << ": ";
-            for(int i = 0; i < joueurs[numeroJoueur].compteur;
+            std::cout << "Pile du joueur " << numeroJoueur + 1 << ": ";
+            for(int i = 0; i < joueurs[numeroJoueur].sommet;
                 i++) // Affiche chaque élément de la pile
             {
-                std::cout << joueurs[numeroJoueur].pileJoueur[i] << " ";
+                std::cout << joueurs[numeroJoueur].pilePickominos[i] << " ";
             }
             std::cout << std::endl;
         }

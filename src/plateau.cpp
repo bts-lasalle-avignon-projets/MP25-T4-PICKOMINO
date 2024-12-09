@@ -207,13 +207,12 @@ int trouverMeilleurPickomino(Plateau& plateau, int score)
 
 void ajouterPickominoAuJoueur(Joueur& joueur, int pickomino, Plateau& plateau)
 {
-    joueur.pileJoueur[joueur.compteur++] = pickomino + VALEUR_PICKOMINO_MIN;
-    plateau.pickominos[pickomino]        = EtatPickomino(plateau.numeroJoueur + 1);
+    joueur.pilePickominos[joueur.sommet++] = pickomino + VALEUR_PICKOMINO_MIN;
+    plateau.pickominos[pickomino]          = EtatPickomino(plateau.numeroJoueur + 1);
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "pickomino = " << pickomino << std::endl;
 #endif
-    ajouterSommet(joueur);
 }
 
 void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
@@ -225,7 +224,7 @@ void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
 #endif
     if(joueur.sommet > 0)
     {
-        int dernierPickomino = joueur.pileJoueur[--joueur.compteur] - VALEUR_PICKOMINO_MIN;
+        int dernierPickomino = joueur.pilePickominos[--joueur.sommet] - VALEUR_PICKOMINO_MIN;
 #ifdef DEBUG_PLATEAU
         std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
         std::cout << "dernierPickomino = " << dernierPickomino << std::endl;
@@ -233,7 +232,6 @@ void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
         plateau.pickominos[dernierPickomino] = EtatPickomino::DISPONIBLE;
     }
     retournerPickominos(plateau);
-    retirerSommet(joueur);
 }
 
 void retournerPickominos(Plateau& plateau)
