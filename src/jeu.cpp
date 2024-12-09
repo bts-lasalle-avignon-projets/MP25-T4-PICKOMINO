@@ -24,13 +24,8 @@ void jouerJeu()
     Jeu jeu;
 
     initialiserJeu(jeu);
-
-    int joueurActif = 0;
-
     do
     {
-        joueurActif = (joueurActif + 1) % jeu.nbJoueurs;
-
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
         jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs, jeu.joueurs[jeu.plateau.numeroJoueur]);
 #ifdef DEBUG_JEU
@@ -42,7 +37,6 @@ void jouerJeu()
         }
 #endif
     } while(!estPartieFinie(jeu.plateau));
-    //
 }
 
 int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
@@ -76,12 +70,22 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 
             if(!demander("continuer à lancer des dés"))
             {
-#ifdef DEBUG_JEU
+#ifdef SIMULATION
+                // Simuler l'état initial du jeu
+                joueurs[0].pilePickominos[joueurs[0].sommet++] = 22;
+                score                                          = 22;
+
+                // Débogage pour vérifier l'état initial
                 std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
                           << "] ";
-                std::cout << "Pioche ?";
+                std::cout << "Simulation : joueur[1] pilePickominos = ";
+                for(int i = 0; i < joueurs[0].sommet; ++i)
+                {
+                    std::cout << joueurs[0].pilePickominos[i] << " ";
+                }
+                std::cout << std::endl;
 #endif
-                int pickomino = piocherPickomino(plateau, score, joueurs);
+                int pickomino = piocherPickomino(plateau, score, joueurs, nbJoueurs);
 #ifdef DEBUG_JEU
                 std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
                           << "] ";
