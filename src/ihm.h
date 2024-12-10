@@ -24,6 +24,7 @@ void afficherValeurDejaGardee();
 void afficherTousDesGardes();
 void afficherLancerArrete();
 void afficherLancerNul();
+void afficherScoreFinal(int nbjoueurs, Joueur joueurs[]);
 
 char demanderValeurDe();
 bool demander(const std::string& message);
