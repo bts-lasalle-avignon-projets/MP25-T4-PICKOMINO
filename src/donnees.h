@@ -9,6 +9,7 @@
 
 #define NB_JOUEURS_MAX 7
 #define NB_JOUEURS_MIN 2
+#define JOUEUR_DEBUT   1
 
 #define NB_PICKOMINOS        16
 #define VALEUR_PICKOMINO_MIN 21

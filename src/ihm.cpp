@@ -1,4 +1,4 @@
-﻿#include "ihm.h"
+#include "ihm.h"
 #include "donnees.h"
 
 #include <iostream>
@@ -18,9 +18,9 @@ int saisirNombreDeJoueurs()
     return nombreDeJoueurs;
 }
 
-void afficherPlateau(Plateau& plateau)
+void afficherPlateau(Plateau& plateau, Joueur& joueur)
 {
-    afficherJoueur(plateau.numeroJoueur);
+    afficherJoueur(joueur);
     afficherBrochette(plateau.pickominos);
     afficherDes(plateau.desObtenus, plateau.desEnJeu);
     afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
@@ -30,26 +30,26 @@ void afficherPile(Joueur joueurs[], int nbJoueurs)
 {
     for(int numeroJoueur = 0; numeroJoueur < nbJoueurs; numeroJoueur++) // Iterer sur chaque joueur
     {
-        if(joueurs[numeroJoueur].compteur <= 0) // Si le joueur n'a pas de pile
+        if(joueurs[numeroJoueur].sommet <= 0) // Si le joueur n'a pas de pile
         {
-            std::cout << "La pile du joueur " << numeroJoueur << " est vide." << std::endl;
+            std::cout << "La pile du joueur " << numeroJoueur + 1 << " est vide." << std::endl;
         }
         else // Si le joueur a des éléments dans sa pile
         {
-            std::cout << "Affichage de la pile du joueur " << numeroJoueur << ": ";
-            for(int i = 0; i < joueurs[numeroJoueur].compteur;
+            std::cout << "Pile du joueur " << numeroJoueur + 1 << ": ";
+            for(int i = 0; i < joueurs[numeroJoueur].sommet;
                 i++) // Affiche chaque élément de la pile
             {
-                std::cout << joueurs[numeroJoueur].pileJoueur[i] << " ";
+                std::cout << joueurs[numeroJoueur].pilePickominos[i] << " ";
             }
             std::cout << std::endl;
         }
     }
 }
 
-void afficherJoueur(int numeroJoueur)
+void afficherJoueur(Joueur& joueur)
 {
-    std::cout << "Joueur " << (numeroJoueur + 1) << std::endl;
+    std::cout << "Joueur " << joueur.nom << std::endl;
 }
 
 void afficherBrochette(EtatPickomino pickominos[NB_PICKOMINOS])
@@ -135,12 +135,21 @@ void afficherLancerNul()
     std::cout << "Le lancer est nul !" << std::endl << std::endl;
 }
 
+
 void afficherScoreFinal(int nbjoueurs, Joueur joueurs[])
 {
     for(int i = 0; i < nbjoueurs; i++)
     {
         std::cout << "Score final du joueur" << i + 1 << " : " << joueurs[i].scoreFinal
                   << std::endl;
+}
+void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
+{
+    for(int i = 0; i < nbJoueurs; i++)
+    {
+        std::cout << "Selectionner Pseudo du Joueur " << (i + 1) << " : ";
+        std::cin >> joueurs[i].nom;
+
     }
 }
 

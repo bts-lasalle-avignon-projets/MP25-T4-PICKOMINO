@@ -24,17 +24,14 @@ void jouerJeu()
     Jeu jeu;
 
     initialiserJeu(jeu);
-
-    int joueurActif = 0;
-
+    demanderNomJoueur(jeu.nbJoueurs, jeu.joueurs);
+    jeu.plateau.numeroJoueur = JOUEUR_DEBUT;
     do
     {
-        joueurActif = (joueurActif + 1) % jeu.nbJoueurs;
-
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
         jouerTour(jeu.plateau, jeu.joueurs, jeu.nbJoueurs, jeu.joueurs[jeu.plateau.numeroJoueur]);
 #ifdef DEBUG_JEU
-        for(int i = 0; i < jeu.nbJoueurs; i++)
+        for(int i = 0; i < jeu.nbJoueurs; ++i)
         {
             std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
             std::cout << "Pile du joueur " << i << " : Sommet = " << jeu.joueurs[i].sommet
@@ -55,7 +52,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
     while(jeuActif)
     {
         lancerDes(plateau);
-        afficherPlateau(plateau);
+        afficherPlateau(plateau, joueur);
         afficherPile(joueurs, nbJoueurs);
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
@@ -77,7 +74,23 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 
             if(!demander("continuer à lancer des dés"))
             {
-                int pickomino = piocherPickomino(plateau, score, joueurs);
+
+#ifdef SIMULATION
+                // Simuler l'état initial du jeu
+                joueurs[0].pilePickominos[joueurs[0].sommet++] = 22;
+                score                                          = 22;
+
+                // Débogage pour vérifier l'état initial
+                std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
+                          << "] ";
+                std::cout << "Simulation : joueur[1] pilePickominos = ";
+                for(int i = 0; i < joueurs[0].sommet; ++i)
+                {
+                    std::cout << joueurs[0].pilePickominos[i] << " ";
+                }
+                std::cout << std::endl;
+#endif
+                int pickomino = piocherPickomino(plateau, score, joueurs, nbJoueurs);
 
 #ifdef DEBUG_JEU
                 std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
@@ -145,7 +158,7 @@ int calculerNbDeVerDuJoueur(Joueur& joueur)
 
     for(int i = 0; i <= joueur.sommet; i++)
     {
-        int pickomino = joueur.pileJoueur[i];
+        int pickomino = joueur.pilePickominos[i];
         nbDeVerTotal += calculerVerPickomino(pickomino);
     }
 
