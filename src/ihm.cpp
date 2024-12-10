@@ -1,4 +1,4 @@
-#include "ihm.h"
+﻿#include "ihm.h"
 #include "donnees.h"
 
 #include <iostream>

@@ -7,7 +7,6 @@
 // #define DEBUG_JEU
 //  #define SIMULATION
 
-
 #define LANCER_NUL     1
 #define LANCER_TERMINE 0
 
