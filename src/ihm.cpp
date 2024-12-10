@@ -135,13 +135,13 @@ void afficherLancerNul()
     std::cout << "Le lancer est nul !" << std::endl << std::endl;
 }
 
-
 void afficherScoreFinal(int nbjoueurs, Joueur joueurs[])
 {
     for(int i = 0; i < nbjoueurs; i++)
     {
         std::cout << "Score final du joueur" << i + 1 << " : " << joueurs[i].scoreFinal
                   << std::endl;
+    }
 }
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
 {
@@ -149,7 +149,6 @@ void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
     {
         std::cout << "Selectionner Pseudo du Joueur " << (i + 1) << " : ";
         std::cin >> joueurs[i].nom;
-
     }
 }
 

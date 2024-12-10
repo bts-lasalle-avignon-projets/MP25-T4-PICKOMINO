@@ -74,7 +74,6 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 
             if(!demander("continuer à lancer des dés"))
             {
-
 #ifdef SIMULATION
                 // Simuler l'état initial du jeu
                 joueurs[0].pilePickominos[joueurs[0].sommet++] = 22;
@@ -97,8 +96,9 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
                           << "] ";
                 std::cout << "pickomino = " << pickomino << std::endl;
 #endif
-                int totalVers = calculerNbDeVerDuJoueur(joueur);
+
 #ifdef DEBUG_JEU
+                int totalVers = calculerNbDeVerDuJoueur(joueur);
                 std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
                           << "] ";
                 std::cout << "Nombre total de vers du joueur : " << totalVers << std::endl;
