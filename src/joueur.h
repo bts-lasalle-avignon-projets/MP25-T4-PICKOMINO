@@ -3,11 +3,12 @@
 
 #include "donnees.h"
 
-//#define DEBUG_JOUEUR
+// #define DEBUG_JOUEUR
 #include "string"
 
 struct Joueur
 {
+    int         scoreFinal;
     int         pilePickominos[NB_PICKOMINOS];
     int         sommet;
     std::string nom;
