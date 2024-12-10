@@ -235,8 +235,8 @@ void rendreDernierPickomino(Joueur& joueur, Plateau& plateau)
         std::cout << "dernierPickomino = " << dernierPickomino << std::endl;
 #endif
         plateau.pickominos[dernierPickomino] = EtatPickomino::DISPONIBLE;
+        retournerPickominos(plateau);
     }
-    retournerPickominos(plateau);
 }
 
 void retournerPickominos(Plateau& plateau)

@@ -18,9 +18,9 @@ int saisirNombreDeJoueurs()
     return nombreDeJoueurs;
 }
 
-void afficherPlateau(Plateau& plateau)
+void afficherPlateau(Plateau& plateau, Joueur& joueur)
 {
-    afficherJoueur(plateau.numeroJoueur);
+    afficherJoueur(joueur);
     afficherBrochette(plateau.pickominos);
     afficherDes(plateau.desObtenus, plateau.desEnJeu);
     afficherDesGardes(plateau.desGardes, NB_DES - plateau.desEnJeu);
@@ -47,9 +47,9 @@ void afficherPile(Joueur joueurs[], int nbJoueurs)
     }
 }
 
-void afficherJoueur(int numeroJoueur)
+void afficherJoueur(Joueur& joueur)
 {
-    std::cout << "Joueur " << (numeroJoueur + 1) << std::endl;
+    std::cout << "Joueur " << joueur.nom << std::endl;
 }
 
 void afficherBrochette(EtatPickomino pickominos[NB_PICKOMINOS])
@@ -133,6 +133,15 @@ void afficherLancerArrete()
 void afficherLancerNul()
 {
     std::cout << "Le lancer est nul !" << std::endl << std::endl;
+}
+
+void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
+{
+    for(int i = 0; i < nbJoueurs; i++)
+    {
+        std::cout << "Selectionner Pseudo du Joueur " << (i + 1) << " : ";
+        std::cin >> joueurs[i].nom;
+    }
 }
 
 char demanderValeurDe()
