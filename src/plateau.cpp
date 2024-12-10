@@ -162,21 +162,55 @@ int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]
         rendreDernierPickomino(joueurs[plateau.numeroJoueur], plateau);
         return AUCUN_PICKOMINO;
     }
-    int pickominoPile = picorerJoueur(joueurs[plateau.numeroJoueur], joueurs, nbJoueurs, score);
+
+    int meilleurPickominoPile = trouverPickominoPile(joueurs,
+                                                     nbJoueurs,
+                                                     joueurs[plateau.numeroJoueur],
+                                                     score); // renvoie brute
+
+    int meilleurPickominoPlateau = trouverMeilleurPickomino(plateau, score); // renvoie index
+
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "pickomino Pile : " << pickominoPile << std::endl;
+    std::cout << "meilleurPickominoPile = " << meilleurPickominoPile << std::endl;
 #endif
-    if(pickominoPile != AUCUN_PICKOMINO)
-    {
-        return pickominoPile;
-    }
+#ifdef DEBUG_PLATEAU
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "meilleurPickominoPlateau = " << meilleurPickominoPlateau << std::endl;
+#endif
 
-    int meilleurPickomino = trouverMeilleurPickomino(plateau, score);
-    if(meilleurPickomino != AUCUN_PICKOMINO)
+    if(meilleurPickominoPile != AUCUN_PICKOMINO && meilleurPickominoPlateau != AUCUN_PICKOMINO)
     {
-        ajouterPickominoAuJoueur(joueurs[plateau.numeroJoueur], meilleurPickomino, plateau);
-        return meilleurPickomino;
+        if(meilleurPickominoPile > meilleurPickominoPlateau)
+        {
+#ifdef DEBUG_PLATEAU
+            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+            std::cout << "Hello " << std::endl;
+#endif
+            picorerJoueur(joueurs[plateau.numeroJoueur], joueurs, nbJoueurs, score);
+            return meilleurPickominoPile;
+        }
+        else if(meilleurPickominoPlateau > meilleurPickominoPile)
+        {
+#ifdef DEBUG_PLATEAU
+            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+            std::cout << "World " << std::endl;
+#endif
+            ajouterPickominoAuJoueur(joueurs[plateau.numeroJoueur],
+                                     meilleurPickominoPlateau,
+                                     plateau);
+            return meilleurPickominoPlateau;
+        }
+    }
+    if(meilleurPickominoPlateau != AUCUN_PICKOMINO)
+    {
+        ajouterPickominoAuJoueur(joueurs[plateau.numeroJoueur], meilleurPickominoPlateau, plateau);
+        return meilleurPickominoPlateau;
+    }
+    if(meilleurPickominoPile != AUCUN_PICKOMINO)
+    {
+        picorerJoueur(joueurs[plateau.numeroJoueur], joueurs, nbJoueurs, score);
+        return meilleurPickominoPile;
     }
 
     rendreDernierPickomino(joueurs[plateau.numeroJoueur], plateau);
@@ -185,38 +219,78 @@ int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]
 
 int trouverMeilleurPickomino(Plateau& plateau, int score)
 {
-    int meilleurScore     = VALEUR_PICKOMINO_MIN - 1;
-    int meilleurPickomino = -1;
+    int meilleurPickomino = VALEUR_PICKOMINO_MIN - 1;
 
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
-        int valeur = i + VALEUR_PICKOMINO_MIN;
-        if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE && valeur <= score &&
-           valeur > meilleurScore)
+        int valeurPickomino = i + VALEUR_PICKOMINO_MIN;
+        if(plateau.pickominos[i] == EtatPickomino::DISPONIBLE && valeurPickomino <= score &&
+           valeurPickomino > meilleurPickomino)
         {
-            meilleurScore     = valeur;
-            meilleurPickomino = i;
+            meilleurPickomino = valeurPickomino;
         }
     }
+
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "meilleurPickomino = " << meilleurPickomino << std::endl;
 #endif
 
-    return meilleurPickomino;
+    return (meilleurPickomino >= VALEUR_PICKOMINO_MIN) ? meilleurPickomino : AUCUN_PICKOMINO;
 }
 
-void ajouterPickominoAuJoueur(Joueur& joueur, int pickomino, Plateau& plateau)
+int trouverPickominoPile(Joueur        joueurs[NB_JOUEURS_MAX],
+                         int           nbJoueurs,
+                         const Joueur& joueurExclu,
+                         int           scoreJoueur)
+{
+    int meilleurPickominoPile = AUCUN_PICKOMINO;
+
+    for(int i = 0; i < nbJoueurs; ++i)
+    {
+        if(&joueurs[i] != &joueurExclu && joueurs[i].sommet > 0)
+        {
+            int sommetPickomino = joueurs[i].pilePickominos[joueurs[i].sommet - 1];
+
+            if(sommetPickomino == scoreJoueur)
+            {
+                return sommetPickomino;
+            }
+
+            if(sommetPickomino < scoreJoueur &&
+               (meilleurPickominoPile == -1 || sommetPickomino > meilleurPickominoPile))
+            {
+                meilleurPickominoPile = sommetPickomino;
+            }
+        }
+    }
+
+#ifdef DEBUG_PLATEAU
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "meilleurPickominoPile = " << meilleurPickominoPile << std::endl;
+#endif
+
+    return meilleurPickominoPile;
+}
+
+void ajouterPickominoAuJoueur(Joueur& joueur, int pickominoValeur, Plateau& plateau)
 {
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "sommet = " << joueur.sommet << std::endl;
 #endif
-    joueur.pilePickominos[joueur.sommet++] = pickomino + VALEUR_PICKOMINO_MIN;
-    plateau.pickominos[pickomino]          = EtatPickomino(plateau.numeroJoueur + 1);
+
+    joueur.pilePickominos[joueur.sommet++] = pickominoValeur;
+
+    int index = pickominoValeur - VALEUR_PICKOMINO_MIN;
+    if(index >= 0 && index < NB_PICKOMINOS)
+    {
+        plateau.pickominos[index] = EtatPickomino(plateau.numeroJoueur + 1);
+    }
+
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "pickomino = " << pickomino << std::endl;
+    std::cout << "pickomino = " << pickominoValeur << std::endl;
 #endif
 }
 

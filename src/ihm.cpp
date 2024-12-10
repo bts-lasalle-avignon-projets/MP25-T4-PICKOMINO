@@ -110,6 +110,11 @@ void afficherPioche(int pickomino)
     std::cout << "Vous piochez : " << pickomino << std::endl << std::endl;
 }
 
+void afficherPicorer(int pickomino)
+{
+    std::cout << "Vous picorer : " << pickomino << std::endl << std::endl;
+}
+
 void afficherErreurEntree()
 {
     std::cout << "Entrée invalide !" << std::endl;
