@@ -24,6 +24,8 @@ void jouerJeu()
     Jeu jeu;
 
     initialiserJeu(jeu);
+    demanderNomJoueur(jeu.nbJoueurs, jeu.joueurs);
+    jeu.plateau.numeroJoueur = JOUEUR_DEBUT;
     do
     {
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
@@ -48,7 +50,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
     while(jeuActif)
     {
         lancerDes(plateau);
-        afficherPlateau(plateau);
+        afficherPlateau(plateau, joueur);
         afficherPile(joueurs, nbJoueurs);
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
