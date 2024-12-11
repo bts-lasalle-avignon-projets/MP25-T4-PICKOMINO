@@ -54,6 +54,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
         lancerDes(plateau);
         afficherPlateau(plateau, joueur);
         afficherPile(joueurs, nbJoueurs);
+        afficherScore(score);
 
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
@@ -70,7 +71,6 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
             }
 
             score = calculerScore(plateau.desGardes);
-            afficherScore(score);
 
             if(!demander("continuer à lancer des dés"))
             {
