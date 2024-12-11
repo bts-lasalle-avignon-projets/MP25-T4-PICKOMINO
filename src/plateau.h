@@ -39,6 +39,9 @@ int  trouverPickominoPile(Joueur        joueurs[NB_JOUEURS_MAX],
                           int           nbJoueurs,
                           const Joueur& joueurExclu,
                           int           scoreJoueur);
-int  picorerJoueur(Joueur& joueur, Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs, int scoreJoueur);
-
+int  picorerJoueur(Joueur&        joueur,
+                   Joueur         joueurs[NB_JOUEURS_MAX],
+                   int            nbJoueurs,
+                   int            pickominoVole,
+                   const Plateau& plateau);
 #endif // PLATEAU_H

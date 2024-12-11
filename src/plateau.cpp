@@ -163,12 +163,10 @@ int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]
         return AUCUN_PICKOMINO;
     }
 
-    int meilleurPickominoPile = trouverPickominoPile(joueurs,
-                                                     nbJoueurs,
-                                                     joueurs[plateau.numeroJoueur],
-                                                     score); // renvoie brute
+    int meilleurPickominoPile =
+      trouverPickominoPile(joueurs, nbJoueurs, joueurs[plateau.numeroJoueur], score);
 
-    int meilleurPickominoPlateau = trouverMeilleurPickomino(plateau, score); // renvoie index
+    int meilleurPickominoPlateau = trouverMeilleurPickomino(plateau, score);
 
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
@@ -187,7 +185,11 @@ int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]
             std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
             std::cout << "Hello " << std::endl;
 #endif
-            picorerJoueur(joueurs[plateau.numeroJoueur], joueurs, nbJoueurs, score);
+            picorerJoueur(joueurs[plateau.numeroJoueur],
+                          joueurs,
+                          nbJoueurs,
+                          meilleurPickominoPile,
+                          plateau);
             return meilleurPickominoPile;
         }
         else if(meilleurPickominoPlateau > meilleurPickominoPile)
@@ -209,7 +211,11 @@ int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]
     }
     if(meilleurPickominoPile != AUCUN_PICKOMINO)
     {
-        picorerJoueur(joueurs[plateau.numeroJoueur], joueurs, nbJoueurs, score);
+        picorerJoueur(joueurs[plateau.numeroJoueur],
+                      joueurs,
+                      nbJoueurs,
+                      meilleurPickominoPile,
+                      plateau);
         return meilleurPickominoPile;
     }
 
@@ -335,14 +341,20 @@ void retournerPickominos(Plateau& plateau)
         plateau.pickominos[index] = EtatPickomino::RETOURNE; // On retourne ce Pickomino
     }
 }
-int picorerJoueur(Joueur& joueur, Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs, int scoreJoueur)
+int picorerJoueur(Joueur&        joueur,
+                  Joueur         joueurs[NB_JOUEURS_MAX],
+                  int            nbJoueurs,
+                  int            pickominoVole,
+                  const Plateau& plateau)
 {
+    pickominoVole =
+      trouverPickominoPile(joueurs, nbJoueurs, joueurs[plateau.numeroJoueur], pickominoVole);
     for(int i = 0; i < nbJoueurs; ++i)
     {
         if(&joueurs[i] != &joueur)
         {
             int sommetPickomino = joueurs[i].pilePickominos[joueurs[i].sommet - 1];
-            if(sommetPickomino == scoreJoueur) // Vérifier que le sommet correspond au score
+            if(sommetPickomino == pickominoVole) // Vérifier que le sommet correspond au score
             {
                 // Retirer le Pickomino du joueur cible
                 joueurs[i].sommet--;
@@ -364,7 +376,7 @@ int picorerJoueur(Joueur& joueur, Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs,
 
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "Aucun Pickomino correspondant au score " << scoreJoueur
+    std::cout << "Aucun Pickomino correspondant au score " << pickominoVole
               << " n'a été trouvé pour picorer." << std::endl;
 #endif
 
