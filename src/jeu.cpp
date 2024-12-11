@@ -15,6 +15,14 @@ void initialiserJeu(Jeu& jeu)
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "nbJoueurs = " << jeu.nbJoueurs << std::endl;
 #endif
+    for(int i = 0; i < jeu.nbJoueurs; i++)
+    {
+        jeu.joueurs[i].scoreFinal = 0;
+#ifdef DEBUG_JEU
+        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+        std::cout << "scoreFinal = " << jeu.joueurs[i].scoreFinal << std::endl;
+#endif
+    }
     creerLesPilesDesJoueurs(jeu.joueurs, jeu.nbJoueurs);
     initialiserBrochette(jeu.plateau);
 }
