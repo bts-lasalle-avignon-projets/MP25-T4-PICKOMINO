@@ -112,7 +112,7 @@ void afficherPioche(int pickomino)
 
 void afficherPicorer(int pickomino)
 {
-    std::cout << "Vous picorer : " << pickomino << std::endl << std::endl;
+    std::cout << "Vous picorez : " << pickomino << std::endl << std::endl;
 }
 
 void afficherErreurEntree()
@@ -152,7 +152,7 @@ void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
 {
     for(int i = 0; i < nbJoueurs; i++)
     {
-        std::cout << "Selectionner Pseudo du Joueur " << (i + 1) << " : ";
+        std::cout << "Saisir le pseudo du joueur " << (i + 1) << " : ";
         std::cin >> joueurs[i].nom;
     }
 }
