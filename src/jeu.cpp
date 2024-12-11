@@ -106,7 +106,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
 
                 if(pickomino != AUCUN_PICKOMINO)
                 {
-                    afficherPioche(pickomino + VALEUR_PICKOMINO_MIN);
+                    afficherPioche(pickomino);
                 }
                 jeuActif = false;
             }

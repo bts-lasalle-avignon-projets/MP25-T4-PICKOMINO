@@ -18,6 +18,7 @@ void afficherDes(int desObtenus[NB_DES], int nbDes);
 void afficherDesGardes(int desGardes[NB_DES], int nbDes);
 void afficherScore(int score);
 void afficherPioche(int pickomino);
+void afficherPicorer(int pickomino);
 
 void afficherErreurEntree();
 void afficherValeurDejaGardee();
