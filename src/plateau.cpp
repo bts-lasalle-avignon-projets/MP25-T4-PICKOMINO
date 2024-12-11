@@ -217,7 +217,7 @@ int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]
     return AUCUN_PICKOMINO;
 }
 
-int trouverMeilleurPickomino(Plateau& plateau, int score)
+int trouverMeilleurPickomino(const Plateau& plateau, int score)
 {
     int meilleurPickomino = VALEUR_PICKOMINO_MIN - 1;
 
