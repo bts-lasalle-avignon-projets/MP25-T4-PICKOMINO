@@ -181,10 +181,6 @@ int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]
     {
         if(meilleurPickominoPile > meilleurPickominoPlateau)
         {
-#ifdef DEBUG_PLATEAU
-            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-            std::cout << "Hello " << std::endl;
-#endif
             picorerJoueur(joueurs[plateau.numeroJoueur],
                           joueurs,
                           nbJoueurs,
@@ -194,10 +190,6 @@ int piocherPickomino(Plateau& plateau, int score, Joueur joueurs[NB_JOUEURS_MAX]
         }
         else if(meilleurPickominoPlateau > meilleurPickominoPile)
         {
-#ifdef DEBUG_PLATEAU
-            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-            std::cout << "World " << std::endl;
-#endif
             ajouterPickominoAuJoueur(joueurs[plateau.numeroJoueur],
                                      meilleurPickominoPlateau,
                                      plateau);
