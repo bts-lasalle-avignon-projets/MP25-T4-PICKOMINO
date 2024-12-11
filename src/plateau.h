@@ -1,7 +1,7 @@
 #ifndef PLATEAU_H
 #define PLATEAU_H
 
-//#define DEBUG_PLATEAU
+#define DEBUG_PLATEAU
 
 #include "donnees.h"
 #include "joueur.h"

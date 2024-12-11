@@ -32,11 +32,12 @@ void afficherPile(Joueur joueurs[], int nbJoueurs)
     {
         if(joueurs[numeroJoueur].sommet <= 0) // Si le joueur n'a pas de pile
         {
-            std::cout << "La pile du joueur " << numeroJoueur + 1 << " est vide." << std::endl;
+            std::cout << "La pile du joueur " << joueurs[numeroJoueur].nom << " est vide."
+                      << std::endl;
         }
         else // Si le joueur a des éléments dans sa pile
         {
-            std::cout << "Pile du joueur " << numeroJoueur + 1 << ": ";
+            std::cout << "Pile du joueur " << joueurs[numeroJoueur].nom << ": ";
             for(int i = 0; i < joueurs[numeroJoueur].sommet;
                 i++) // Affiche chaque élément de la pile
             {
