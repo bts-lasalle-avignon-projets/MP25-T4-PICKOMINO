@@ -123,7 +123,7 @@ void afficherErreurEntree()
 
 void afficherBienvenue()
 {
-    std::cout << "Bienvenue dans la version : 1.0" << std::endl << std::endl;
+    std::cout << "Pickomino version " << VERSION << std::endl << std::endl;
 }
 
 void afficherValeurDejaGardee()
