@@ -149,6 +149,13 @@ void afficherScoreFinal(int nbjoueurs, Joueur joueurs[])
                   << std::endl;
     }
 }
+
+void afficherErreurValeurIndisponible()
+{
+    std::cout << "La valeur choisie n'est pas disponible parmi les dés lancés. Essayez encore."
+              << std::endl;
+}
+
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
 {
     for(int i = 0; i < nbJoueurs; i++)
