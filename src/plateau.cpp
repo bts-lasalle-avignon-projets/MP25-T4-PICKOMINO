@@ -57,12 +57,19 @@ bool garderDes(Plateau& plateau)
             return false;
         }
 
+        if(estPasDansLesDesLances(plateau, valeurGardee))
+        {
+            afficherErreurValeurIndisponible();
+        }
+
         dejaGardee = estDejaGarde(valeurGardee, plateau.desGardes, NB_DES - plateau.desEnJeu);
 
         if(dejaGardee)
+        {
             afficherValeurDejaGardee();
+        }
 
-    } while(dejaGardee);
+    } while(dejaGardee || estPasDansLesDesLances(plateau, valeurGardee));
 
     bool gardeEffectuee = false;
     int  nbDesGardes    = 0;
@@ -85,6 +92,7 @@ bool garderDes(Plateau& plateau)
     }
 
     plateau.desEnJeu -= nbDesGardes;
+
 #ifdef DEBUG_PLATEAU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "desEnJeu = " << plateau.desEnJeu << std::endl;
@@ -119,6 +127,18 @@ bool estDejaGarde(int valeur, int desGardes[NB_DES], int nbDes)
             return true;
     }
     return false;
+}
+
+bool estPasDansLesDesLances(const Plateau& plateau, int valeurRecherchee)
+{
+    for(int i = 0; i < plateau.desEnJeu; i++)
+    {
+        if(plateau.desObtenus[i] == valeurRecherchee)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool contientV(int desGardes[NB_DES])

@@ -44,4 +44,6 @@ int  picorerJoueur(Joueur&        joueur,
                    int            nbJoueurs,
                    int            pickominoVole,
                    const Plateau& plateau);
+bool estPasDansLesDesLances(const Plateau& plateau, int valeurRecherchee);
+
 #endif // PLATEAU_H

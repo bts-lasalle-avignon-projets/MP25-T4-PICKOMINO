@@ -26,6 +26,8 @@ void afficherTousDesGardes();
 void afficherLancerArrete();
 void afficherLancerNul();
 void afficherScoreFinal(int nbjoueurs, Joueur joueurs[]);
+void afficherErreurValeurIndisponible();
+void afficherValeurDejaGardee();
 
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[]);
 char demanderValeurDe();
