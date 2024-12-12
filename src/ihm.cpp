@@ -121,6 +121,11 @@ void afficherErreurEntree()
     std::cout << "Entrée invalide !" << std::endl;
 }
 
+void afficherBienvenue()
+{
+    std::cout << "Bienvenue dans la version : 1.0" << std::endl << std::endl;
+}
+
 void afficherValeurDejaGardee()
 {
     std::cout << "Vous avez déjà gardé cette valeur !" << std::endl;
