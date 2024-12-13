@@ -21,6 +21,7 @@ void afficherPioche(int pickomino);
 void afficherPicorer(int pickomino);
 
 void afficherErreurEntree();
+void afficherBienvenue();
 void afficherValeurDejaGardee();
 void afficherTousDesGardes();
 void afficherLancerArrete();

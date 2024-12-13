@@ -10,6 +10,7 @@
 void initialiserJeu(Jeu& jeu)
 {
     srand(time(NULL));
+
     jeu.nbJoueurs = saisirNombreDeJoueurs();
 #ifdef DEBUG_JEU
     std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
@@ -30,6 +31,8 @@ void initialiserJeu(Jeu& jeu)
 void jouerJeu()
 {
     Jeu jeu;
+
+    afficherBienvenue();
 
     initialiserJeu(jeu);
     demanderNomJoueur(jeu.nbJoueurs, jeu.joueurs);
