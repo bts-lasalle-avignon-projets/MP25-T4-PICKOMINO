@@ -1,0 +1,20 @@
+name: clang-format Check
+
+on:
+    push:
+        branches: [develop]
+    pull_request:
+        branches: [develop]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Run Clang-Format
+              uses: jidicula/clang-format-action@v4.13.0
+              with:
+                  clang-format-version: "13"
+                  check-path: "src"
+                  fallback-style: "InheritParentConfig"
