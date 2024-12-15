@@ -8,7 +8,7 @@
 
 struct Joueur
 {
-    int         scoreFinal;
+    int         score;
     int         pilePickominos[NB_PICKOMINOS];
     int         sommet;
     std::string nom;

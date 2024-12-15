@@ -150,8 +150,7 @@ void afficherScoreFinal(int nbjoueurs, Joueur joueurs[])
 {
     for(int i = 0; i < nbjoueurs; i++)
     {
-        std::cout << "Score final du joueur" << i + 1 << " : " << joueurs[i].scoreFinal
-                  << std::endl;
+        std::cout << "Score final du joueur" << i + 1 << " : " << joueurs[i].score << std::endl;
     }
 }
 
@@ -159,6 +158,11 @@ void afficherErreurValeurIndisponible()
 {
     std::cout << "La valeur choisie n'est pas disponible parmi les dés lancés. Essayez encore."
               << std::endl;
+}
+
+void afficherGagnant(Joueur joueurs[], int nbJoueur)
+{
+    std::cout << "Le gagnant est : " << joueurs[trouverGagant(joueurs, nbJoueur)].nom << std::endl;
 }
 
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])

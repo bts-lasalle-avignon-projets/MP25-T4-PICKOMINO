@@ -4,7 +4,7 @@
 #include "joueur.h"
 #include "plateau.h"
 
-// #define DEBUG_JEU
+/// #define DEBUG_JEU
 //   #define SIMULATION
 
 #define VERSION "1.0"
@@ -23,8 +23,7 @@ void initialiserJeu(Jeu& jeu);
 void jouerJeu();
 int  jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur);
 bool estPartieFinie(Plateau& plateau);
-int  calculerVerPickomino(int pickomino);
-int  calculerNbDeVerDuJoueur(Joueur& joueur);
-void calculerScoreFinalDesJoueurs(int nbJoueurs, Joueur joueurs[]);
+void calculerScoreFinal(Joueur joueurs[], int nbJoueurs);
+int  trouverGagant(Joueur joueur[], int nbJoueur);
 
 #endif // JEU_H

@@ -18,10 +18,10 @@ void initialiserJeu(Jeu& jeu)
 #endif
     for(int i = 0; i < jeu.nbJoueurs; i++)
     {
-        jeu.joueurs[i].scoreFinal = 0;
+        jeu.joueurs[i].score = 0;
 #ifdef DEBUG_JEU
         std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-        std::cout << "scoreFinal = " << jeu.joueurs[i].scoreFinal << std::endl;
+        std::cout << "scoreFinal = " << jeu.joueurs[i].score << std::endl;
 #endif
     }
     creerLesPilesDesJoueurs(jeu.joueurs, jeu.nbJoueurs);
@@ -50,8 +50,9 @@ void jouerJeu()
         }
 #endif
     } while(!estPartieFinie(jeu.plateau));
-    calculerScoreFinalDesJoueurs(jeu.nbJoueurs, jeu.joueurs);
+    calculerScoreFinal(jeu.joueurs, jeu.nbJoueurs);
     afficherScoreFinal(jeu.nbJoueurs, jeu.joueurs);
+    afficherGagnant(jeu.joueurs, jeu.nbJoueurs);
 }
 
 int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
@@ -82,6 +83,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
             }
 
             score = calculerScore(plateau.desGardes);
+            afficherScore(score);
 
             if(!demander("continuer à lancer des dés"))
             {
@@ -108,17 +110,15 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
                 std::cout << "pickomino = " << pickomino << std::endl;
 #endif
 
-#ifdef DEBUG_JEU
-                int totalVers = calculerNbDeVerDuJoueur(joueur);
-                std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
-                          << "] ";
-                std::cout << "Nombre total de vers du joueur : " << totalVers << std::endl;
-#endif
-
                 if(pickomino != AUCUN_PICKOMINO)
                 {
                     afficherPioche(pickomino);
                 }
+#ifdef DEBUG_JEU
+                calculerScoreFinal(joueurs, nbJoueurs);
+                afficherScoreFinal(nbJoueurs, joueurs);
+                afficherGagnant(joueurs, nbJoueurs);
+#endif
                 jeuActif = false;
             }
         }
@@ -137,54 +137,50 @@ bool estPartieFinie(Plateau& plateau)
     return true;
 }
 
-int calculerVerPickomino(int pickomino)
-{
-    int valeurPickominoEnVer = 0;
-    if(pickomino >= VALEUR_PICKOMINO_MIN &&
-       pickomino <= LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_UN_VER)
-    {
-        valeurPickominoEnVer = NB_VERS_PICKOMINO::UN_VER;
-    }
-    if(pickomino > LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_UN_VER &&
-       pickomino <= LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_DEUX_VERS)
-    {
-        valeurPickominoEnVer = NB_VERS_PICKOMINO::DEUX_VERS;
-    }
-    if(pickomino > LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_DEUX_VERS &&
-       pickomino <= LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_TROIS_VERS)
-    {
-        valeurPickominoEnVer = NB_VERS_PICKOMINO::TROIS_VERS;
-    }
-    if(pickomino > LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_TROIS_VERS &&
-       pickomino <= VALEUR_PICKOMINO_MAX)
-    {
-        valeurPickominoEnVer = NB_VERS_PICKOMINO::QUATRE_VERS;
-    }
-    return valeurPickominoEnVer;
-}
-
-int calculerNbDeVerDuJoueur(Joueur& joueur)
-{
-    int nbDeVerTotal = 0;
-
-    for(int i = 0; i <= joueur.sommet; i++)
-    {
-        int pickomino = joueur.pilePickominos[i];
-        nbDeVerTotal += calculerVerPickomino(pickomino);
-    }
-
-    return nbDeVerTotal;
-}
-
-void calculerScoreFinalDesJoueurs(int nbJoueurs, Joueur joueurs[])
+void calculerScoreFinal(Joueur joueurs[], int nbJoueurs)
 {
     for(int i = 0; i < nbJoueurs; i++)
     {
-        int nbDeVerFinalDuJoueur = calculerNbDeVerDuJoueur(joueurs[i]);
-        joueurs[i].scoreFinal += nbDeVerFinalDuJoueur;
+        joueurs[i].score = 0;
 #ifdef DEBUG_JEU
         std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-        std::cout << "Score total des vers calculé : " << joueurs[i].scoreFinal << std::endl;
+        std::cout << "score Final : " << joueurs[i].score << std::endl;
 #endif
+        for(int j = 0; j < joueurs[i].sommet; j++)
+        {
+            if(joueurs[i].pilePickominos[j] <= LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_UN_VER)
+            {
+                joueurs[i].score += NB_VERS_PICKOMINO::UN_VER;
+            }
+            else if(joueurs[i].pilePickominos[j] <=
+                    LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_DEUX_VERS)
+            {
+                joueurs[i].score += NB_VERS_PICKOMINO::DEUX_VERS;
+            }
+            else if(joueurs[i].pilePickominos[j] <=
+                    LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_TROIS_VERS)
+            {
+                joueurs[i].score += NB_VERS_PICKOMINO::TROIS_VERS;
+            }
+            else
+            {
+                joueurs[i].score += NB_VERS_PICKOMINO::QUATRE_VERS;
+            }
+        }
     }
+}
+
+int trouverGagant(Joueur joueur[], int nbJoueur)
+{
+    int meilleurScore = AUCUN_PICKOMINO;
+    int joueurGagnant = 0;
+    for(int i = 0; i < nbJoueur; i++)
+    {
+        if(joueur[i].score > meilleurScore)
+        {
+            meilleurScore = joueur[i].score;
+            joueurGagnant = i;
+        }
+    }
+    return joueurGagnant;
 }
