@@ -173,8 +173,9 @@ void calculerScoreFinal(Joueur joueurs[], int nbJoueurs)
 
 int trouverGagant(Joueur joueur[], int nbJoueur)
 {
-    int meilleurScore = joueur[0].score; // Le score est initialement celui du joueur 1
-    int joueurGagnant = 0;
+    int  meilleurScore = joueur[0].score; // Le score est initialement celui du joueur 1
+    int  joueurGagnant = 0;
+    bool egalite       = false;
     for(int i = 1; i < nbJoueur;
         i++) // i = 1 pour directement comparer le deuxième joueur au premier
     {
@@ -182,6 +183,35 @@ int trouverGagant(Joueur joueur[], int nbJoueur)
         {
             meilleurScore = joueur[i].score;
             joueurGagnant = i;
+            egalite       = false;
+        }
+        else if(meilleurScore == joueur[i].score)
+        {
+            egalite = true;
+        }
+    }
+
+    if(egalite)
+    {
+        joueurGagnant = trouverPickoGagnant(joueur, nbJoueur);
+    }
+
+    return joueurGagnant;
+}
+
+int trouverPickoGagnant(Joueur joueur[], int nbJoueur)
+{
+    int pickoGagnant  = joueur[0].pilePickominos[0];
+    int joueurGagnant = 0;
+    for(int i = 0; i < nbJoueur; i++)
+    {
+        for(int j = 0; j < NB_PICKOMINOS; j++)
+        {
+            if(joueur[i].pilePickominos[j] > pickoGagnant)
+            {
+                pickoGagnant  = joueur[i].pilePickominos[j];
+                joueurGagnant = i;
+            }
         }
     }
     return joueurGagnant;
