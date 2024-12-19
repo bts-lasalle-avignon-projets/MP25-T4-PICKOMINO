@@ -172,9 +172,10 @@ void calculerScoreFinal(Joueur joueurs[], int nbJoueurs)
 
 int trouverGagant(Joueur joueur[], int nbJoueur)
 {
-    int meilleurScore = AUCUN_PICKOMINO;
+    int meilleurScore = joueur[0].score; // Le score est initialement celui du joueur 1
     int joueurGagnant = 0;
-    for(int i = 0; i < nbJoueur; i++)
+    for(int i = 1; i < nbJoueur;
+        i++) // i = 1 pour directement comparer le deuxième joueur au premier
     {
         if(joueur[i].score > meilleurScore)
         {
