@@ -160,9 +160,9 @@ void afficherErreurValeurIndisponible()
               << std::endl;
 }
 
-void afficherGagnant(Joueur joueurs[], int nbJoueur)
+void afficherGagnant(Joueur joueurs[], int gagnant)
 {
-    std::cout << "Le gagnant est : " << joueurs[trouverGagant(joueurs, nbJoueur)].nom << std::endl;
+    std::cout << "Le gagnant est : " << joueurs[gagnant].nom << std::endl;
 }
 
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])

@@ -28,7 +28,7 @@ void afficherLancerArrete();
 void afficherLancerNul();
 void afficherScoreFinal(int nbjoueurs, Joueur joueurs[]);
 void afficherErreurValeurIndisponible();
-void afficherGagnant(Joueur joueurs[], int nbJoueurs);
+void afficherGagnant(Joueur joueurs[], int gagnant);
 
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[]);
 char demanderValeurDe();

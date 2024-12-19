@@ -52,7 +52,8 @@ void jouerJeu()
     } while(!estPartieFinie(jeu.plateau));
     calculerScoreFinal(jeu.joueurs, jeu.nbJoueurs);
     afficherScoreFinal(jeu.nbJoueurs, jeu.joueurs);
-    afficherGagnant(jeu.joueurs, jeu.nbJoueurs);
+    int indexGagnant = trouverGagant(jeu.joueurs, jeu.nbJoueurs);
+    afficherGagnant(jeu.joueurs, indexGagnant);
 }
 
 int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
