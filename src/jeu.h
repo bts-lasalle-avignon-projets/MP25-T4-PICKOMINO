@@ -25,5 +25,6 @@ int  jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur
 bool estPartieFinie(Plateau& plateau);
 void calculerScoreFinal(Joueur joueurs[], int nbJoueurs);
 int  trouverGagant(Joueur joueur[], int nbJoueur);
+int  trouverPickoGagnant(Joueur joueur[], int nbJoueur);
 
 #endif // JEU_H
