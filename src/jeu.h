@@ -22,9 +22,9 @@ struct Jeu
 void initialiserJeu(Jeu& jeu);
 void jouerJeu();
 int  jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur);
-bool estPartieFinie(Plateau& plateau);
+bool estPartieFinie(const Plateau& plateau);
 void calculerScoreFinal(Joueur joueurs[], int nbJoueurs);
-int  trouverGagant(Joueur joueur[], int nbJoueur);
-int  trouverPickoGagnant(Joueur joueur[], int nbJoueur);
+int  trouverGagnant(Joueur joueurs[], int nbJoueurs);
+int  trouverPickominoMax(Joueur joueur);
 
 #endif // JEU_H

@@ -35,7 +35,7 @@ void jouerJeu()
     afficherBienvenue();
 
     initialiserJeu(jeu);
-    demanderNomJoueur(jeu.nbJoueurs, jeu.joueurs);
+    demanderNomJoueur(jeu.joueurs, jeu.nbJoueurs);
     jeu.plateau.numeroJoueur = JOUEUR_DEBUT;
     do
     {
@@ -51,9 +51,9 @@ void jouerJeu()
 #endif
     } while(!estPartieFinie(jeu.plateau));
     calculerScoreFinal(jeu.joueurs, jeu.nbJoueurs);
-    afficherScoreFinal(jeu.nbJoueurs, jeu.joueurs);
-    int indexGagnant = trouverGagant(jeu.joueurs, jeu.nbJoueurs);
-    afficherGagnant(jeu.joueurs, indexGagnant);
+    afficherScoreFinal(jeu.joueurs, jeu.nbJoueurs);
+    int indexGagnant = trouverGagnant(jeu.joueurs, jeu.nbJoueurs);
+    afficherGagnant(jeu.joueurs[indexGagnant]);
 }
 
 int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
@@ -128,7 +128,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
     return etatTour;
 }
 
-bool estPartieFinie(Plateau& plateau)
+bool estPartieFinie(const Plateau& plateau)
 {
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
@@ -149,70 +149,52 @@ void calculerScoreFinal(Joueur joueurs[], int nbJoueurs)
 #endif
         for(int j = 0; j < joueurs[i].sommet; j++)
         {
-            if(joueurs[i].pilePickominos[j] <= LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_UN_VER)
-            {
-                joueurs[i].score += NB_VERS_PICKOMINO::UN_VER;
-            }
-            else if(joueurs[i].pilePickominos[j] <=
-                    LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_DEUX_VERS)
-            {
-                joueurs[i].score += NB_VERS_PICKOMINO::DEUX_VERS;
-            }
-            else if(joueurs[i].pilePickominos[j] <=
-                    LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_TROIS_VERS)
-            {
-                joueurs[i].score += NB_VERS_PICKOMINO::TROIS_VERS;
-            }
-            else
-            {
-                joueurs[i].score += NB_VERS_PICKOMINO::QUATRE_VERS;
-            }
+            joueurs[i].score += ((joueurs[i].pilePickominos[j] - VALEUR_PICKOMINO_MIN) /
+                                 NB_VERS_PICKOMINO::QUATRE_VERS) +
+                                1;
         }
     }
 }
 
-int trouverGagant(Joueur joueur[], int nbJoueur)
+int trouverGagnant(Joueur joueurs[], int nbJoueurs)
 {
-    int  meilleurScore = joueur[0].score; // Le score est initialement celui du joueur 1
-    int  joueurGagnant = 0;
-    bool egalite       = false;
-    for(int i = 1; i < nbJoueur;
-        i++) // i = 1 pour directement comparer le deuxième joueur au premier
-    {
-        if(joueur[i].score > meilleurScore)
-        {
-            meilleurScore = joueur[i].score;
-            joueurGagnant = i;
-            egalite       = false;
-        }
-        else if(meilleurScore == joueur[i].score)
-        {
-            egalite = true;
-        }
-    }
-
-    if(egalite)
-    {
-        joueurGagnant = trouverPickoGagnant(joueur, nbJoueur);
-    }
-
-    return joueurGagnant;
-}
-
-int trouverPickoGagnant(Joueur joueur[], int nbJoueur)
-{
-    int pickoGagnant  = joueur[0].pilePickominos[0];
+    int meilleurScore = joueurs[0].score;
+    int pickominoMax  = trouverPickominoMax(joueurs[0]);
     int joueurGagnant = 0;
-    for(int i = 0; i < nbJoueur; i++)
+
+    for(int i = 1; i < nbJoueurs; i++)
     {
-        for(int j = 0; j < NB_PICKOMINOS; j++)
+        if(joueurs[i].score > meilleurScore)
         {
-            if(joueur[i].pilePickominos[j] > pickoGagnant)
+            meilleurScore = joueurs[i].score;
+            joueurGagnant = i;
+            pickominoMax  = trouverPickominoMax(joueurs[i]);
+        }
+        else if(meilleurScore == joueurs[i].score)
+        {
+            int pickominoMaxAVerifier = trouverPickominoMax(joueurs[i]);
+            if(pickominoMaxAVerifier > pickominoMax)
             {
-                pickoGagnant  = joueur[i].pilePickominos[j];
                 joueurGagnant = i;
+                pickominoMax  = pickominoMaxAVerifier;
             }
         }
     }
+
     return joueurGagnant;
+}
+
+int trouverPickominoMax(Joueur joueur)
+{
+    int pickominoMax = joueur.pilePickominos[0];
+
+    for(int i = 1; i < joueur.sommet; i++)
+    {
+        if(joueur.pilePickominos[i] > pickominoMax)
+        {
+            pickominoMax = joueur.pilePickominos[i];
+        }
+    }
+
+    return pickominoMax;
 }

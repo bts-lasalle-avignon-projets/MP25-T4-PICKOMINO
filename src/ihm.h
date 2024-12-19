@@ -26,11 +26,11 @@ void afficherValeurDejaGardee();
 void afficherTousDesGardes();
 void afficherLancerArrete();
 void afficherLancerNul();
-void afficherScoreFinal(int nbjoueurs, Joueur joueurs[]);
+void afficherScoreFinal(Joueur joueurs[], int nbjoueurs);
 void afficherErreurValeurIndisponible();
-void afficherGagnant(Joueur joueurs[], int gagnant);
+void afficherGagnant(Joueur joueur);
 
-void demanderNomJoueur(int nbJoueurs, Joueur joueurs[]);
+void demanderNomJoueur(Joueur joueurs[], int nbJoueurs);
 char demanderValeurDe();
 bool demander(const std::string& message);
 
