@@ -29,6 +29,10 @@ $ ./pickomino.out
 
 ## Changelog
 
+### Version 1.1
+
+- [x] Affiche le gagnant en fin de partie
+
 ### Version 1.0
 
 - [x] Saisir le nombre de joueurs et leur nom
