@@ -36,7 +36,7 @@ void jouerJeu()
 
     initialiserJeu(jeu);
     demanderNomJoueur(jeu.joueurs, jeu.nbJoueurs);
-    jeu.plateau.numeroJoueur = JOUEUR_DEBUT;
+    jeu.plateau.numeroJoueur = JOUEUR_DEBUT_JEU;
     do
     {
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
@@ -158,9 +158,9 @@ void calculerScoreFinal(Joueur joueurs[], int nbJoueurs)
 
 int trouverGagnant(Joueur joueurs[], int nbJoueurs)
 {
-    int meilleurScore = joueurs[0].score;
-    int pickominoMax  = trouverPickominoMax(joueurs[0]);
-    int joueurGagnant = 0;
+    int meilleurScore = joueurs[JOUEUR_UN].score;
+    int pickominoMax  = trouverPickominoMax(joueurs[JOUEUR_UN]);
+    int joueurGagnant = JOUEUR_UN;
 
     for(int i = 1; i < nbJoueurs; i++)
     {
