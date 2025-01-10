@@ -146,12 +146,11 @@ void afficherLancerNul()
     std::cout << "Le lancer est nul !" << std::endl << std::endl;
 }
 
-void afficherScoreFinal(int nbjoueurs, Joueur joueurs[])
+void afficherScoreFinal(Joueur joueurs[], int nbjoueurs)
 {
     for(int i = 0; i < nbjoueurs; i++)
     {
-        std::cout << "Score final du joueur" << i + 1 << " : " << joueurs[i].scoreFinal
-                  << std::endl;
+        std::cout << "Score final du joueur" << i + 1 << " : " << joueurs[i].score << std::endl;
     }
 }
 
@@ -161,7 +160,12 @@ void afficherErreurValeurIndisponible()
               << std::endl;
 }
 
-void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
+void afficherGagnant(Joueur joueur)
+{
+    std::cout << "Le gagnant est : " << joueur.nom << std::endl;
+}
+
+void demanderNomJoueur(Joueur joueurs[], int nbJoueurs)
 {
     for(int i = 0; i < nbJoueurs; i++)
     {
