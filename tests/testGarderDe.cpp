@@ -40,3 +40,35 @@ TEST_CASE("Garder un dé valide")
     CHECK(plateau.desGardes[0] == 3); // Le premier dé gardé est la valeur 3
     CHECK(plateau.desEnJeu == 4);     // Un dé a été retiré des dés en jeu
 }
+
+TEST_CASE("Garder un dé incorrecte")
+{
+    // Initialisation
+    Plateau plateau;
+    plateau.desEnJeu      = 5;
+    plateau.desObtenus[0] = 1;
+    plateau.desObtenus[1] = 2;
+    plateau.desObtenus[2] = 3;
+    plateau.desObtenus[3] = 4;
+    plateau.desObtenus[4] = 5;
+
+    for(int i = 0; i < NB_DES; i++)
+    {
+        plateau.desGardes[i] = 0; // Aucun dé gardé au départ
+    }
+
+    int valeur = 6; // 6 n'est pas dans desObtenus
+
+    bool resultat = estPasDansLesDesLances(plateau, valeur);
+
+    // Vérifications
+    // La fonction ne devrait pas avoir réussi à garder un dé
+    CHECK(resultat == true);
+
+    // Aucune modification du plateau ne doit avoir lieu
+    CHECK(plateau.desEnJeu == 5); // Les dés en jeu restent inchangés
+    for(int i = 0; i < NB_DES; i++)
+    {
+        CHECK(plateau.desGardes[i] == 0); // Aucun dé gardé
+    }
+}

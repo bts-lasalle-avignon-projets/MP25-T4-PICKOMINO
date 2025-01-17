@@ -1,4 +1,4 @@
-TARGET = pickomino.out
+TARGET = pickomino.exe
 MAIN = main
 
 DOSSIER_INCLUDE = ./src
@@ -41,7 +41,7 @@ $(DOSSIER_TESTS)/testCalculScore.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_
 	$(LD) -o $@ $(LDFLAGS) $^
 
 $(DOSSIER_TESTS)/testGarderDe.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testGarderDe.o $(DOSSIER_SRC)/plateau.o $(DOSSIER_SRC)/ihm.o
-	$(LD) -o $@ $(LDFLAGS) $^
+	$(LD) $@ $(LDFLAGS) $^
 	
 $(DOSSIER_TESTS)/testUnitaire.o: $(DOSSIER_TESTS)/testUnitaire.cpp $(HEADERS)
 	$(CXX) -o $@ $<
