@@ -34,14 +34,14 @@ testCalculScore: $(DOSSIER_TESTS)/testCalculScore.out
 testGarderDe: $(DOSSIER_TESTS)/testGarderDe.out
 	$(DOSSIER_TESTS)/testGarderDe.out
 
-$(DOSSIER_TESTS)/testUnitaire.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testCalculScore.o $(DOSSIER_SRC)/plateau.o $(DOSSIER_SRC)/ihm.o $(DOSSIER_SRC)/joueur.o $(DOSSIER_SRC)/jeu.o
-	$(LD) $@ $(LDFLAGS) $^
+$(DOSSIER_TESTS)/testUnitaire.out: $(OBJETS_TESTS_COMPLET) $(filter-out $(DOSSIER_SRC)/main.o, $(OBJETS_SRC_COMPLET))
+	$(LD) -o $@ $(LDFLAGS) $^
 
 $(DOSSIER_TESTS)/testCalculScore.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testCalculScore.o $(DOSSIER_SRC)/plateau.o $(DOSSIER_SRC)/ihm.o
-	$(LD) $@ $(LDFLAGS) $^
+	$(LD) -o $@ $(LDFLAGS) $^
 
 $(DOSSIER_TESTS)/testGarderDe.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testGarderDe.o $(DOSSIER_SRC)/plateau.o $(DOSSIER_SRC)/ihm.o
-	$(LD) $@ $(LDFLAGS) $^
+	$(LD) -o $@ $(LDFLAGS) $^
 	
 $(DOSSIER_TESTS)/testUnitaire.o: $(DOSSIER_TESTS)/testUnitaire.cpp $(HEADERS)
 	$(CXX) -o $@ $<
