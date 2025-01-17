@@ -72,3 +72,24 @@ TEST_CASE("Garder un dé incorrecte")
         CHECK(plateau.desGardes[i] == 0); // Aucun dé gardé
     }
 }
+
+TEST_CASE("Le dé est déjà garder")
+{
+    Plateau plateau;
+    plateau.desEnJeu     = 5;
+    plateau.desGardes[0] = 1;
+    plateau.desGardes[1] = 2;
+    plateau.desGardes[2] = 3;
+
+    int valeur = 3;
+
+    bool resultat = estDejaGarde(valeur, plateau.desGardes, NB_DES - plateau.desEnJeu);
+    CHECK(resultat == true);
+
+    // Aucune modification du plateau ne doit avoir lieu
+    CHECK(plateau.desEnJeu == 5); // Les dés en jeu restent inchangés
+    for(int i = 0; i < NB_DES - plateau.desEnJeu; i++)
+    {
+        CHECK(plateau.desGardes[i] == i + 1); // Aucun dé gardé suplémentaire ou modifier
+    }
+}
