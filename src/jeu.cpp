@@ -78,11 +78,7 @@ int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
         }
         else
         {
-            if(!garderDes(plateau))
-            {
-                afficherValeurDejaGardee();
-            }
-
+            garderDes(plateau);
             score = calculerScore(plateau.desGardes);
             afficherScore(score);
 
