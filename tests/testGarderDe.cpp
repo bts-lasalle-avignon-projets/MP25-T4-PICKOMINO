@@ -121,3 +121,27 @@ TEST_CASE("Garder un ver :")
         CHECK(plateau.desGardes[i] == 0); // Aucun dé gardé supplémentaire
     }
 }
+
+TEST_CASE("Garder 8 dés : ")
+{
+    Plateau plateau;
+    plateau.desEnJeu = 8;
+    for(int i = 0; i < NB_DES; i++)
+    {
+        plateau.desObtenus[i] = 1;
+    }
+    for(int i = 0; i < NB_DES; i++)
+    {
+        plateau.desGardes[i] = 0; // Aucun dé gardé au départ
+    }
+
+    simulerEntree("1\n");
+
+    bool resultat = garderDes(plateau);
+    CHECK(resultat == true);
+    CHECK(plateau.desEnJeu == 0);
+    for(int i = 0; i < NB_DES; i++)
+    {
+        CHECK(plateau.desGardes[i] == 1);
+    }
+}
