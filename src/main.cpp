@@ -1,10 +1,10 @@
 // pickomino (version C++ sans STL)
 
-#include "jeu.h"
+#include "jeuIA.h"
 
 int main()
 {
-    jouerJeu();
+    jouerJeuIA();
 
     return 0;
 }

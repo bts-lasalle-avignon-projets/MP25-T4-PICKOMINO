@@ -8,7 +8,8 @@
 #include "joueur.h"
 #include "jeu.h"
 
-int saisirNombreDeJoueurs();
+int  saisirNombreDeJoueurs();
+void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux);
 
 void afficherPlateau(Plateau& plateau, Joueur& joueur);
 void afficherPile(Joueur* joueurs, int nbJoueurs);
@@ -28,6 +29,7 @@ void afficherLancerArrete();
 void afficherLancerNul();
 void afficherScoreFinal(int nbjoueurs, Joueur joueurs[]);
 void afficherErreurValeurIndisponible();
+void afficherChoixIA(const std::string& nomJoueur, char valeurChoisie);
 
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[]);
 char demanderValeurDe();

@@ -18,6 +18,38 @@ int saisirNombreDeJoueurs()
     return nombreDeJoueurs;
 }
 
+void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux)
+{
+    bool conditionsValides = false;
+
+    while(!conditionsValides)
+    {
+        std::cout << "Combien de joueurs réels voulez-vous ? (Minimum 1, Maximum 6) : ";
+        std::cin >> nbJoueursReels;
+
+        if(nbJoueursReels < 1 || nbJoueursReels > 6)
+        {
+            std::cout << "Le nombre de joueurs réels doit être entre 1 et 6." << std::endl;
+            continue;
+        }
+
+        std::cout << "Combien de joueurs IA voulez-vous ? (Minimum 1, Maximum 6) : ";
+        int nbJoueursIA;
+        std::cin >> nbJoueursIA;
+
+        nbJoueursTotaux = nbJoueursReels + nbJoueursIA;
+
+        if(nbJoueursTotaux < 2 || nbJoueursTotaux > 7)
+        {
+            std::cout << "Le nombre total de joueurs doit être entre 2 et 7." << std::endl;
+        }
+        else
+        {
+            conditionsValides = true;
+        }
+    }
+}
+
 void afficherPlateau(Plateau& plateau, Joueur& joueur)
 {
     afficherJoueur(joueur);
@@ -159,6 +191,11 @@ void afficherErreurValeurIndisponible()
 {
     std::cout << "La valeur choisie n'est pas disponible parmi les dés lancés. Essayez encore."
               << std::endl;
+}
+
+void afficherChoixIA(const std::string& nomJoueur, char valeurChoisie)
+{
+    std::cout << "L'IA " << nomJoueur << " choisit de garder le dé " << valeurChoisie << std::endl;
 }
 
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
