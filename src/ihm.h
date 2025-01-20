@@ -21,6 +21,7 @@ void afficherPioche(int pickomino);
 void afficherPicorer(int pickomino);
 
 void afficherErreurEntree();
+void afficherErreurDeveloppement();
 void afficherBienvenue();
 void afficherValeurDejaGardee();
 void afficherTousDesGardes();
@@ -33,5 +34,9 @@ void afficherGagnant(Joueur joueur);
 void demanderNomJoueur(Joueur joueurs[], int nbJoueurs);
 char demanderValeurDe();
 bool demander(const std::string& message);
+
+void afficherMenu();
+void choisirModeDeJeu(int choixUtilisateur);
+void afficherLogo();
 
 #endif // IHM_H
