@@ -1,5 +1,7 @@
 #include "jeu.h"
 #include "ihm.h"
+#include "classement.h"
+
 #include <ctime>   // pour time
 #include <cstdlib> // pour srand
 
@@ -29,7 +31,9 @@ void initialiserJeu(Jeu& jeu)
 
 void jouerJeu()
 {
-    Jeu jeu;
+    PartieClassement classement[MAX_PARTIES];
+    int              nbParties = chargerClassement(classement, MAX_PARTIES);
+    Jeu              jeu;
     initialiserJeu(jeu);
     demanderNomJoueur(jeu.joueurs, jeu.nbJoueurs);
     jeu.plateau.numeroJoueur = JOUEUR_DEBUT_JEU;
@@ -50,6 +54,15 @@ void jouerJeu()
     afficherScoreFinal(jeu.joueurs, jeu.nbJoueurs);
     int indexGagnant = trouverGagnant(jeu.joueurs, jeu.nbJoueurs);
     afficherGagnant(jeu.joueurs[indexGagnant]);
+
+    // Ajouter la partie au classement
+    ajouterPartieClassement(classement,
+                            &nbParties,
+                            jeu.joueurs[indexGagnant].nom.c_str(),
+                            jeu.joueurs[indexGagnant].score,
+                            MAX_PARTIES);
+
+    sauvegarderClassement(classement, nbParties);
 }
 
 int jouerTour(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)

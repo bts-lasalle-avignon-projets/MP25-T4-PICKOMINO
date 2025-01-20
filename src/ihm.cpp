@@ -233,15 +233,23 @@ void afficherMenu()
 
 void choisirModeDeJeu(int choixUtilisateur)
 {
+    PartieClassement classement[MAX_PARTIES];
+    int              nbParties = chargerClassement(classement, MAX_PARTIES);
+
     switch(choixUtilisateur)
     {
         case 1:
             jouerJeu();
             break;
         case 2:
+            afficherErreurDeveloppement();
+            break;
         case 3:
+            afficherClassement(classement, nbParties);
+            break;
         case 4:
             afficherErreurDeveloppement();
+            break;
         case 5:
             break;
         default:
@@ -270,4 +278,14 @@ void afficherLogo()
 
     // Afficher le texte en jaune
     std::cout << yellow << text << reset << std::endl;
+}
+
+void afficherClassement(PartieClassement classement[], int nbParties)
+{
+    std::cout << "Classement des meilleures parties :\n";
+    for(int i = 0; i < nbParties; i++)
+    {
+        std::cout << i + 1 << ". " << classement[i].nomJoueur << " - " << classement[i].score
+                  << " points\n";
+    }
 }

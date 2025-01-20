@@ -18,6 +18,8 @@
 
 #define AUCUN_PICKOMINO -1
 
+#define MAX_PARTIES 10
+
 enum NB_VERS_PICKOMINO
 
 {

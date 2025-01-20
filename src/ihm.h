@@ -7,6 +7,7 @@
 #include "plateau.h"
 #include "joueur.h"
 #include "jeu.h"
+#include "classement.h"
 
 int saisirNombreDeJoueurs();
 
@@ -38,5 +39,5 @@ bool demander(const std::string& message);
 void afficherMenu();
 void choisirModeDeJeu(int choixUtilisateur);
 void afficherLogo();
-
+void afficherClassement(PartieClassement classement[], int nbParties);
 #endif // IHM_H
