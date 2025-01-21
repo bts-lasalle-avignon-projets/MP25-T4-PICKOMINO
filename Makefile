@@ -37,10 +37,10 @@ testGarderDe: $(DOSSIER_TESTS)/testGarderDe.out
 $(DOSSIER_TESTS)/testUnitaire.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testCalculScore.o $(DOSSIER_TESTS)/testGarderDe.o $(filter-out $(DOSSIER_SRC)/$(MAIN).o, $(OBJ))
 	$(LD) $@ $(LDFLAGS) $^
 
-$(DOSSIER_TESTS)/testCalculScore.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testCalculScore.o $(DOSSIER_SRC)/plateau.o $(DOSSIER_SRC)/ihm.o
+$(DOSSIER_TESTS)/testCalculScore.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testCalculScore.o $(filter-out $(DOSSIER_SRC)/$(MAIN).o, $(OBJ))
 	$(LD) $@ $(LDFLAGS) $^
 
-$(DOSSIER_TESTS)/testGarderDe.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testGarderDe.o $(DOSSIER_SRC)/plateau.o $(DOSSIER_SRC)/ihm.o
+$(DOSSIER_TESTS)/testGarderDe.out: $(DOSSIER_TESTS)/testUnitaire.o $(DOSSIER_TESTS)/testGarderDe.o $(filter-out $(DOSSIER_SRC)/$(MAIN).o, $(OBJ))
 	$(LD) $@ $(LDFLAGS) $^
 	
 $(DOSSIER_TESTS)/testUnitaire.o: $(DOSSIER_TESTS)/testUnitaire.cpp $(HEADERS)
