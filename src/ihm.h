@@ -9,7 +9,7 @@
 #include "jeu.h"
 
 int  saisirNombreDeJoueurs();
-void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux);
+void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux, int& nbJoueursIA);
 
 void afficherPlateau(Plateau& plateau, Joueur& joueur);
 void afficherPile(Joueur* joueurs, int nbJoueurs);

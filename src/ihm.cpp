@@ -18,7 +18,7 @@ int saisirNombreDeJoueurs()
     return nombreDeJoueurs;
 }
 
-void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux)
+void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux, int& nbJoueursIA)
 {
     bool conditionsValides = false;
 
