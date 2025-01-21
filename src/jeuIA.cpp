@@ -21,7 +21,7 @@ void simulerEntree(const std::string& entreeSimulee)
 
 void initialiserJeuIA(Jeu& jeu)
 {
-    srand(time(NULL)); // Initialisation de la graine pour les nombres aléatoires
+    srand(time(NULL));
     jeu.nbJoueursReels  = 0;
     jeu.nbJoueursTotaux = 0;
     saisirNombreDeJoueursIA(jeu.nbJoueursReels, jeu.nbJoueursTotaux, jeu.nbJoueursIA);
@@ -76,7 +76,6 @@ bool garderDesIA(Plateau& plateau, Joueur& joueur)
     {
         valeurGardee = choisirValeurDeIA(plateau, joueur);
 #ifdef DEBUG_JEUIA
-        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
         std::cout << "valeurGardee : " << valeurGardee << std::endl;
 #endif
         if(estPasDansLesDesLances(plateau, valeurGardee))
@@ -84,8 +83,7 @@ bool garderDesIA(Plateau& plateau, Joueur& joueur)
             continue;
         }
 
-        dejaGardee = estDejaGarde(valeurGardee, plateau.desGardes, NB_DES - plateau.desEnJeu);
-
+        dejaGardee = estDejaGarde(valeurGardee, plateau.desGardes, NB_DES);
         if(dejaGardee)
         {
             continue;
@@ -107,6 +105,7 @@ bool garderDesIA(Plateau& plateau, Joueur& joueur)
                     plateau.desGardes[j] = valeurGardee;
                     ++nbDesGardes;
                     gardeEffectuee = true;
+                    break;
                 }
             }
         }
@@ -115,37 +114,49 @@ bool garderDesIA(Plateau& plateau, Joueur& joueur)
     plateau.desEnJeu -= nbDesGardes;
 
 #ifdef DEBUG_PLATEAU
-    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "desEnJeu = " << plateau.desEnJeu << std::endl;
 #endif
 
     return gardeEffectuee;
 }
 
-char choisirValeurDeIA(Plateau& plateau, Joueur& joueur)
+int choisirValeurDeIA(Plateau& plateau, Joueur& joueur)
 {
-    // Priorité des valeurs de dés : de 6 à 1
-    char priorites[] = { 'V', '5', '4', '3', '2', '1' };
+    int priorites[] = { 6, 5, 4, 3, 2, 1 };
+
+    bool versDejaChoisi = false;
 
     for(size_t i = 0; i < sizeof(priorites) / sizeof(priorites[0]); ++i)
     {
-        char valeurChoisie = priorites[i];
+#ifdef DEBUG_JEUIA
+        std::cout << "Je suis dans la boucle pour la valeur : " << priorites[i] << std::endl;
+#endif
+        int valeurChoisie = priorites[i];
 
-        // Recherche si la valeur choisie existe dans les dés lancés
+        bool dejaGardee = estDejaGarde(valeurChoisie, plateau.desGardes, NB_DES);
+        if(dejaGardee)
+        {
+            continue;
+        }
+
         for(int j = 0; j < plateau.desEnJeu; ++j)
         {
-            if((valeurChoisie == 'V' && plateau.desObtenus[j] == ID_VERS) ||
-               (valeurChoisie >= '1' && valeurChoisie <= '5' &&
-                plateau.desObtenus[j] == valeurChoisie - '0'))
+            if(valeurChoisie == ID_VERS)
             {
-                // Retourne la première valeur valide trouvée
+                if(plateau.desObtenus[j] == ID_VERS && !versDejaChoisi)
+                {
+                    versDejaChoisi = true;
+                    return valeurChoisie;
+                }
+            }
+            else if(plateau.desObtenus[j] == valeurChoisie)
+            {
                 return valeurChoisie;
             }
         }
     }
 
-    // Si aucune valeur valide n'a été trouvée, retourne 'V' (valeur inconnue ou invalide)
-    return 'V';
+    return -1;
 }
 
 bool reglesIA(Plateau& plateau, Joueur& joueur)
@@ -158,15 +169,19 @@ bool reglesIA(Plateau& plateau, Joueur& joueur)
         if(plateau.desGardes[i] == ID_VERS)
         {
             aUnV = true;
+            if(score >= 21)
+            {
+                return true;
+            }
         }
     }
 
     if(aUnV && score >= 21)
     {
-        return false;
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 int jouerTourIA(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur)
@@ -181,6 +196,7 @@ int jouerTourIA(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueu
         afficherPlateau(plateau, joueur);
         afficherPile(joueurs, nbJoueurs);
         afficherScore(score);
+
         if(verifierLancerNul(plateau.desObtenus, plateau.desGardes, plateau.desEnJeu))
         {
             rendreDernierPickomino(joueur, plateau);
@@ -190,25 +206,18 @@ int jouerTourIA(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueu
         }
         else
         {
-            // char caculDeIAFacile = choisirValeurDeIA(plateau, joueur);
-            // simulerEntree(std::string(1, caculDeIAFacile));
             garderDesIA(plateau, joueur);
             score = calculerScore(plateau.desGardes);
+#ifdef DEBUG_JEUIA
+            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+            std::cout << "Le score est de : " << score << std::endl;
+#endif
             if(reglesIA(plateau, joueur))
             {
+#ifdef DEBUG_JEUIA
+                std::cout << "Je respecte la règle et termine le tour." << std::endl;
+#endif
                 jeuActif = false;
-            }
-            else
-            {
-                if(estJoueurIA(joueur))
-                {
-                    char valeurChoisie = choisirValeurDeIA(plateau, joueur);
-                    afficherChoixIA("IA", valeurChoisie);
-                    if(reglesIA(plateau, joueur))
-                    {
-                        jeuActif = false;
-                    }
-                }
             }
         }
     }

@@ -193,7 +193,7 @@ void afficherErreurValeurIndisponible()
               << std::endl;
 }
 
-void afficherChoixIA(const std::string& nomJoueur, char valeurChoisie)
+void afficherChoixIA(const std::string& nomJoueur, int valeurChoisie)
 {
     std::cout << "L'IA " << nomJoueur << " choisit de garder le dé " << valeurChoisie << std::endl;
 }

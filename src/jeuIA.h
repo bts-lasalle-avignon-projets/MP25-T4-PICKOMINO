@@ -10,7 +10,7 @@
 
 bool estValeurGardee(int valeur, const Joueur& joueur);
 bool garderDesIA(Plateau& plateau, Joueur& joueur);
-char choisirValeurDeIA(Plateau& plateau, Joueur& joueur);
+int  choisirValeurDeIA(Plateau& plateau, Joueur& joueur);
 bool reglesIA(Plateau& plateau, Joueur& joueur, bool& valeursGardees);
 void initialiserJeuIA(Jeu& jeu);
 int  jouerTourIA(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur);

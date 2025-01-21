@@ -29,7 +29,7 @@ void afficherLancerArrete();
 void afficherLancerNul();
 void afficherScoreFinal(int nbjoueurs, Joueur joueurs[]);
 void afficherErreurValeurIndisponible();
-void afficherChoixIA(const std::string& nomJoueur, char valeurChoisie);
+void afficherChoixIA(const std::string& nomJoueur, int valeurChoisie);
 
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[]);
 char demanderValeurDe();
