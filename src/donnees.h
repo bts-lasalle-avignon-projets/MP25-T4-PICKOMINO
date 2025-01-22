@@ -7,14 +7,12 @@
 #define VALEUR_VERS        5
 #define VALEUR_DE_INCONNUE -1
 
-
 #define NB_JOUEURS_MAX_JEU_IA 6
 
-#define NB_JOUEURS_MAX   7
-#define NB_JOUEURS_MIN   2
-#define JOUEUR_DEBUT_JEU 1
-#define JOUEUR_UN        0
-
+#define NB_JOUEURS_MAX 7
+#define NB_JOUEURS_MIN 2
+#define JOUEUR_DEBUT   1
+#define JOUEUR_UN      0
 
 #define NB_PICKOMINOS        16
 #define VALEUR_PICKOMINO_MIN 21

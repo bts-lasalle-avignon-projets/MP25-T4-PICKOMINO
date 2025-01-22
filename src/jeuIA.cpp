@@ -243,6 +243,6 @@ void jouerJeuIA()
         }
 #endif
     } while(!estPartieFinie(jeu.plateau));
-    calculerScoreFinalDesJoueurs(jeu.nbJoueursTotaux, jeu.joueurs);
-    afficherScoreFinal(jeu.nbJoueursTotaux, jeu.joueurs);
+    calculerScoreFinal(jeu.joueurs, jeu.nbJoueurs);
+    afficherScoreFinal(jeu.joueurs, jeu.nbJoueurs);
 }

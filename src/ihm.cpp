@@ -1,4 +1,5 @@
 ﻿#include "ihm.h"
+#include "jeuIA.h"
 #include "donnees.h"
 
 #include <iostream>
@@ -198,13 +199,10 @@ void afficherErreurValeurIndisponible()
               << std::endl;
 }
 
-
 void afficherChoixIA(const std::string& nomJoueur, int valeurChoisie)
 {
     std::cout << "L'IA " << nomJoueur << " choisit de garder le dé " << valeurChoisie << std::endl;
 }
-
-void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
 
 void afficherGagnant(Joueur joueur)
 {
@@ -280,6 +278,8 @@ void choisirModeDeJeu(int choixUtilisateur)
             jouerJeu();
             break;
         case 2:
+            jouerJeuIA();
+            break;
         case 3:
         case 4:
             afficherErreurDeveloppement();

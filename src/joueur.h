@@ -10,6 +10,7 @@ struct Joueur
 {
     bool        estIA;
     int         score;
+    int         scoreFinal;
     int         pilePickominos[NB_PICKOMINOS];
     int         sommet;
     std::string nom;
