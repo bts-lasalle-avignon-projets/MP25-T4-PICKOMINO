@@ -34,25 +34,6 @@ void initialiserJeuIA(Jeu& jeu)
     initialiserBrochette(jeu.plateau);
 }
 
-bool estValeurGardee(int valeur, const Joueur& joueur)
-{
-    if(valeur == ID_VERS)
-    {
-        return true;
-    }
-    else if(valeur >= 1 && valeur <= 5)
-    {
-        for(int i = 0; i < joueur.sommet; ++i)
-        {
-            if(joueur.pilePickominos[i] == valeur)
-            {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 bool garderDesIA(Plateau& plateau, Joueur& joueur)
 {
 #ifdef DEBUG_JEUIA

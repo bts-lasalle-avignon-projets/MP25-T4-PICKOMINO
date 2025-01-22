@@ -8,7 +8,6 @@
 #define LANCER_NUL     1
 #define LANCER_TERMINE 0
 
-bool estValeurGardee(int valeur, const Joueur& joueur);
 bool garderDesIA(Plateau& plateau, Joueur& joueur);
 int  choisirValeurDeIA(Plateau& plateau, Joueur& joueur);
 bool reglesIA(Plateau& plateau, Joueur& joueur, bool& valeursGardees);
