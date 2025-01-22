@@ -1,23 +1,12 @@
 #include "jeuIA.h"
 #include "ihm.h"
+#include "donnees.h"
 #include <ctime>   // pour time
 #include <cstdlib> // pour srand
-#include <sstream>
-
-std::istringstream simulatedInput;
-std::ostringstream simulatedOutput;
 
 #ifdef DEBUG_JEUIA
 #include <iostream>
 #endif
-
-void simulerEntree(const std::string& entreeSimulee)
-{
-    simulatedInput.str("");                 // Réinitialise le flux simulé
-    simulatedInput.clear();                 // Efface l'état du flux
-    simulatedInput.str(entreeSimulee);      // Injecte la chaîne simulée dans le flux
-    std::cin.rdbuf(simulatedInput.rdbuf()); // Redirige std::cin vers simulatedInput
-}
 
 void initialiserJeuIA(Jeu& jeu)
 {
@@ -67,7 +56,8 @@ bool estValeurGardee(int valeur, const Joueur& joueur)
 bool garderDesIA(Plateau& plateau, Joueur& joueur)
 {
 #ifdef DEBUG_JEUIA
-    std::cout << "GarderDesIA" << std::endl;
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    std::cout << "J'entre dans la fonction 'garderDesIA' " << std::endl;
 #endif
     int  valeurGardee;
     bool dejaGardee = false;
@@ -76,6 +66,7 @@ bool garderDesIA(Plateau& plateau, Joueur& joueur)
     {
         valeurGardee = choisirValeurDeIA(plateau, joueur);
 #ifdef DEBUG_JEUIA
+        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
         std::cout << "valeurGardee : " << valeurGardee << std::endl;
 #endif
         if(estPasDansLesDesLances(plateau, valeurGardee))
@@ -129,6 +120,7 @@ int choisirValeurDeIA(Plateau& plateau, Joueur& joueur)
     for(size_t i = 0; i < sizeof(priorites) / sizeof(priorites[0]); ++i)
     {
 #ifdef DEBUG_JEUIA
+        std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
         std::cout << "Je suis dans la boucle pour la valeur : " << priorites[i] << std::endl;
 #endif
         int valeurChoisie = priorites[i];
@@ -208,16 +200,24 @@ int jouerTourIA(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueu
         {
             garderDesIA(plateau, joueur);
             score = calculerScore(plateau.desGardes);
+            afficherScore(score);
 #ifdef DEBUG_JEUIA
             std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
             std::cout << "Le score est de : " << score << std::endl;
 #endif
             if(reglesIA(plateau, joueur))
             {
+                int pickomino = piocherPickomino(plateau, score, joueurs, nbJoueurs);
+                if(pickomino != AUCUN_PICKOMINO)
+                {
+                    afficherPioche(pickomino);
+                }
+                jeuActif = false;
 #ifdef DEBUG_JEUIA
+                std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__
+                          << "] ";
                 std::cout << "Je respecte la règle et termine le tour." << std::endl;
 #endif
-                jeuActif = false;
             }
         }
     }
@@ -239,7 +239,8 @@ void jouerJeuIA()
         if(estJoueurIA(joueurActuel))
         {
 #ifdef DEBUG_JEUIA
-            std::cout << "JouerTourIA" << std::endl;
+            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+            std::cout << "Le joueur est une IA donc 'JouerTourIA'" << std::endl;
 #endif
             jouerTourIA(jeu.plateau, jeu.joueurs, jeu.nbJoueursTotaux, joueurActuel);
         }

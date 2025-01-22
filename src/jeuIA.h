@@ -1,6 +1,6 @@
 #ifndef JEUIA_H
 #define JEUIA_H
-#define DEBUG_JEUIA
+// #define DEBUG_JEUIA
 #include "joueur.h"
 #include "plateau.h"
 #include "jeu.h"
@@ -15,4 +15,5 @@ bool reglesIA(Plateau& plateau, Joueur& joueur, bool& valeursGardees);
 void initialiserJeuIA(Jeu& jeu);
 int  jouerTourIA(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueur);
 void jouerJeuIA();
-#endif
+
+#endif // JEUIA_H
