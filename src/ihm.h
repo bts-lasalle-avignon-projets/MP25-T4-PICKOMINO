@@ -30,11 +30,8 @@ void afficherLancerArrete();
 void afficherLancerNul();
 void afficherScoreFinal(Joueur joueurs[], int nbjoueurs);
 void afficherErreurValeurIndisponible();
-
 void afficherChoixIA(const std::string& nomJoueur, int valeurChoisie);
-
 void afficherGagnant(Joueur joueur);
-
 
 void demanderNomJoueur(Joueur joueurs[], int nbJoueurs);
 char demanderValeurDe();
