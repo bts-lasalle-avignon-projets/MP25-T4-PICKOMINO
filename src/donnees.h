@@ -18,6 +18,16 @@
 
 #define AUCUN_PICKOMINO -1
 
+enum VALEUR_PRIORITEES_IA
+
+{
+    UN_IA     = 1,
+    DEUX_IA   = 2,
+    TROIS_IA  = 3,
+    QUATRE_IA = 4,
+    CINQ_IA   = 5
+};
+
 enum NB_VERS_PICKOMINO
 
 {

@@ -94,7 +94,12 @@ bool garderDesIA(Plateau& plateau, Joueur& joueur)
 
 int choisirValeurDeIA(Plateau& plateau, Joueur& joueur)
 {
-    int priorites[] = { 6, 5, 4, 3, 2, 1 };
+    int priorites[] = { ID_VERS,
+                        VALEUR_PRIORITEES_IA::CINQ_IA,
+                        VALEUR_PRIORITEES_IA::QUATRE_IA,
+                        VALEUR_PRIORITEES_IA::TROIS_IA,
+                        VALEUR_PRIORITEES_IA::DEUX_IA,
+                        VALEUR_PRIORITEES_IA::UN_IA };
 
     bool versDejaChoisi = false;
 
@@ -142,14 +147,14 @@ bool reglesIA(Plateau& plateau, Joueur& joueur)
         if(plateau.desGardes[i] == ID_VERS)
         {
             aUnV = true;
-            if(score >= 21)
+            if(score >= VALEUR_PICKOMINO_MIN)
             {
                 return true;
             }
         }
     }
 
-    if(aUnV && score >= 21)
+    if(aUnV && score >= VALEUR_PICKOMINO_MIN)
     {
         return true;
     }
