@@ -22,17 +22,26 @@ void afficherPioche(int pickomino);
 void afficherPicorer(int pickomino);
 
 void afficherErreurEntree();
+void afficherErreurDeveloppement();
 void afficherBienvenue();
 void afficherValeurDejaGardee();
 void afficherTousDesGardes();
 void afficherLancerArrete();
 void afficherLancerNul();
-void afficherScoreFinal(int nbjoueurs, Joueur joueurs[]);
+void afficherScoreFinal(Joueur joueurs[], int nbjoueurs);
 void afficherErreurValeurIndisponible();
+
 void afficherChoixIA(const std::string& nomJoueur, int valeurChoisie);
 
-void demanderNomJoueur(int nbJoueurs, Joueur joueurs[]);
+void afficherGagnant(Joueur joueur);
+
+
+void demanderNomJoueur(Joueur joueurs[], int nbJoueurs);
 char demanderValeurDe();
 bool demander(const std::string& message);
+
+void afficherMenu();
+void choisirModeDeJeu(int choixUtilisateur);
+void afficherLogo();
 
 #endif // IHM_H

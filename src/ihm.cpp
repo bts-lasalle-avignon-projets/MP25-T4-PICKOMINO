@@ -2,6 +2,7 @@
 #include "donnees.h"
 
 #include <iostream>
+#include <string>
 
 int saisirNombreDeJoueurs()
 {
@@ -153,6 +154,11 @@ void afficherErreurEntree()
     std::cout << "Entrée invalide !" << std::endl;
 }
 
+void afficherErreurDeveloppement()
+{
+    std::cout << "En cours de développement !" << std::endl;
+}
+
 void afficherBienvenue()
 {
     std::cout << "Pickomino version " << VERSION << std::endl << std::endl;
@@ -178,12 +184,11 @@ void afficherLancerNul()
     std::cout << "Le lancer est nul !" << std::endl << std::endl;
 }
 
-void afficherScoreFinal(int nbjoueurs, Joueur joueurs[])
+void afficherScoreFinal(Joueur joueurs[], int nbjoueurs)
 {
     for(int i = 0; i < nbjoueurs; i++)
     {
-        std::cout << "Score final du joueur" << i + 1 << " : " << joueurs[i].scoreFinal
-                  << std::endl;
+        std::cout << "Score final du joueur" << i + 1 << " : " << joueurs[i].score << std::endl;
     }
 }
 
@@ -193,12 +198,21 @@ void afficherErreurValeurIndisponible()
               << std::endl;
 }
 
+
 void afficherChoixIA(const std::string& nomJoueur, int valeurChoisie)
 {
     std::cout << "L'IA " << nomJoueur << " choisit de garder le dé " << valeurChoisie << std::endl;
 }
 
 void demanderNomJoueur(int nbJoueurs, Joueur joueurs[])
+
+void afficherGagnant(Joueur joueur)
+{
+    std::cout << "Le gagnant est : " << joueur.nom << std::endl;
+}
+
+void demanderNomJoueur(Joueur joueurs[], int nbJoueurs)
+
 {
     for(int i = 0; i < nbJoueurs; i++)
     {
@@ -234,4 +248,67 @@ bool demander(const std::string& message)
     } while(choixValides.find(reponse) == std::string::npos);
 
     return (reponse == 'o' || reponse == 'O');
+}
+
+void afficherMenu()
+{
+    afficherBienvenue();
+    afficherLogo();
+
+    std::cout << " ------------ Choisir un mode de jeu ------------ " << std::endl;
+    std::cout << "1. Jouer en LAN" << std::endl;
+    std::cout << "2. Jouer contre IA" << std::endl;
+    std::cout << "3. Afficher classement" << std::endl;
+    std::cout << "4. Afficher les règles" << std::endl;
+    std::cout << "5. Quitter Pickomino" << std::endl << std::endl;
+
+    int choixUtilisateur;
+
+    do
+    {
+        std::cout << "Votre Choix : ";
+        std::cin >> choixUtilisateur;
+        choisirModeDeJeu(choixUtilisateur);
+    } while(choixUtilisateur >= 2 && choixUtilisateur <= 4);
+}
+
+void choisirModeDeJeu(int choixUtilisateur)
+{
+    switch(choixUtilisateur)
+    {
+        case 1:
+            jouerJeu();
+            break;
+        case 2:
+        case 3:
+        case 4:
+            afficherErreurDeveloppement();
+        case 5:
+            break;
+        default:
+            std::cout << "Choix invalide. Veuillez réessayer.\n";
+            break;
+    }
+}
+
+void afficherLogo()
+{
+    // Définir la couleur jaune avec les séquences d'échappement ANSI
+    const std::string yellow = "\033[33m"; // Code ANSI pour jaune
+    const std::string reset  = "\033[0m";  // Réinitialise la couleur
+
+    // Texte à afficher
+    const std::string text = R"(
+   
+                                              
+▗▄▄▖▗▄▄▄▖ ▗▄▄▖▗▖ ▗▖ ▗▄▖ ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖ ▗▄▖ 
+▐▌ ▐▌ █  ▐▌   ▐▌▗▞▘▐▌ ▐▌▐▛▚▞▜▌  █  ▐▛▚▖▐▌▐▌ ▐▌
+▐▛▀▘  █  ▐▌   ▐▛▚▖ ▐▌ ▐▌▐▌  ▐▌  █  ▐▌ ▝▜▌▐▌ ▐▌
+▐▌  ▗▄█▄▖▝▚▄▄▖▐▌ ▐▌▝▚▄▞▘▐▌  ▐▌▗▄█▄▖▐▌  ▐▌▝▚▄▞▘
+
+                                                                                     
+)";
+
+    // Afficher le texte en jaune
+    std::cout << yellow << text << reset << std::endl;
 }

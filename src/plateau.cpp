@@ -48,15 +48,6 @@ bool garderDes(Plateau& plateau)
     do
     {
         valeurGardee = convertirValeurDe(demanderValeurDe());
-        if(valeurGardee == VALEUR_DE_INCONNUE)
-        {
-#ifdef DEBUG_PLATEAU
-            std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-            std::cout << "valeurGardee = " << valeurGardee << std::endl;
-#endif
-            return false;
-        }
-
         if(estPasDansLesDesLances(plateau, valeurGardee))
         {
             afficherErreurValeurIndisponible();
