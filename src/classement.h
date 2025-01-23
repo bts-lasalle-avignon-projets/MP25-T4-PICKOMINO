@@ -20,6 +20,6 @@ void ajouterPartieClassement(PartieClassement classement[],
                              const char*      nomJoueur,
                              int              score,
                              int              maxParties);
-void afficherClassement(PartieClassement classement[], int nbParties);
 
+bool verifierFichierVide();
 #endif // CLASSEMENT_H

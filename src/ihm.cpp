@@ -282,10 +282,35 @@ void afficherLogo()
 
 void afficherClassement(PartieClassement classement[], int nbParties)
 {
-    std::cout << "Classement des meilleures parties :\n";
-    for(int i = 0; i < nbParties; i++)
+    if(verifierFichierVide())
     {
-        std::cout << i + 1 << ". " << classement[i].nomJoueur << " - " << classement[i].score
-                  << " points\n";
+        system("clear");
+        std::cout << "Il n'y a aucune partie de sauvegarder !" << std::endl;
+    }
+    else
+    {
+        system("clear");
+        std::cout << "Classement des meilleures parties :\n";
+        for(int i = 0; i < nbParties; i++)
+        {
+            std::cout << i + 1 << ". " << classement[i].nomJoueur << " - " << classement[i].score
+                      << " points\n";
+        }
+    }
+    retournerAuMenu();
+}
+
+void retournerAuMenu()
+{
+    char choixUtilisateur;
+    std::cout << "Retourner au Menu (oO)";
+    std::cin >> choixUtilisateur;
+    switch(choixUtilisateur)
+    {
+        case 'o':
+        case 'O':
+            afficherMenu();
+        default:
+            break;
     }
 }

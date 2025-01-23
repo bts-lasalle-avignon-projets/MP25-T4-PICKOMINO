@@ -40,4 +40,6 @@ void afficherMenu();
 void choisirModeDeJeu(int choixUtilisateur);
 void afficherLogo();
 void afficherClassement(PartieClassement classement[], int nbParties);
+void retournerAuMenu();
+
 #endif // IHM_H
