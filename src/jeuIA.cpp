@@ -37,8 +37,8 @@ void initialiserJeuIA(Jeu& jeu)
 bool garderDesIA(Plateau& plateau, Joueur& joueur)
 {
 #ifdef DEBUG_JEUIA
-    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
-    std::cout << "J'entre dans la fonction 'garderDesIA' " << std::endl;
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] "
+              << std::endl;
 #endif
     int  valeurGardee;
     bool dejaGardee = false;
@@ -85,7 +85,8 @@ bool garderDesIA(Plateau& plateau, Joueur& joueur)
 
     plateau.desEnJeu -= nbDesGardes;
 
-#ifdef DEBUG_PLATEAU
+#ifdef DEBUG_JEUIA
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
     std::cout << "desEnJeu = " << plateau.desEnJeu << std::endl;
 #endif
 

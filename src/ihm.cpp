@@ -26,24 +26,27 @@ void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux, int& nbJ
 
     while(!conditionsValides)
     {
-        std::cout << "Combien de joueurs réels voulez-vous ? (Minimum 1, Maximum 6) : ";
+        std::cout << "Combien de joueurs réels voulez-vous ? (Minimum " << NB_JOUEURS_IA_MIN
+                  << ", Maximum " << NB_JOUEURS_IA_MAX << ") : ";
         std::cin >> nbJoueursReels;
 
-        if(nbJoueursReels < 1 || nbJoueursReels > 6)
+        if(nbJoueursReels < NB_JOUEURS_IA_MIN || nbJoueursReels > NB_JOUEURS_IA_MAX)
         {
             std::cout << "Le nombre de joueurs réels doit être entre 1 et 6." << std::endl;
             continue;
         }
 
-        std::cout << "Combien de joueurs IA voulez-vous ? (Minimum 1, Maximum 6) : ";
+        std::cout << "Combien de joueurs IA voulez-vous ? (Minimum " << NB_JOUEURS_IA_MIN
+                  << ", Maximum " << NB_JOUEURS_IA_MAX << ") : ";
         int nbJoueursIA;
         std::cin >> nbJoueursIA;
 
         nbJoueursTotaux = nbJoueursReels + nbJoueursIA;
 
-        if(nbJoueursTotaux < 2 || nbJoueursTotaux > 7)
+        if(nbJoueursTotaux < NB_JOUEURS_MIN || nbJoueursTotaux > NB_JOUEURS_MAX)
         {
-            std::cout << "Le nombre total de joueurs doit être entre 2 et 7." << std::endl;
+            std::cout << "Le nombre total de joueurs doit être entre " << NB_JOUEURS_MIN << " et "
+                      << NB_JOUEURS_MAX << "." << std::endl;
         }
         else
         {
@@ -267,23 +270,24 @@ void afficherMenu()
         std::cout << "Votre Choix : ";
         std::cin >> choixUtilisateur;
         choisirModeDeJeu(choixUtilisateur);
-    } while(choixUtilisateur >= 2 && choixUtilisateur <= 4);
+    } while(choixUtilisateur >= CHOIX_MENU::CHOIX_MENU_UN &&
+            choixUtilisateur <= CHOIX_MENU::CHOIX_MENU_QUATRE);
 }
 
 void choisirModeDeJeu(int choixUtilisateur)
 {
     switch(choixUtilisateur)
     {
-        case 1:
+        case CHOIX_MENU::CHOIX_MENU_UN:
             jouerJeu();
             break;
-        case 2:
+        case CHOIX_MENU::CHOIX_MENU_DEUX:
             jouerJeuIA();
             break;
-        case 3:
-        case 4:
+        case CHOIX_MENU::CHOIX_MENU_TROIS:
+        case CHOIX_MENU::CHOIX_MENU_QUATRE:
             afficherErreurDeveloppement();
-        case 5:
+        case CHOIX_MENU::CHOIX_MENU_CINQ:
             break;
         default:
             std::cout << "Choix invalide. Veuillez réessayer.\n";
