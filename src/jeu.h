@@ -15,6 +15,9 @@
 struct Jeu
 {
     int     nbJoueurs;
+    int     nbJoueursReels; // Nombre de joueurs réels pour IA
+    int     nbJoueursIA;
+    int     nbJoueursTotaux; // Nombre total de joueurs pour IA (réels + IA)
     Joueur  joueurs[NB_JOUEURS_MAX];
     Plateau plateau;
 };

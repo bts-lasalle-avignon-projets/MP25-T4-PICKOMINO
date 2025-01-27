@@ -36,7 +36,7 @@ void jouerJeu()
     Jeu              jeu;
     initialiserJeu(jeu);
     demanderNomJoueur(jeu.joueurs, jeu.nbJoueurs);
-    jeu.plateau.numeroJoueur = JOUEUR_DEBUT_JEU;
+    jeu.plateau.numeroJoueur = JOUEUR_DEBUT;
     do
     {
         initialiserPlateau(jeu.plateau, jeu.nbJoueurs);
