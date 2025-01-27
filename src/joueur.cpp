@@ -22,3 +22,8 @@ void creerLesPilesDesJoueurs(Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs)
         }
     }
 }
+
+bool estJoueurIA(const Joueur& joueur)
+{
+    return joueur.estIA;
+}

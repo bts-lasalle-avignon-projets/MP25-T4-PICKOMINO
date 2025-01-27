@@ -8,12 +8,15 @@
 
 struct Joueur
 {
+    bool        estIA;
     int         score;
+    int         scoreFinal;
     int         pilePickominos[NB_PICKOMINOS];
     int         sommet;
     std::string nom;
 };
 
 void creerLesPilesDesJoueurs(Joueur joueurs[NB_JOUEURS_MAX], int nbJoueurs);
+bool estJoueurIA(const Joueur& joueur);
 
 #endif
