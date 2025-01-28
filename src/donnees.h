@@ -22,7 +22,6 @@
 
 #define AUCUN_PICKOMINO -1
 
-
 #define MAX_PARTIES 10
 
 enum VALEUR_PRIORITEES_IA
@@ -34,7 +33,6 @@ enum VALEUR_PRIORITEES_IA
     QUATRE_IA = 4,
     CINQ_IA   = 5
 };
-
 
 enum NB_VERS_PICKOMINO
 
