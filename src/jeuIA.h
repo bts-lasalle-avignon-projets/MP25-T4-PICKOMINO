@@ -1,6 +1,6 @@
 #ifndef JEUIA_H
 #define JEUIA_H
-// #define DEBUG_JEUIA
+#define DEBUG_JEUIA
 #include "joueur.h"
 #include "plateau.h"
 #include "jeu.h"

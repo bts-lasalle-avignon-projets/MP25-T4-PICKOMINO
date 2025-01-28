@@ -214,11 +214,20 @@ int jouerTourIA(Plateau& plateau, Joueur joueurs[], int nbJoueurs, Joueur& joueu
 
 void jouerJeuIA()
 {
-    Jeu jeu;
+    PartieClassement classement[MAX_PARTIES];
+    int              nbParties = chargerClassement(classement, MAX_PARTIES);
+    Jeu              jeu;
     initialiserJeuIA(jeu);
 
     creerLesPilesDesJoueurs(jeu.joueurs, jeu.nbJoueursTotaux);
     jeu.plateau.numeroJoueur = JOUEUR_DEBUT;
+#ifdef DEBUG_JEUIA
+    std::cout << "[" << __FILE__ << ":" << __PRETTY_FUNCTION__ << ":" << __LINE__ << "] ";
+    for(int i = 0; i < jeu.nbJoueursTotaux; i++)
+    {
+        std::cout << "joueur.nom" << i << ": " << jeu.joueurs[i].nom << std::endl;
+    }
+#endif
     do
     {
         initialiserPlateau(jeu.plateau, jeu.nbJoueursTotaux);
@@ -244,6 +253,17 @@ void jouerJeuIA()
         }
 #endif
     } while(!estPartieFinie(jeu.plateau));
-    calculerScoreFinal(jeu.joueurs, jeu.nbJoueurs);
-    afficherScoreFinal(jeu.joueurs, jeu.nbJoueurs);
+    calculerScoreFinal(jeu.joueurs, jeu.nbJoueursTotaux);
+    afficherScoreFinal(jeu.joueurs, jeu.nbJoueursTotaux);
+    int indexGagnant = trouverGagnant(jeu.joueurs, jeu.nbJoueursTotaux);
+    afficherGagnant(jeu.joueurs[indexGagnant]);
+
+    // Ajouter la partie au classement
+    ajouterPartieClassement(classement,
+                            &nbParties,
+                            jeu.joueurs[indexGagnant].nom.c_str(),
+                            jeu.joueurs[indexGagnant].score,
+                            MAX_PARTIES);
+
+    sauvegarderClassement(classement, nbParties);
 }
