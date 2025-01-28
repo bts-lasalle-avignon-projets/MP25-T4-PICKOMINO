@@ -288,6 +288,7 @@ void choisirModeDeJeu(int choixUtilisateur)
             jouerJeuIA();
             break;
         case CHOIX_MENU::CHOIX_MENU_TROIS:
+            afficherClassement(classement, nbParties);
         case CHOIX_MENU::CHOIX_MENU_QUATRE:
             afficherErreurDeveloppement();
         case CHOIX_MENU::CHOIX_MENU_CINQ:
