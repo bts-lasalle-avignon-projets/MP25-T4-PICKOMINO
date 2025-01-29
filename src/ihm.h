@@ -36,6 +36,8 @@ void afficherGagnant(Joueur joueur);
 void demanderNomJoueur(Joueur joueurs[], int nbJoueurs);
 char demanderValeurDe();
 bool demander(const std::string& message);
+int  demanderEntier(const std::string& message);
+int  demanderEntierDansIntervalle(const std::string& message, int valeurMin, int valeurMax);
 
 void afficherMenu();
 void choisirModeDeJeu(int choixUtilisateur);
