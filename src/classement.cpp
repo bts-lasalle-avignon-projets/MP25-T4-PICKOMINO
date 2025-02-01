@@ -75,16 +75,13 @@ void ajouterPartieClassement(PartieClassement classement[],
 
 bool verifierFichierVide()
 {
-    FILE* fichier = fopen("classement.txt", "w");
+    FILE* fichier = fopen("classement.txt", "r");
     if(!fichier)
-    {
-        perror("Erreur lors de la sauvegarde du classement");
-        return false;
-    }
+        return true; // Considérer le fichier comme vide s'il n'existe pas
 
-    fseek(fichier, 0, SEEK_END);  // Déplacer le curseur à la fin du fichier
-    long taille = ftell(fichier); // Obtenir la position actuelle (taille du fichier en octets)
-    fclose(fichier);              // Fermer le fichier
+    fseek(fichier, 0, SEEK_END);
+    bool estVide = (ftell(fichier) == 0);
 
-    return (taille == 0); // Retourne true si la taille est 0 (fichier vide)
+    fclose(fichier);
+    return estVide;
 }

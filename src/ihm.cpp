@@ -283,10 +283,10 @@ void choisirModeDeJeu(int choixUtilisateur)
     {
         case CHOIX_MENU::CHOIX_MENU_UN:
             jouerJeu();
-            break;
+            retournerAuMenu();
         case CHOIX_MENU::CHOIX_MENU_DEUX:
             jouerJeuIA();
-            break;
+            retournerAuMenu();
         case CHOIX_MENU::CHOIX_MENU_TROIS:
             afficherClassement(classement, nbParties);
         case CHOIX_MENU::CHOIX_MENU_QUATRE:
@@ -350,6 +350,7 @@ void retournerAuMenu()
     {
         case 'o':
         case 'O':
+            system("clear");
             afficherMenu();
         default:
             break;
