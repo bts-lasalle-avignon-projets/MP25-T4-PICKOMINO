@@ -22,6 +22,8 @@
 
 #define AUCUN_PICKOMINO -1
 
+#define MAX_PARTIES 10
+
 enum VALEUR_PRIORITEES_IA
 
 {

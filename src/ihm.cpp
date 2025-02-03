@@ -318,16 +318,19 @@ void afficherMenu()
 
 void choisirModeDeJeu(int choixUtilisateur)
 {
+    PartieClassement classement[MAX_PARTIES];
+    int              nbParties = chargerClassement(classement, MAX_PARTIES);
+
     switch(choixUtilisateur)
     {
         case CHOIX_MENU::CHOIX_MENU_UN:
             jouerJeu();
-            break;
+            retournerAuMenu();
         case CHOIX_MENU::CHOIX_MENU_DEUX:
             jouerJeuIA();
-            break;
+            retournerAuMenu();
         case CHOIX_MENU::CHOIX_MENU_TROIS:
-            afficherErreurDeveloppement();
+            afficherClassement(classement, nbParties);
             break;
         case CHOIX_MENU::CHOIX_MENU_QUATRE:
             afficherPDF();
@@ -360,4 +363,40 @@ void afficherLogo()
 
     // Afficher le texte en jaune
     std::cout << yellow << text << reset << std::endl;
+}
+
+void afficherClassement(PartieClassement classement[], int nbParties)
+{
+    if(verifierFichierVide())
+    {
+        system("clear");
+        std::cout << "Il n'y a aucune partie de sauvegarder !" << std::endl;
+    }
+    else
+    {
+        system("clear");
+        std::cout << "Classement des meilleures parties :\n";
+        for(int i = 0; i < nbParties; i++)
+        {
+            std::cout << i + 1 << ". " << classement[i].nomJoueur << " - " << classement[i].score
+                      << " points\n";
+        }
+    }
+    retournerAuMenu();
+}
+
+void retournerAuMenu()
+{
+    char choixUtilisateur;
+    std::cout << "Retourner au Menu (oO)";
+    std::cin >> choixUtilisateur;
+    switch(choixUtilisateur)
+    {
+        case 'o':
+        case 'O':
+            system("clear");
+            afficherMenu();
+        default:
+            break;
+    }
 }

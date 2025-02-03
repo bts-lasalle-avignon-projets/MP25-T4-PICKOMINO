@@ -7,6 +7,7 @@
 #include "plateau.h"
 #include "joueur.h"
 #include "jeu.h"
+#include "classement.h"
 
 int  saisirNombreDeJoueurs();
 void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux, int& nbJoueursIA);
@@ -43,5 +44,7 @@ int  demanderEntierDansIntervalle(const std::string& message, int valeurMin, int
 void afficherMenu();
 void choisirModeDeJeu(int choixUtilisateur);
 void afficherLogo();
+void afficherClassement(PartieClassement classement[], int nbParties);
+void retournerAuMenu();
 
 #endif // IHM_H
