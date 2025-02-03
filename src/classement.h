@@ -1,7 +1,8 @@
 #ifndef CLASSEMENT_H
 #define CLASSEMENT_H
 
-#define NB_CARACTERE 50
+#define NB_CARACTERE       50
+#define FICHIER_CLASSEMENT "classement.txt"
 
 #include <string>
 

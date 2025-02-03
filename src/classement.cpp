@@ -8,7 +8,7 @@
 using namespace std;
 int chargerClassement(PartieClassement classement[], int maxParties)
 {
-    ifstream fichier("classement.txt");
+    ifstream fichier(FICHIER_CLASSEMENT);
     if(!fichier)
     {
         cerr << "Erreur lors de l'ouverture du fichier" << endl;
@@ -32,7 +32,7 @@ int chargerClassement(PartieClassement classement[], int maxParties)
 
 void sauvegarderClassement(PartieClassement classement[], int nbParties)
 {
-    ofstream fichier("classement.txt");
+    ofstream fichier(FICHIER_CLASSEMENT);
     if(!fichier)
     {
         cerr << "Erreur lors de la sauvegarde du classement";
@@ -86,7 +86,7 @@ void trierClassement(PartieClassement classement[], int& nbParties)
 
 bool verifierFichierVide()
 {
-    ifstream fichier("classement.txt");
+    ifstream fichier(FICHIER_CLASSEMENT);
     if(!fichier)
     {
         cerr << "Erreur lors de l'ouverture du fichier";
