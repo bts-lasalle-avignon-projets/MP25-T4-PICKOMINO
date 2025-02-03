@@ -7,7 +7,7 @@
 /// #define DEBUG_JEU
 //   #define SIMULATION
 
-#define VERSION "1.1"
+#define VERSION "2.0"
 
 #define LANCER_NUL     1
 #define LANCER_TERMINE 0
@@ -15,6 +15,9 @@
 struct Jeu
 {
     int     nbJoueurs;
+    int     nbJoueursReels; // Nombre de joueurs réels pour IA
+    int     nbJoueursIA;
+    int     nbJoueursTotaux; // Nombre total de joueurs pour IA (réels + IA)
     Joueur  joueurs[NB_JOUEURS_MAX];
     Plateau plateau;
 };

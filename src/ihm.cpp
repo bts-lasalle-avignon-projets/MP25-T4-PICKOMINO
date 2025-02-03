@@ -1,21 +1,46 @@
 ﻿#include "ihm.h"
+#include "jeuIA.h"
 #include "donnees.h"
 
 #include <iostream>
+#include <string>
+#include <limits> // Pour ignorer les caractères invalides
 
 int saisirNombreDeJoueurs()
 {
-    int nombreDeJoueurs;
+    return demanderEntierDansIntervalle("Veuillez indiquer le nombre de joueurs (entre 2 et 7) : ",
+                                        NB_JOUEURS_MIN,
+                                        NB_JOUEURS_MAX);
+}
 
-    do
+void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux, int& nbJoueursIA)
+{
+    while(true)
     {
-        std::cout << "Veuillez indiquer le nombre de joueurs (entre " << NB_JOUEURS_MIN << " et "
-                  << NB_JOUEURS_MAX << ") : ";
-        std::cin >> nombreDeJoueurs;
-        std::cout << std::endl;
-    } while(nombreDeJoueurs < NB_JOUEURS_MIN || nombreDeJoueurs > NB_JOUEURS_MAX);
+        nbJoueursReels = demanderEntierDansIntervalle(
+          "Combien de joueurs réels voulez-vous ? (Minimum " + std::to_string(NB_JOUEURS_IA_MIN) +
+            ", Maximum " + std::to_string(NB_JOUEURS_IA_MAX) + ") : ",
+          NB_JOUEURS_IA_MIN,
+          NB_JOUEURS_IA_MAX);
 
-    return nombreDeJoueurs;
+        nbJoueursIA = demanderEntierDansIntervalle(
+          "Combien de joueurs IA voulez-vous ? (Minimum " + std::to_string(NB_JOUEURS_IA_MIN) +
+            ", Maximum " + std::to_string(NB_JOUEURS_IA_MAX) + ") : ",
+          NB_JOUEURS_IA_MIN,
+          NB_JOUEURS_IA_MAX);
+
+        nbJoueursTotaux = nbJoueursReels + nbJoueursIA;
+
+        if(nbJoueursTotaux >= NB_JOUEURS_MIN && nbJoueursTotaux <= NB_JOUEURS_MAX)
+        {
+            break;
+        }
+        else
+        {
+            std::cout << "Le nombre total de joueurs doit être entre " << NB_JOUEURS_MIN << " et "
+                      << NB_JOUEURS_MAX << "." << std::endl;
+        }
+    }
 }
 
 void afficherPlateau(Plateau& plateau, Joueur& joueur)
@@ -121,6 +146,11 @@ void afficherErreurEntree()
     std::cout << "Entrée invalide !" << std::endl;
 }
 
+void afficherErreurDeveloppement()
+{
+    std::cout << "En cours de développement !" << std::endl;
+}
+
 void afficherBienvenue()
 {
     std::cout << "Pickomino version " << VERSION << std::endl << std::endl;
@@ -160,12 +190,32 @@ void afficherErreurValeurIndisponible()
               << std::endl;
 }
 
+void afficherChoixIA(const std::string& nomJoueur, int valeurChoisie)
+{
+    std::cout << "L'IA " << nomJoueur << " choisit de garder le dé " << valeurChoisie << std::endl;
+}
+
 void afficherGagnant(Joueur joueur)
 {
     std::cout << "Le gagnant est : " << joueur.nom << std::endl;
 }
 
+void afficherPDF()
+{
+    const std::string cheminPDF = "./docs/regles-pickomino.pdf";
+#ifdef _WIN32
+    std::string redirection = "start " + cheminPDF;
+#elif __APPLE__
+    std::string redirection = "open " + cheminPDF;
+#else
+    std::string redirection = "xdg-open " + cheminPDF;
+#endif
+    std::system(redirection.c_str()); // (std::system) Exécution de la commande
+                                      // (.c_str) conversion en char pour compatibilité
+}
+
 void demanderNomJoueur(Joueur joueurs[], int nbJoueurs)
+
 {
     for(int i = 0; i < nbJoueurs; i++)
     {
@@ -201,4 +251,152 @@ bool demander(const std::string& message)
     } while(choixValides.find(reponse) == std::string::npos);
 
     return (reponse == 'o' || reponse == 'O');
+}
+
+int demanderEntier(const std::string& message)
+{
+    int valeur;
+    while(true)
+    {
+        std::cout << message;
+        std::cin >> valeur;
+
+        if(std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Veuillez saisir une valeur valide." << std::endl;
+        }
+        else
+        {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return valeur;
+        }
+    }
+}
+
+int demanderEntierDansIntervalle(const std::string& message, int valeurMin, int valeurMax)
+{
+    int valeur;
+    while(true)
+    {
+        valeur = demanderEntier(message);
+        if(valeur >= valeurMin && valeur <= valeurMax)
+        {
+            return valeur;
+        }
+        else
+        {
+            std::cout << "Veuillez saisir une valeur entre " << valeurMin << " et " << valeurMax
+                      << "." << std::endl;
+        }
+    }
+}
+
+void afficherMenu()
+{
+    afficherBienvenue();
+    afficherLogo();
+
+    std::cout << " ------------ Choisir un mode de jeu ------------ " << std::endl;
+    std::cout << "1. Jouer en LAN" << std::endl;
+    std::cout << "2. Jouer contre IA" << std::endl;
+    std::cout << "3. Afficher classement" << std::endl;
+    std::cout << "4. Afficher les règles" << std::endl;
+    std::cout << "5. Quitter Pickomino" << std::endl << std::endl;
+
+    int choixUtilisateur;
+
+    do
+    {
+        std::cout << "Votre Choix : ";
+        std::cin >> choixUtilisateur;
+        choisirModeDeJeu(choixUtilisateur);
+    } while(choixUtilisateur >= CHOIX_MENU::CHOIX_MENU_UN &&
+            choixUtilisateur <= CHOIX_MENU::CHOIX_MENU_QUATRE);
+}
+
+void choisirModeDeJeu(int choixUtilisateur)
+{
+    PartieClassement classement[MAX_PARTIES];
+    int              nbParties = chargerClassement(classement, MAX_PARTIES);
+
+    switch(choixUtilisateur)
+    {
+        case CHOIX_MENU::CHOIX_MENU_UN:
+            jouerJeu();
+            retournerAuMenu();
+        case CHOIX_MENU::CHOIX_MENU_DEUX:
+            jouerJeuIA();
+            retournerAuMenu();
+        case CHOIX_MENU::CHOIX_MENU_TROIS:
+            afficherClassement(classement, nbParties);
+            break;
+        case CHOIX_MENU::CHOIX_MENU_QUATRE:
+            afficherPDF();
+            break;
+        case CHOIX_MENU::CHOIX_MENU_CINQ:
+            break;
+        default:
+            std::cout << "Choix invalide. Veuillez réessayer.\n";
+            break;
+    }
+}
+
+void afficherLogo()
+{
+    // Définir la couleur jaune avec les séquences d'échappement ANSI
+    const std::string yellow = "\033[33m"; // Code ANSI pour jaune
+    const std::string reset  = "\033[0m";  // Réinitialise la couleur
+
+    // Texte à afficher
+    const std::string text = R"(
+   
+                                              
+▗▄▄▖▗▄▄▄▖ ▗▄▄▖▗▖ ▗▖ ▗▄▖ ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖ ▗▄▖ 
+▐▌ ▐▌ █  ▐▌   ▐▌▗▞▘▐▌ ▐▌▐▛▚▞▜▌  █  ▐▛▚▖▐▌▐▌ ▐▌
+▐▛▀▘  █  ▐▌   ▐▛▚▖ ▐▌ ▐▌▐▌  ▐▌  █  ▐▌ ▝▜▌▐▌ ▐▌
+▐▌  ▗▄█▄▖▝▚▄▄▖▐▌ ▐▌▝▚▄▞▘▐▌  ▐▌▗▄█▄▖▐▌  ▐▌▝▚▄▞▘
+
+                                                                                     
+)";
+
+    // Afficher le texte en jaune
+    std::cout << yellow << text << reset << std::endl;
+}
+
+void afficherClassement(PartieClassement classement[], int nbParties)
+{
+    if(verifierFichierVide())
+    {
+        system("clear");
+        std::cout << "Il n'y a aucune partie de sauvegarder !" << std::endl;
+    }
+    else
+    {
+        system("clear");
+        std::cout << "Classement des meilleures parties :\n";
+        for(int i = 0; i < nbParties; i++)
+        {
+            std::cout << i + 1 << ". " << classement[i].nomJoueur << " - " << classement[i].score
+                      << " points\n";
+        }
+    }
+    retournerAuMenu();
+}
+
+void retournerAuMenu()
+{
+    char choixUtilisateur;
+    std::cout << "Retourner au Menu (oO)";
+    std::cin >> choixUtilisateur;
+    switch(choixUtilisateur)
+    {
+        case 'o':
+        case 'O':
+            system("clear");
+            afficherMenu();
+        default:
+            break;
+    }
 }
