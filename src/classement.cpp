@@ -1,67 +1,78 @@
 #include "classement.h"
+#include "donnees.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <cstring>
 
+using namespace std;
 int chargerClassement(PartieClassement classement[], int maxParties)
 {
-    FILE* fichier = fopen("classement.txt", "r");
+    ifstream fichier("classement.txt");
     if(!fichier)
-        return 0;
-
-    int nbParties = 0;
-    while(fscanf(fichier,
-                 "%49[^,],%d\n",
-                 classement[nbParties].nomJoueur,
-                 &classement[nbParties].score) == 2 &&
-          nbParties < maxParties)
     {
+        cerr << "Erreur lors de l'ouverture du fichier" << endl;
+        return 0;
+    }
+
+    int    nbParties = 0;
+    string ligne;
+
+    while(nbParties < maxParties && getline(fichier, ligne))
+    {
+        stringstream ligneLu(ligne);
+        getline(ligneLu, classement[nbParties].nomJoueur, ','); // Lire le nom jusqu'à la virgule
+        ligneLu >> classement[nbParties].score;
         nbParties++;
     }
 
-    fclose(fichier);
+    fichier.close();
     return nbParties;
 }
 
 void sauvegarderClassement(PartieClassement classement[], int nbParties)
 {
-    FILE* fichier = fopen("classement.txt", "w");
+    ofstream fichier("classement.txt");
     if(!fichier)
     {
-        perror("Erreur lors de la sauvegarde du classement");
+        cerr << "Erreur lors de la sauvegarde du classement";
         return;
     }
 
     for(int i = 0; i < nbParties; i++)
     {
-        fprintf(fichier, "%s,%d\n", classement[i].nomJoueur, classement[i].score);
+        fichier << classement[i].nomJoueur << "," << classement[i].score << "\n";
     }
 
-    fclose(fichier);
+    fichier.close();
 }
 
-void ajouterPartieClassement(PartieClassement classement[],
-                             int*             nbParties,
-                             const char*      nomJoueur,
-                             int              score,
-                             int              maxParties)
+void ajouterPartieClassement(PartieClassement   classement[],
+                             int&               nbParties,
+                             const std::string& nomJoueur,
+                             int                score)
 {
     // Ajouter la nouvelle partie
-    if(*nbParties < maxParties)
+    if(nbParties < MAX_PARTIES)
     {
-        strcpy(classement[*nbParties].nomJoueur, nomJoueur);
-        classement[*nbParties].score = score;
-        (*nbParties)++;
+        classement[nbParties].nomJoueur = nomJoueur;
+        classement[nbParties].score     = score;
+        (nbParties)++;
     }
-    else if(score > classement[*nbParties - 1].score)
+    else if(score > classement[nbParties - 1].score)
     {
-        strcpy(classement[*nbParties - 1].nomJoueur, nomJoueur);
-        classement[*nbParties - 1].score = score;
+        classement[nbParties - 1].nomJoueur = nomJoueur;
+        classement[nbParties - 1].score     = score;
     }
+    trierClassement(classement, nbParties);
+}
 
+void trierClassement(PartieClassement classement[], int& nbParties)
+{
     // Trier le classement
-    for(int i = 0; i < *nbParties - 1; i++)
+    for(int i = 0; i < nbParties - 1; i++)
     {
-        for(int j = i + 1; j < *nbParties; j++)
+        for(int j = i + 1; j < nbParties; j++)
         {
             if(classement[i].score < classement[j].score)
             {
@@ -75,13 +86,11 @@ void ajouterPartieClassement(PartieClassement classement[],
 
 bool verifierFichierVide()
 {
-    FILE* fichier = fopen("classement.txt", "r");
+    ifstream fichier("classement.txt");
     if(!fichier)
-        return true; // Considérer le fichier comme vide s'il n'existe pas
-
-    fseek(fichier, 0, SEEK_END);
-    bool estVide = (ftell(fichier) == 0);
-
-    fclose(fichier);
-    return estVide;
+    {
+        cerr << "Erreur lors de l'ouverture du fichier";
+        return true;
+    }
+    return fichier.peek() == EOF;
 }

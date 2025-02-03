@@ -57,10 +57,9 @@ void jouerJeu()
 
     // Ajouter la partie au classement
     ajouterPartieClassement(classement,
-                            &nbParties,
-                            jeu.joueurs[indexGagnant].nom.c_str(),
-                            jeu.joueurs[indexGagnant].score,
-                            MAX_PARTIES);
+                            nbParties,
+                            jeu.joueurs[indexGagnant].nom,
+                            jeu.joueurs[indexGagnant].score);
 
     sauvegarderClassement(classement, nbParties);
 }

@@ -1,25 +1,23 @@
 #ifndef CLASSEMENT_H
 #define CLASSEMENT_H
 
-#define MAX_PARTIES 10
+#define NB_CARACTERE 50
 
-#include <cstdio>  // Pour FILE, fopen, fclose, fscanf, fprintf
-#include <cstring> // Pour strcpy et memset
+#include <string>
 
 struct PartieClassement
 {
-    char nomJoueur[50];
-    int  score;
+    std::string nomJoueur;
+    int         score;
 };
 
 // Déclarations des fonctions
 int  chargerClassement(PartieClassement classement[], int maxParties);
 void sauvegarderClassement(PartieClassement classement[], int nbParties);
-void ajouterPartieClassement(PartieClassement classement[],
-                             int*             nbParties,
-                             const char*      nomJoueur,
-                             int              score,
-                             int              maxParties);
-
+void ajouterPartieClassement(PartieClassement   classement[],
+                             int&               nbParties,
+                             const std::string& nomJoueur,
+                             int                score);
+void trierClassement(PartieClassement classement[], int& nbParties);
 bool verifierFichierVide();
 #endif // CLASSEMENT_H

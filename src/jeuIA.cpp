@@ -258,12 +258,11 @@ void jouerJeuIA()
     int indexGagnant = trouverGagnant(jeu.joueurs, jeu.nbJoueursTotaux);
     afficherGagnant(jeu.joueurs[indexGagnant]);
 
-    // Ajouter la partie au classement
+    // Appel de la fonction
     ajouterPartieClassement(classement,
-                            &nbParties,
-                            jeu.joueurs[indexGagnant].nom.c_str(),
-                            jeu.joueurs[indexGagnant].score,
-                            MAX_PARTIES);
+                            nbParties,
+                            jeu.joueurs[indexGagnant].nom,
+                            jeu.joueurs[indexGagnant].score);
 
     sauvegarderClassement(classement, nbParties);
 }
