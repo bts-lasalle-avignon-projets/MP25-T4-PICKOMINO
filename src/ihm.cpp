@@ -202,7 +202,7 @@ void afficherGagnant(Joueur joueur)
 
 void afficherPDF()
 {
-    std::string cheminPDF = "./docs/regles-pickomino.pdf";
+    const std::string cheminPDF = "./docs/regles-pickomino.pdf";
 #ifdef _WIN32
     std::string redirection = "start " + cheminPDF;
 #elif __APPLE__
