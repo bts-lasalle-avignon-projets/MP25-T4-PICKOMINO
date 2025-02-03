@@ -6,6 +6,8 @@
   - [Présentation](#présentation)
   - [Utilisation](#utilisation)
   - [Changelog](#changelog)
+    - [Version 2.0](#version-20)
+    - [Version 1.1](#version-11)
     - [Version 1.0](#version-10)
   - [TODO](#todo)
   - [Défauts constatés non corrigés](#défauts-constatés-non-corrigés)
@@ -29,6 +31,13 @@ $ ./pickomino.out
 
 ## Changelog
 
+### Version 2.0
+
+- [x] Ajouter un menu
+- [x] Implémenter une intelligence artificielle pour permettre de jouer contre l'ordinateur
+- [x] Enregistrer les scores des parties pour un classement
+- [x] Lors de la saisie du nombre de joueurs, l'entrée d'un caractère non valide provoque un dysfonctionnement du jeu.
+
 ### Version 1.1
 
 - [x] Affiche le gagnant en fin de partie
@@ -41,13 +50,14 @@ $ ./pickomino.out
 
 ## TODO
 
-- [ ] Ajouter un menu
-- [ ] Implémenter une intelligence artificielle pour permettre de jouer contre l'ordinateur
-- [ ] Enregistrer les scores des parties pour un classement
+- [ ] Ajouter des niveaux de difficultés à l'IA
+- [ ] Améliorer l'affichage
+- [ ] Ajouter une option "rejouer" à la fin de chaque partie
 
 ## Défauts constatés non corrigés
 
-- [ ] Lors de la saisie du nombre de joueurs, l'entrée d'un caractère non valide provoque un dysfonctionnement du jeu.
+- [ ] Le joueur n°1 ne commence pas lorsque plus de 2 joueurs participent
+- [ ] Entrer un caractère incorrect dans le menu fait quitter le programme
 
 ## Équipe de développement
 

@@ -19,7 +19,7 @@ void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux, int& nbJ
     {
         nbJoueursReels = demanderEntierDansIntervalle(
           "Combien de joueurs réels voulez-vous ? (Minimum " + std::to_string(NB_JOUEURS_IA_MIN) +
-            ", Maximum " + std::to_string(NB_JOUEURS_IA_MAX) + ": ",
+            ", Maximum " + std::to_string(NB_JOUEURS_IA_MAX) + ") : ",
           NB_JOUEURS_IA_MIN,
           NB_JOUEURS_IA_MAX);
 
