@@ -4,53 +4,41 @@
 
 #include <iostream>
 #include <string>
+#include <limits> // Pour ignorer les caractères invalides
 
 int saisirNombreDeJoueurs()
 {
-    int nombreDeJoueurs;
-
-    do
-    {
-        std::cout << "Veuillez indiquer le nombre de joueurs (entre " << NB_JOUEURS_MIN << " et "
-                  << NB_JOUEURS_MAX << ") : ";
-        std::cin >> nombreDeJoueurs;
-        std::cout << std::endl;
-    } while(nombreDeJoueurs < NB_JOUEURS_MIN || nombreDeJoueurs > NB_JOUEURS_MAX);
-
-    return nombreDeJoueurs;
+    return demanderEntierDansIntervalle("Veuillez indiquer le nombre de joueurs (entre 2 et 7) : ",
+                                        NB_JOUEURS_MIN,
+                                        NB_JOUEURS_MAX);
 }
 
 void saisirNombreDeJoueursIA(int& nbJoueursReels, int& nbJoueursTotaux, int& nbJoueursIA)
 {
-    bool conditionsValides = false;
-
-    while(!conditionsValides)
+    while(true)
     {
-        std::cout << "Combien de joueurs réels voulez-vous ? (Minimum " << NB_JOUEURS_IA_MIN
-                  << ", Maximum " << NB_JOUEURS_IA_MAX << ") : ";
-        std::cin >> nbJoueursReels;
+        nbJoueursReels = demanderEntierDansIntervalle(
+          "Combien de joueurs réels voulez-vous ? (Minimum " + std::to_string(NB_JOUEURS_IA_MIN) +
+            ", Maximum " + std::to_string(NB_JOUEURS_IA_MAX) + ": ",
+          NB_JOUEURS_IA_MIN,
+          NB_JOUEURS_IA_MAX);
 
-        if(nbJoueursReels < NB_JOUEURS_IA_MIN || nbJoueursReels > NB_JOUEURS_IA_MAX)
-        {
-            std::cout << "Le nombre de joueurs réels doit être entre 1 et 6." << std::endl;
-            continue;
-        }
-
-        std::cout << "Combien de joueurs IA voulez-vous ? (Minimum " << NB_JOUEURS_IA_MIN
-                  << ", Maximum " << NB_JOUEURS_IA_MAX << ") : ";
-        int nbJoueursIA;
-        std::cin >> nbJoueursIA;
+        nbJoueursIA = demanderEntierDansIntervalle(
+          "Combien de joueurs IA voulez-vous ? (Minimum " + std::to_string(NB_JOUEURS_IA_MIN) +
+            ", Maximum " + std::to_string(NB_JOUEURS_IA_MAX) + ") : ",
+          NB_JOUEURS_IA_MIN,
+          NB_JOUEURS_IA_MAX);
 
         nbJoueursTotaux = nbJoueursReels + nbJoueursIA;
 
-        if(nbJoueursTotaux < NB_JOUEURS_MIN || nbJoueursTotaux > NB_JOUEURS_MAX)
+        if(nbJoueursTotaux >= NB_JOUEURS_MIN && nbJoueursTotaux <= NB_JOUEURS_MAX)
         {
-            std::cout << "Le nombre total de joueurs doit être entre " << NB_JOUEURS_MIN << " et "
-                      << NB_JOUEURS_MAX << "." << std::endl;
+            break;
         }
         else
         {
-            conditionsValides = true;
+            std::cout << "Le nombre total de joueurs doit être entre " << NB_JOUEURS_MIN << " et "
+                      << NB_JOUEURS_MAX << "." << std::endl;
         }
     }
 }
@@ -212,6 +200,20 @@ void afficherGagnant(Joueur joueur)
     std::cout << "Le gagnant est : " << joueur.nom << std::endl;
 }
 
+void afficherPDF()
+{
+    const std::string cheminPDF = "./docs/regles-pickomino.pdf";
+#ifdef _WIN32
+    std::string redirection = "start " + cheminPDF;
+#elif __APPLE__
+    std::string redirection = "open " + cheminPDF;
+#else
+    std::string redirection = "xdg-open " + cheminPDF;
+#endif
+    std::system(redirection.c_str()); // (std::system) Exécution de la commande
+                                      // (.c_str) conversion en char pour compatibilité
+}
+
 void demanderNomJoueur(Joueur joueurs[], int nbJoueurs)
 
 {
@@ -249,6 +251,46 @@ bool demander(const std::string& message)
     } while(choixValides.find(reponse) == std::string::npos);
 
     return (reponse == 'o' || reponse == 'O');
+}
+
+int demanderEntier(const std::string& message)
+{
+    int valeur;
+    while(true)
+    {
+        std::cout << message;
+        std::cin >> valeur;
+
+        if(std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Veuillez saisir une valeur valide." << std::endl;
+        }
+        else
+        {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return valeur;
+        }
+    }
+}
+
+int demanderEntierDansIntervalle(const std::string& message, int valeurMin, int valeurMax)
+{
+    int valeur;
+    while(true)
+    {
+        valeur = demanderEntier(message);
+        if(valeur >= valeurMin && valeur <= valeurMax)
+        {
+            return valeur;
+        }
+        else
+        {
+            std::cout << "Veuillez saisir une valeur entre " << valeurMin << " et " << valeurMax
+                      << "." << std::endl;
+        }
+    }
 }
 
 void afficherMenu()
@@ -289,8 +331,10 @@ void choisirModeDeJeu(int choixUtilisateur)
             retournerAuMenu();
         case CHOIX_MENU::CHOIX_MENU_TROIS:
             afficherClassement(classement, nbParties);
+            break;
         case CHOIX_MENU::CHOIX_MENU_QUATRE:
-            afficherErreurDeveloppement();
+            afficherPDF();
+            break;
         case CHOIX_MENU::CHOIX_MENU_CINQ:
             break;
         default:
