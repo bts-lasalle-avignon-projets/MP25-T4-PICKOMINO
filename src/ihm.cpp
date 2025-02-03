@@ -200,6 +200,20 @@ void afficherGagnant(Joueur joueur)
     std::cout << "Le gagnant est : " << joueur.nom << std::endl;
 }
 
+void afficherPDF()
+{
+    std::string cheminPDF = "./docs/regles-pickomino.pdf";
+#ifdef _WIN32
+    std::string redirection = "start " + cheminPDF;
+#elif __APPLE__
+    std::string redirection = "open " + cheminPDF;
+#else
+    std::string redirection = "xdg-open " + cheminPDF;
+#endif
+    std::system(redirection.c_str()); // (std::system) Exécution de la commande
+                                      // (.c_str) conversion en char pour compatibilité
+}
+
 void demanderNomJoueur(Joueur joueurs[], int nbJoueurs)
 
 {
@@ -313,8 +327,11 @@ void choisirModeDeJeu(int choixUtilisateur)
             jouerJeuIA();
             break;
         case CHOIX_MENU::CHOIX_MENU_TROIS:
-        case CHOIX_MENU::CHOIX_MENU_QUATRE:
             afficherErreurDeveloppement();
+            break;
+        case CHOIX_MENU::CHOIX_MENU_QUATRE:
+            afficherPDF();
+            break;
         case CHOIX_MENU::CHOIX_MENU_CINQ:
             break;
         default:
