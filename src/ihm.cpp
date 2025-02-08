@@ -80,16 +80,30 @@ void afficherJoueur(Joueur& joueur)
 
 void afficherBrochette(EtatPickomino pickominos[NB_PICKOMINOS])
 {
-    std::cout << "Brochette :";
+    const std::string jaune = "\033[33m";
+    const std::string rouge = "\033[31m";
+    const std::string reset = "\033[0m";
+    std::cout << "\nBrochette :\n";
     for(int i = 0; i < NB_PICKOMINOS; i++)
     {
+        int valeur = i + VALEUR_PICKOMINO_MIN;
+        int nbVers = (valeur <= LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_UN_VER)
+                       ? NB_VERS_PICKOMINO::UN_VER
+                     : (valeur > LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_UN_VER &&
+                        valeur <= LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_DEUX_VERS)
+                       ? NB_VERS_PICKOMINO::DEUX_VERS
+                     : (valeur > LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_DEUX_VERS &&
+                        valeur <= LIMITE_PICKOMINO::VALEUR_PICKOMINO_MAX_TROIS_VERS)
+                       ? NB_VERS_PICKOMINO::TROIS_VERS
+                       : NB_VERS_PICKOMINO::QUATRE_VERS;
+
         if(pickominos[i] == EtatPickomino::DISPONIBLE)
         {
-            std::cout << " " << (i + VALEUR_PICKOMINO_MIN);
+            std::cout << jaune << " [ " << valeur << " | " << nbVers << " ] " << reset;
         }
         else if(pickominos[i] == EtatPickomino::RETOURNE)
         {
-            std::cout << " X";
+            std::cout << rouge << " [X|X] " << reset;
         }
     }
     std::cout << std::endl;
@@ -97,7 +111,7 @@ void afficherBrochette(EtatPickomino pickominos[NB_PICKOMINOS])
 
 void afficherDes(int desObtenus[NB_DES], int nbDes)
 {
-    std::cout << "Lancer des dés : ";
+    std::cout << "\nLancer des dés : ";
     for(int i = 0; i < nbDes; i++)
     {
         std::cout << (desObtenus[i] == ID_VERS ? "V" : std::to_string(desObtenus[i])) << " ";
